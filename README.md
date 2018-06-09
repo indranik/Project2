@@ -36,3 +36,7 @@ Other visuals are <TO BE ADDED>
 
 <TO BE ADDED>
 
+#### Potential draft 
+
+![Visual1](resources/draft_visual/Slide1.jpeg)
+![Visual2](resources/draft_visual/Slide2.jpeg)
