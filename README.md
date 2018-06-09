@@ -45,4 +45,4 @@ Other visuals are <TO BE ADDED>
 
 ### Project Contributors
 
-| Niyati Desai  |   Guirlyn Olivar  |   Indrani Kompella |
+ Niyati Desai  |   Guirlyn Olivar  |   Indrani Kompella 
