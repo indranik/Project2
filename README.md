@@ -15,7 +15,7 @@ This app will allow the user to navigate through the set of proposed plans and h
 
 ### Dataset
 
-We are using census and urban planning data collected from <TO BE ADDED>
+We are using Fairfax County's Tax Records, Comprehensive Plan Buildout and development pipeline data.
 
 
 ### Inspiring visualizations
