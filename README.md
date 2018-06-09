@@ -33,3 +33,5 @@ Other visuals are <TO BE ADDED>
 
 <TO BE ADDED>
 
+Potential draft 
+![Visual](resources/draft_visual.pdf)
