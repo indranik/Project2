@@ -18,9 +18,7 @@ This tool will help the County staff and citizens to monitor the current and fut
 
 ### Dataset
 
-We are using Fairfax County's Tax Records, Comprehensive Plan Buildout and development pipeline data. The data is stored in csv, json format. We are in process of acquiring shapefiles and potentially use it for our visualization.
-The data can be found @ resources/data/
-
+We are using Fairfax County's Tax Records, Comprehensive Plan Buildout and development pipeline data.
 
 
 ### Inspiring visualizations
@@ -38,10 +36,3 @@ Other visuals are <TO BE ADDED>
 
 <TO BE ADDED>
 
-#### Potential draft 
-
-![Visual1](resources/draft_visual/Slide1.jpeg)
-![Visual2](resources/draft_visual/Slide2.jpeg)
-
-### Project Contributors
-Niyati Desai     Guirlyn Olivar     Indrani Kompella
