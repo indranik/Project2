@@ -128,3 +128,35 @@
       }
   }
   
+
+/****** WEBPAGE ELEMENTS ******/
+.jumbotron {
+    background-color:rgb(241, 229, 205);
+}
+
+#dashboard {
+    color: cadetblue;
+}
+
+#instruction {
+    font-size: 15px;
+}
+
+/* #dropdownlist {
+    text-align: left;
+} */
+
+#empty_teal {
+    height: 7px;
+    background-color: teal;
+}
+
+#foot {
+    background-color: grey;
+    height: 40px;
+    padding-top: 10px;
+    color:white;
+    font-size: 12px;
+}
+/**** END WEBPAGE ELEMENTS ****/
+
