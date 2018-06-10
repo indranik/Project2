@@ -132,6 +132,7 @@
 /****** WEBPAGE ELEMENTS ******/
 .jumbotron {
     background-color:rgb(241, 229, 205);
+    padding-bottom: 12px;
 }
 
 #dashboard {
@@ -142,9 +143,21 @@
     font-size: 15px;
 }
 
-/* #dropdownlist {
+#dropdownlist {
     text-align: left;
-} */
+}
+
+#dropdownlist1,#dropdownlist2,#dropdownlist3,#dropdownlist4 {
+    width:162px;
+    background-color:teal;
+    color:white;
+    height: 30px;
+    font-size: 15px;
+} 
+
+hr { background-color:rgb(182, 159, 30);
+     height: 1px; 
+     border: 0; }
 
 #empty_teal {
     height: 7px;
