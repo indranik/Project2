@@ -11,6 +11,17 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  
   <link rel="stylesheet" type="text/css" href="../static/styles/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+  integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
+  crossorigin="anonymous">
+  <!-- or -->
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+  integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
+  crossorigin="anonymous">
 
 </head>
 
@@ -20,12 +31,12 @@
     <div class="row">
         <div class="col-md-12">
         <div class="jumbotron text-center">
-            <h2>RESTON TRANSIT STATION AREAS DEVELOPMENT</h2>
-            <h1 id="dashboard">Dashboard</h1>
-            <p id="instruction">Use the interactive chart below to track city's development</p>
+            <h2 class="animated bounceInLeft">RESTON TRANSIT STATION AREAS DEVELOPMENT</h2>
+            <h1 id="dashboard" class="animated bounceInRight">Dashboard</h1>
+            <p id="instruction" class="animated bounceInRight">Use the interactive chart below to track city's development</p>
             <br>
             <hr>
-            <div id="dropdownlist">
+            <div id="dropdownlist" class="animated fadeIn">
               <select id="dropdownlist1">
                 <option selected="selected">TSA (Area Selection)</option>
                 <!-- <option>Niyati</option>
@@ -82,12 +93,9 @@
       </div>
     </div>
   </div>
-
-  
-  
   
 <script src="../static/js/app.js"></script>
-  
+ 
 </body>
 
 </html>

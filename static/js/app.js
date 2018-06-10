@@ -34,3 +34,23 @@
 //***************************************/
 //***********END TEST BLOCK**************/
 //***************************************/
+
+//***************************************/
+//*********CREATE SELECT LIST************/
+//***************************************/
+d3.csv('../resources/data/summaryData.csv', (error, response) => {
+  if (error) return console.warn(error);
+  var todoList = document.querySelector("#dropdownlist1");
+  todoHTML='';
+  var duplicate = [];
+  for (var i = 0; i < response.length; i++) {
+      if (duplicate.includes(response[i].TSA)) continue;
+      var todoListItem = document.createElement("option");
+      todoListItem.innerHTML = response[i].TSA;
+      todoList.appendChild(todoListItem); 
+      duplicate.push(response[i].TSA);
+  } 
+});
+//***************************************/
+//***********END SELECT LIST*************/
+//***************************************/
