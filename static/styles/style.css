@@ -141,14 +141,16 @@
 
 #instruction {
     font-size: 15px;
+    -webkit-animation-delay: 1s;
 }
 
 #dropdownlist {
     text-align: left;
+    -webkit-animation-delay: 2s;
 }
 
 #dropdownlist1,#dropdownlist2,#dropdownlist3,#dropdownlist4 {
-    width:162px;
+    width:165px;
     background-color:teal;
     color:white;
     height: 30px;
@@ -158,6 +160,12 @@
 hr { background-color:rgb(182, 159, 30);
      height: 1px; 
      border: 0; }
+
+h2, h1 {
+    /* -webkit-animation-duration: 10s; */
+    -webkit-animation-delay: 1s;
+    /* -webkit-animation-iteration-count: infinite; */
+}
 
 #empty_teal {
     height: 7px;
