@@ -329,7 +329,7 @@ function do_office(rows){
 
 // Read all csv data
 
-d3.csv("../resources/filter/sample2.csv", function(error, csv) {
+d3.csv("../static/resources/filter/sample2.csv", function(error, csv) {
     rows = [];
 
     csv.forEach(function(row) {

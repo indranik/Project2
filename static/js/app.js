@@ -38,7 +38,7 @@
 //***************************************/
 //*********CREATE SELECT LIST************/
 //***************************************/
-d3.csv('../resources/data/summaryData.csv', (error, response) => {
+d3.csv('../static/resources/data/summaryData.csv', (error, response) => {
   if (error) return console.warn(error);
   var todoList = document.querySelector("#dropdownlist1");
   todoHTML='';
