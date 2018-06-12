@@ -1,7 +1,7 @@
 
 // Read data from the filtered selection made bu the user
 // and render as a table
-d3.csv("../resources/filter/sample.csv", function(error, data) {
+d3.csv("../resources/filter/summaryData.csv", function(error, data) {
     if (error) throw error;
     
     var sortAscending = true;

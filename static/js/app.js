@@ -168,3 +168,12 @@ d3.json('/selectlist', (error, response) => {
 //***************************************/
 //***********END SELECT LIST*************/
 //***************************************/
+
+d3.json('/submit', (error, response) =>{
+  if (error) return console.warn(error);
+  
+  var table = document.querySelector("#table");
+
+  table.innerHTML = response;
+
+});
