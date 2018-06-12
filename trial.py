@@ -1,27 +1,13 @@
-#################################################
-# Import Dependencies
-#################################################
-import datetime as dt
-import pandas as pd
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Jun 11 10:01:06 2018
 
-from flask import Flask, render_template, jsonify
+@author: niyatidesai
+"""
 
-#################################################
-# Flask Setup
-#################################################
-app = Flask(__name__)
-
-#################################################
-# Flask Routes
-#################################################
-@app.route("/")
-def index():
-    return render_template('index.html')
-
-## Route to create dropdownlists
-@app.route("/selectlist")
 def get_select_list():
-    data = pd.read_csv("static/resources/data/summaryData.csv")
+    data = pd.read_csv("resources/data/summaryData.csv")
     data = data.sort_values('TSA')
     data_selectlist = data[['TSA','Dis_SubDis', 'LUCategory']]
     data_selectlist.reset_index(inplace=True, drop=True)
@@ -49,11 +35,11 @@ def get_select_list():
     final_list['district'].append(district_list) 
     final_list['landuse'].append(landuse_list)
 
-    select_dropdown_list = {"Herndon TSA":{"district":final_list['district'][0],"landuse":final_list['landuse'][0]},
+    select_dropdown_list = [{"Herndon TSA":{"district":final_list['district'][0],"landuse":final_list['landuse'][0]},
                 "Reston Town Center TSA":{"district":final_list['district'][1],"landuse":final_list['landuse'][1]},
-                "Wiehle-Reston East TSA":{"district":final_list['district'][2],"landuse":final_list['landuse'][2]}}
+                "Wiehle-Reston East TSA":{"district":final_list['district'][2],"landuse":final_list['landuse'][2]}}]
         
-    return jsonify(select_dropdown_list)
-
-if __name__ == "__main__":
-    app.run(debug=True)
+#    return jsonify(select_dropdown_list)
+    print(select_dropdown_list)
+    
+get_select_list()

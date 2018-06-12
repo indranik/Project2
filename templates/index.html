@@ -29,72 +29,93 @@
   <!-- <div id="test"><h1>Lets start Project #2</h1></div> -->
   <div class="container-fluid">
     <div class="row">
-        <div class="col-md-12">
+      <div class="col-md-12">
         <div class="jumbotron text-center">
             <h2 class="animated bounceInLeft">RESTON TRANSIT STATION AREAS DEVELOPMENT</h2>
             <h1 id="dashboard" class="animated bounceInRight">Dashboard</h1>
             <p id="instruction" class="animated bounceInRight">Use the interactive chart below to track city's development</p>
             <br>
             <hr>
-            <div id="dropdownlist" class="animated fadeIn">
-              <select id="dropdownlist1">
-                <option selected="selected">TSA (Area Selection)</option>
-                <!-- <option>Niyati</option>
-                <option>Guirlyn</option>
-                <option>Indrani</option> -->
+            <div id="dropdownlist" class="animated fadeIn ribbon">
+              <!-- <select id="dropdownlist1" onchange="optionChanged(this.value)"> -->
+              <a href='#'><span>
+              <select id="dropdownlist1" onchange="configureDropDownLists(this,document.getElementById('dropdownlist2'),document.getElementById('dropdownlist3'),document.getElementById('dropdownlist4'))">                
+              <option value='TSA (Area Selection)' selected="selected">TSA (Area Selection)</option>
+              <!-- <option>Niyati</option>
+              <option>Guirlyn</option>
+              <option>Indrani</option> -->
               </select>
+              </span></a>
+
+              <a href='#'><span>
               <select id="dropdownlist2">
-                <option selected="selected">District/Sub-District</option>
+                <option value='District/Sub-District' selected="selected">District/Sub-District</option>
                 <!-- <option>Niyati</option>
                 <option>Guirlyn</option>
                 <option>Indrani</option> -->
               </select>
+              </span></a>
+
+              <a href='#'><span>
               <select id="dropdownlist3">
-                <option selected="selected">Land Use Category</option>
+                <option value='Land Use Category' selected="selected">Land Use Category</option>
                 <!-- <option>Niyati</option>
                 <option>Guirlyn</option>
                 <option>Indrani</option> -->
               </select>
+              </span></a>
+
+              <a href='#'><span>
               <select id="dropdownlist4">
-                <option selected="selected">Development Plan</option>
-                <!-- <option>Niyati</option>
+                <option value='Development Plan' selected="selected">Development Plan</option>
+                <option>Niyati</option>
                 <option>Guirlyn</option>
-                <option>Indrani</option> -->
+                <option>Indrani</option>
               </select>
+              </span></a>
+              
             </div>
-        </div>
-        </div>
-    </div>
-  </div>
-  <!-- <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-6">
-            <select id="dropdownlist"></select>
-        </div>
-    </div>
-  </div> -->
-
-  <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-          <iframe src="../static/summarytable.html" frameborder="1" scrolling="auto"  /></iframe>
-        </div>
-    </div>
-  </div>
-
-  <div class="with-container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <div id="empty_teal"></div>
-            <div class="footer-copyright py-3 text-center" id="foot">
-            © Copyright   Niyati|Guirlyn|Indrani   Bootcamp 2018
+            <div id='container'>
+                <div class='ribbon'>
+                    <a href='#'><span>MediaSite</span></a>
+                    <a href='#'><span>Reviews</span></a>
+                    <a href='#'><span>Features</span></a>
+                    <a href='#'><span>Partners</span></a>
+                </div>
             </div>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 animated fadeInUp" id="summarytable">
+        <iframe src="../static/summarytable.html" frameborder="1" scrolling="auto"  /></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div id="test"></div> 
+      </div>
+    </div>
+  </div>
+ 
+  <div class="with-container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div id="empty_teal"></div>
+          <div class="footer-copyright py-3 text-center" id="foot">
+            © Copyright   Niyati|Guirlyn|Indrani   Bootcamp 2018
+          </div>
+      </div>
+    </div>
+  </div>
   
-<script src="../static/js/app.js"></script>
+<script type="text/javascript" src="../static/js/app.js"></script>
  
 </body>
 

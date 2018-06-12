@@ -1,25 +1,10 @@
-#################################################
-# Import Dependencies
-#################################################
-import datetime as dt
-import pandas as pd
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
 
-from flask import Flask, render_template, jsonify
+This is a temporary script file.
+"""
 
-#################################################
-# Flask Setup
-#################################################
-app = Flask(__name__)
-
-#################################################
-# Flask Routes
-#################################################
-@app.route("/")
-def index():
-    return render_template('index.html')
-
-## Route to create dropdownlists
-@app.route("/selectlist")
 def get_select_list():
     data = pd.read_csv("static/resources/data/summaryData.csv")
     data = data.sort_values('TSA')
@@ -52,8 +37,7 @@ def get_select_list():
     select_dropdown_list = {"Herndon TSA":{"district":final_list['district'][0],"landuse":final_list['landuse'][0]},
                 "Reston Town Center TSA":{"district":final_list['district'][1],"landuse":final_list['landuse'][1]},
                 "Wiehle-Reston East TSA":{"district":final_list['district'][2],"landuse":final_list['landuse'][2]}}
-        
-    return jsonify(select_dropdown_list)
-
-if __name__ == "__main__":
-    app.run(debug=True)
+    
+    print(select_dropdown_list)
+    
+get_select_list()
