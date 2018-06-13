@@ -264,10 +264,14 @@ function gauges(){
   
     //Only pass the Residential %, the non residential is 100- residential %
     // Need to check value for proper rendering or use an alternative <<<<<<< assumes good values
-    gauge('Existing',  response[0]);
-    gauge('Plan', response[1]);
-    gauge('Approved', response[2]);
-    gauge('Review', response[3]); 
+    var scenarios= ["Existing","Plan","Approved","Review"];
+    for (var i=0; i< scenarios.length; i++){
+      if (response[i] == 0){
+        console.log("draw something else");
+      } else {
+        gauge(scenarios[i],response[i]);
+      }
+    }
   });
 }
 
@@ -282,5 +286,17 @@ function table(uniqueid_selection){
     gauges();
   });
 }
+
+//On click of the Submit button
+function drawSelection(){
+  d3.json(`/areaSelection/<selectionString>`, (error, response)=>{
+    if (error) return console.warn(error);
+    
+    var table = document.querySelector("#table");
+    table.innerHTML = response;
+  });
+
+}
+
 
 table('HerndonTSAWoodlandParkMixedUse')
