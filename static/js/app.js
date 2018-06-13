@@ -175,7 +175,7 @@ Gauge
 
 */
 
-function gauge(scenario, category, value){
+function gauge(scenario, value){
   // Trig to calc meter point
   var degrees = 180 - (value*1.8);
   var radius = .5;
@@ -191,28 +191,27 @@ function gauge(scenario, category, value){
       pathEnd = ' Z';
   var path = mainPath.concat(pathX,space,pathY,pathEnd);
 
+  var valueResidential = value;
+  var valueNonResidentail = 100-value;
+  
+
   var data = [{ type: 'scatter',
   x: [0], y:[0],
       marker: {size: 28, color:'850000'},
       showlegend: false,
       name: 'value',
       text: value,
-      hoverinfo: 'text+name'},
-  { values: [50/9,50/9, 50/9, 50/9, 50/9, 50/9, 50/9, 50/9,50/9,50],
+      hoverinfo: 'text'},
+  { values: [value/2, value/2, value],
   rotation: 90,
-  text: ['100', '', '', '', '', '',
-              '', '', '0',''],
+  text: ["","",''],
   textinfo: 'text',
   textposition:'inside',
-  marker: {colors:['rgba(14, 127, 0, .5)', 'rgba(110, 154, 22, .5)',
-                          'rgba(170, 202, 42, .5)', 'rgba(202, 209, 95, .5)',
-                          'rgba(205, 202, 42, .5)', 'rgba(210, 209, 95, .5)',
-                          'rgba(210, 206, 145, .5)', 'rgba(232, 226, 202, .5)',
-                          'rgba(240, 216, 145, .5)',
+  marker: {colors:['rgba(14, 127, 0, .5)', 'rgba(14, 127, 0, .5)',
+  
                           'rgba(255, 255, 255, 0)']},
-  //labels: ['8-9', '7-8', '6-7', '5-6', '4-5', '3-4',
-  //'2-3', '1-2', '0-1',''],
-  hoverinfo: 'text',
+  labels: ['Non Residential', 'Residential', ''],
+  hoverinfo: 'labels+text',
   hole: .5,
   type: 'pie',
   showlegend: false
@@ -227,14 +226,14 @@ function gauge(scenario, category, value){
           color: '850000'
       }
       }],
-  title: 'Scenario: ' + scenario,
-  xaxis: {zeroline:false, showticklabels:false, title: category,
+  title: 'Residential/Non Residential: ' + scenario,
+  xaxis: {zeroline:false, showticklabels:false, title: "",
               showgrid: false, range: [-1, 1]}, 
   yaxis: {zeroline:false, showticklabels:false,
               showgrid: false, range: [-1, 1]}
   };
 
-  Plotly.newPlot('gauge'+scenario+category, data, layout);
+  Plotly.newPlot('gauge'+scenario, data, layout);
 }
 
 
@@ -244,16 +243,12 @@ d3.json('/submit', (error, response) => {
   
   // draw gauge based on example table loaded in response
   var table = document.querySelector("#table");
-  
-  gauge('Existing', "Residential", 27);
-  gauge('Plan', "Residential",52);
-  gauge('Approved', "Residential",32);
-  gauge('Review', "Residential",43);
-  
-  gauge('Existing', "NonResidential", 73);
-  gauge('Plan', "NonResidential",48);
-  gauge('Approved', "NonResidential",68);
-  gauge('Review', "NonResidential",57);
+
+  //Only pass the Residential %, the non residential is 100- residential %
+  gauge('Existing',  27);
+  gauge('Plan', 52);
+  gauge('Approved', 32);
+  gauge('Review', 43);
   
 
   table.innerHTML = response;
