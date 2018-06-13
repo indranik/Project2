@@ -3,6 +3,12 @@
 #################################################
 import datetime as dt
 import pandas as pd
+import sqlalchemy
+from sqlalchemy.ext.automap import automap_base
+from sqlalchemy.orm import Session
+from sqlalchemy import create_engine,inspect, func
+
+import numpy as np
 
 from flask import Flask, render_template, jsonify
 
@@ -10,6 +16,29 @@ from flask import Flask, render_template, jsonify
 # Flask Setup
 #################################################
 app = Flask(__name__)
+
+#################################################
+# Database Queries Setup
+#################################################
+# Create engine using the RestonDev.sqlite database file
+engine = create_engine("sqlite:///static/resources/data/RestonDev.sqlite")
+
+# Create a connection to the engine called `conn`
+conn = engine.connect()
+# Declare a Base using `automap_base()`
+Base = automap_base()
+# Use the Base class to reflect the database tables
+Base.prepare(engine, reflect=True)
+# Print all of the classes mapped to the Base
+Base.classes.keys()
+# Assign the classes
+Existing = Base.classes.Existing
+PlanMax = Base.classes.PlanMax
+ExApp = Base.classes.ExApp
+ExURApp = Base.classes.ExURApp
+
+# Create a session
+session = Session(engine)
 
 #################################################
 # Flask Routes
@@ -67,6 +96,112 @@ def unique():
         u = u.replace(":","")
         unique_id.append(u)
     return (jsonify(unique_id))
+
+@app.route('/areaselection/<selectionString>')
+def areaSelection(selectionString):
+    TSA = ""
+    DistSubDist = ""
+    LUCategory = ""
+    
+    if (len(selectionString)>2):
+        userSelection = selectionString.split(",")
+        TSA = userSelection[0]
+        DistSubDist = userSelection[1]
+        LUCategory = userSelection[2]
+        
+    # Filter strings   
+    EX_FilterString = ""
+    PlanMax_FilterString = ""
+    EXApp_FilterString = ""
+    EXURApp_FilterString = ""
+    
+    
+    if TSA != "":
+        EX_FilterString = "Existing.TSA == '" + TSA + "'"
+        PlanMax_FilterString = "PlanMax.TSA == '" + TSA + "'"
+        EXApp_FilterString = "EXApp.TSA == '" + TSA + "'"
+        EXURApp_FilterString = "EXURApp.TSA == '" + TSA + "'"
+        
+    if DistSubDist != "":
+        if TSA != "":
+            EX_FilterString = EX_FilterString +" AND Existing.Dis_SubDis == '" + DistSubDist + "'"
+            PlanMax_FilterString = PlanMax_FilterString +" AND PlanMax.Dis_SubDis == '" + DistSubDist + "'"
+            EXApp_FilterString = EXApp_FilterString +" AND EXApp.Dis_SubDis == '" + DistSubDist + "'"
+            EXURApp_FilterString = EXURApp_FilterString +" AND EXURApp.Dis_SubDis == '" + DistSubDist + "'"
+        else:
+            EX_FilterString ="Existing.Dis_SubDis == '" + DistSubDist + "'"
+            PlanMax_FilterString = "PlanMax.Dis_SubDis == '" + DistSubDist + "'"
+            EXApp_FilterString = "EXApp.Dis_SubDis == '" + DistSubDist + "'"
+            EXURApp_FilterString = "EXURApp.Dis_SubDis == '" + DistSubDist + "'"
+        
+    if LUCategory != "":
+        if TSA != "" or DistSubDist != "":
+            EX_FilterString = EX_FilterString +" AND Existing.LUCategory == '" + LUCategory + "'"
+            PlanMax_FilterString = PlanMax_FilterString +" AND PlanMax.LUCategory == '" + LUCategory + "'"
+            EXApp_FilterString = EXApp_FilterString +" AND EXApp.LUCategory == '" + LUCategory + "'"
+            EXURApp_FilterString = EXURApp_FilterString +" AND EXURApp.LUCategory == '" + LUCategory + "'"
+        elif TSA == "" and DistSubDist == "":
+            EX_FilterString = "Existing.LUCategory == '" + LUCategory + "'"
+            PlanMax_FilterString = "PlanMax.LUCategory == '" + LUCategory + "'"
+            EXApp_FilterString = "EXApp.LUCategory == '" + LUCategory + "'"
+            EXURApp_FilterString = "EXURApp.LUCategory == '" + LUCategory + "'"
+            
+    ExistingData = session.query(Existing.Scenario,func.sum(Existing.Office).label('Office'),\
+                                func.sum(Existing.Retail).label('Retail'),\
+                                func.sum(Existing.Hotel).label('Hotel'),\
+                                func.sum(Existing.Institutional).label('Institutional'),\
+                                func.sum(Existing.Industrial).label('Industrial'),\
+                                func.sum(Existing.Nonresidential_GFA).label('Nonresidential_GFA'),\
+                                func.sum(Existing.Residential_GFA).label('Residential_GFA'),\
+                                func.sum(Existing.Residential_Units).label('Residential_Units')).filter(EX_FilterString).\
+                                group_by(Existing.Scenario).all()
+                                
+    PlanMaxData = session.query(PlanMax.Scenario,func.sum(PlanMax.Office).label('Office'),\
+                                func.sum(PlanMax.Retail).label('Retail'),\
+                                func.sum(PlanMax.Hotel).label('Hotel'),\
+                                func.sum(PlanMax.Institutional).label('Institutional'),\
+                                func.sum(PlanMax.Industrial).label('Industrial'),\
+                                func.sum(PlanMax.Nonresidential_GFA).label('Nonresidential_GFA'),\
+                                func.sum(PlanMax.Residential_GFA).label('Residential_GFA'),\
+                                func.sum(PlanMax.Residential_Units).label('Residential_Units')).filter(PlanMax_FilterString).\
+                                group_by(PlanMax.Scenario).all()
+    
+    ExAppData = session.query(ExApp.Scenario,func.sum(ExApp.Office).label('Office'),\
+                                func.sum(ExApp.Retail).label('Retail'),\
+                                func.sum(ExApp.Hotel).label('Hotel'),\
+                                func.sum(ExApp.Institutional).label('Institutional'),\
+                                func.sum(ExApp.Industrial).label('Industrial'),\
+                                func.sum(ExApp.Nonresidential_GFA).label('Nonresidential_GFA'),\
+                                func.sum(ExApp.Residential_GFA).label('Residential_GFA'),\
+                                func.sum(ExApp.Residential_Units).label('Residential_Units')).filter(EXApp_FilterString).\
+                                group_by(ExApp.Scenario).all()
+            
+    ExURAppData = session.query(ExURApp.Scenario,func.sum(ExURApp.Office).label('Office'),\
+                                func.sum(ExURApp.Retail).label('Retail'),\
+                                func.sum(ExURApp.Hotel).label('Hotel'),\
+                                func.sum(ExURApp.Institutional).label('Institutional'),\
+                                func.sum(ExURApp.Industrial).label('Industrial'),\
+                                func.sum(ExURApp.Nonresidential_GFA).label('Nonresidential_GFA'),\
+                                func.sum(ExURApp.Residential_GFA).label('Residential_GFA'),\
+                                func.sum(ExURApp.Residential_Units).label('Residential_Units')).filter(EXURApp_FilterString).\
+                                group_by(ExURApp.Scenario).all()
+                                                          
+    ExistingDataDF = pd.DataFrame(ExistingData)
+    PlanMaxDataDF = pd.DataFrame(PlanMaxData)
+    ExAppDataDF = pd.DataFrame(ExAppData)
+    ExURAppDataDF = pd.DataFrame(ExURAppData)
+    
+    Testframes = [ExistingDataDF, PlanMaxDataDF, ExAppDataDF,ExURAppDataDF]
+    
+    summaryTableDF = pd.concat(Testframes)
+    summaryTableDF['Percent Residential'] = 100*(summaryTableDF['Residential_GFA']/(summaryTableDF['Residential_GFA']+summaryTableDF['Nonresidential_GFA']))
+    summaryTableDF = summaryTableDF.set_index('Scenario')
+
+    summaryTableDF.to_csv("static/resources/data/selection.csv")
+    
+    #summaryTableDict = summaryTableDF.to_dict('records')
+    return jsonify(summaryTableDF.to_html())
+    #return jsonify(summaryTableDict)
 
 
 @app.route("/table/<uniqueid_selection>")
