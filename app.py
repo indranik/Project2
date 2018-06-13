@@ -94,6 +94,7 @@ def unique():
     for unique in csvdata["UniqueID"]:
         u = unique.replace(" ", "")
         u = u.replace(":","")
+        u = u.replace("-","")
         unique_id.append(u)
     return (jsonify(unique_id))
 
@@ -208,7 +209,9 @@ def areaSelection(selectionString):
 def table(uniqueid_selection):
     data = csvdata
     data['id'] = data['UniqueID'].str.replace(" ","")
-    data['UniqueID'] = data['id'].str.replace(":","")
+    data['id'] = data['id'].str.replace(":","")
+    data['UniqueID'] = data['id'].str.replace("-","")
+
     row_selected = data.loc[data['UniqueID'] == uniqueid_selection]
 
     off_col = ('EX_OffSQFT', 'MR_OFF_SQFT','EARMR_OffSQFT','EUARMR_OffSQFT')
@@ -250,8 +253,10 @@ def table(uniqueid_selection):
     newtable_df['Total'] = (newtable_df['Residential']+ newtable_df['Hotel']+ newtable_df['Office']+
                             newtable_df['Institutions']+
                             newtable_df['Retail']+
-                            newtable_df['Industry'])
+                            newtable_df['Industry'])                            
     newtable_df['Percent Residential'] = round(100*(newtable_df['Residential']/newtable_df['Total']))
+    newtable_df = newtable_df.fillna(0)
+    
     filtered_selection = newtable_df.set_index('label')
 
     filtered_selection.to_csv("static/resources/data/selection.csv")
@@ -262,11 +267,18 @@ def table(uniqueid_selection):
 @app.route("/gauges")
 def gauge():
     filtered_selection = pd.read_csv("static/resources/data/selection.csv")
-
+    # check that selection has returned value
+    
+    if len(filtered_selection) == 0:
+        percentages = [0,0,0,0]
+        return jsonify(percentages)     
+    
+    # get the percentages passed to JS
     percentages = []
     for p in filtered_selection["Percent Residential"]:
         percentages.append(p)
-
+    
+    print(percentages)
     return jsonify(percentages)
 
 if __name__ == "__main__":
