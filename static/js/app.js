@@ -288,16 +288,44 @@ function table(uniqueid_selection){
   });
 }
 
-//On click of the Submit button
-function drawSelection(){
-  d3.json(`/areaSelection/<selectionString>`, (error, response)=>{
+
+function areaSelection(selectionString){
+  // Solution wit DB needs to resolve spaces in column names
+  d3.json(`/areaSelection/${selectionString}`, (error, response)=> {
     if (error) return console.warn(error);
-    
+   
     var table = document.querySelector("#table");
     table.innerHTML = response;
   });
+}
+
+//On click of the Submit button
+function drawSelection(){
+
+  // grab selection from html dom elements
+  var dd1 = document.querySelector("#dropdownlist1");
+  var dd2 = document.querySelector("#dropdownlist2");
+  var dd3 = document.querySelector("#dropdownlist3");
+  console.log(dd1.value);
+  console.log(dd2.value);
+  console.log(dd3.value);
+
+  // fabricate the string to select the the row from the data
+  var sbt = document.querySelector("#submitbt");
+  
+  //remove spaces, ":", and "-"
+  var clean1 = dd1.value.replace(/\s|-|:/g,'')
+  var clean2 = dd2.value.replace(/\s|-|:/g,'')
+  var clean3 = dd2.value.replace(/\s|-|:/g,'')
+  var selection = clean1 + "_" + clean2  + "_" +clean3
+  sbt.value = selection
+
+  // set the latest selection as value to the submit button
+  console.log("Submit?",sbt.value)
+  
+  //table(selection)
+  areaSelection(selection);
 
 }
 
-
-table('HerndonTSAWoodlandParkMixedUse')
+ table('HerndonTSAWoodlandParkMixedUse')
