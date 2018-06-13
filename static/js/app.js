@@ -174,7 +174,9 @@ Gauge
 
 */
 
-function gauge(scenario, value){
+function gauge(scenario, residential_value){
+  var value = residential_value?residential_value:1
+  
   // Trig to calc meter point
   var degrees = 180 - (value*1.8);
   var radius = .5;
@@ -189,10 +191,6 @@ function gauge(scenario, value){
       pathY = String(y),
       pathEnd = ' Z';
   var path = mainPath.concat(pathX,space,pathY,pathEnd);
-
-  var valueResidential = value;
-  var valueNonResidentail = 100-value;
-  
 
   var data = [{ type: 'scatter',
   x: [0], y:[0],
@@ -225,8 +223,8 @@ function gauge(scenario, value){
           color: '850000'
       }
       }],
-  title: 'Residential/Non Residential: ' + scenario,
-  xaxis: {zeroline:false, showticklabels:false, title: "",
+  title: scenario,
+  xaxis: {zeroline:false, showticklabels:false, title: "Residential %",
               showgrid: false, range: [-1, 1]}, 
   yaxis: {zeroline:false, showticklabels:false,
               showgrid: false, range: [-1, 1]}
@@ -269,6 +267,7 @@ function gauges(){
     for (var i=0; i< scenarios.length; i++){
       if (response[i] == 0){
         console.log("draw something else");
+        gauge(scenarios[i], 0);
       } else {
         gauge(scenarios[i],response[i]);
       }
@@ -328,4 +327,4 @@ function drawSelection(){
 
 }
 
- table('HerndonTSAWoodlandParkMixedUse')
+ //table('HerndonTSAWoodlandParkMixedUse')

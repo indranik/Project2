@@ -195,8 +195,8 @@ def areaSelection(selectionString):
     Testframes = [ExistingDataDF, PlanMaxDataDF, ExAppDataDF,ExURAppDataDF]
     
     summaryTableDF = pd.concat(Testframes)
-    summaryTableDF['Percent Residential'] = round(100*(summaryTableDF['Residential_GFA']/(summaryTableDF['Residential_GFA']+summaryTableDF['Nonresidential_GFA'])))
-    summaryTableDF = summaryTableDF.set_index('Scenario')
+    #summaryTableDF['Percent Residential'] = 100*(summaryTableDF['Residential_GFA']/(summaryTableDF['Residential_GFA']+summaryTableDF['Nonresidential_GFA']))
+    #summaryTableDF = summaryTableDF.set_index('Scenario')
 
     summaryTableDF.to_csv("static/resources/data/selection.csv")
     
