@@ -98,14 +98,14 @@ def unique():
         unique_id.append(u)
     return (jsonify(unique_id))
 
-@app.route('/areaselection/<selectionString>')
+@app.route("/areaSelection/<selectionString>")
 def areaSelection(selectionString):
     TSA = ""
     DistSubDist = ""
     LUCategory = ""
     
     if (len(selectionString)>2):
-        userSelection = selectionString.split(",")
+        userSelection = selectionString.split("_")  ### ',' character not allowed in filenames http protocol change to '_'
         TSA = userSelection[0]
         DistSubDist = userSelection[1]
         LUCategory = userSelection[2]
@@ -195,14 +195,14 @@ def areaSelection(selectionString):
     Testframes = [ExistingDataDF, PlanMaxDataDF, ExAppDataDF,ExURAppDataDF]
     
     summaryTableDF = pd.concat(Testframes)
-    summaryTableDF['Percent Residential'] = 100*(summaryTableDF['Residential_GFA']/(summaryTableDF['Residential_GFA']+summaryTableDF['Nonresidential_GFA']))
+    summaryTableDF['Percent Residential'] = round(100*(summaryTableDF['Residential_GFA']/(summaryTableDF['Residential_GFA']+summaryTableDF['Nonresidential_GFA'])))
     summaryTableDF = summaryTableDF.set_index('Scenario')
 
     summaryTableDF.to_csv("static/resources/data/selection.csv")
     
-    summaryTableDict = summaryTableDF.to_dict('records')
-    #return jsonify(summaryTableDF.to_html())
-    return jsonify(summaryTableDict)
+    #summaryTableDict = summaryTableDF.to_dict('records')
+    return jsonify(summaryTableDF.to_html())
+    #return jsonify(summaryTableDict)
 
 
 @app.route("/table/<uniqueid_selection>")
