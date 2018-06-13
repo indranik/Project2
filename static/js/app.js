@@ -236,21 +236,52 @@ function gauge(scenario, value){
   Plotly.newPlot('gauge'+scenario, data, layout);
 }
 
+function optionChanged(route) {
+  console.log("Option changed called with  "+ route);
+  table(route);
+  
+} 
 
 
-d3.json('/submit', (error, response) => {
+d3.json("/unique", (error, response) => {
   if (error) return console.warn(error);
-  
-  // draw gauge based on example table loaded in response
-  var table = document.querySelector("#table");
+  console.log("unique", response);
 
-  //Only pass the Residential %, the non residential is 100- residential %
-  gauge('Existing',  27);
-  gauge('Plan', 52);
-  gauge('Approved', 32);
-  gauge('Review', 43);
-  
+  var ddl = document.querySelector("#dropdownlist4");
+  for (i = 0; i < response.length; i++) 
+  {
+    var opt = document.createElement('option');
+    opt.value = response[i];
+    opt.text = response[i];
+    ddl.options.add(opt);
+  }
 
-  table.innerHTML = response;
 
 });
+
+function gauges(){
+  d3.json("/gauges", (error, response) => {
+    console.log(response);
+  
+    //Only pass the Residential %, the non residential is 100- residential %
+    // Need to check value for proper rendering or use an alternative <<<<<<< assumes good values
+    gauge('Existing',  response[0]);
+    gauge('Plan', response[1]);
+    gauge('Approved', response[2]);
+    gauge('Review', response[3]); 
+  });
+}
+
+function table(uniqueid_selection){
+  d3.json(`/table/${uniqueid_selection}`, (error, response) => {
+    if (error) return console.warn(error);
+    
+    // draw gauge based on example table loaded in response
+    var table = document.querySelector("#table");
+    table.innerHTML = response;
+    
+    gauges();
+  });
+}
+
+table('HerndonTSAWoodlandParkMixedUse')
