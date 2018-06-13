@@ -260,6 +260,7 @@ d3.json("/unique", (error, response) => {
 
 function gauges(){
   d3.json("/gauges", (error, response) => {
+    if (error) return console.warn(error);
     console.log(response);
   
     //Only pass the Residential %, the non residential is 100- residential %
