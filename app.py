@@ -60,19 +60,9 @@ def get_select_list():
 
 @app.route("/submit")
 def submit():
-    filtered_selection = csvdata
-
-    all_selection  = filtered_selection[["EX_OffSQFT","EX_RetSQFT","EX_HotSQFT","EX_InstSQFT","EX_IndusSQFT","EX_NonResGFA","EX_ResSQFT","MR_OFF_SQFT","MR_RET_SQFT","MR_HOT_SQFT","MR_INS_SQFT","MR_IND_SQFT","MR_NonRes","MR_ResGFA","EARMR_OffSQFT","EARMR_RetSQFT","EARMR_HotSQFT","EARMR_InstSQFT","EARMR_IndusSQFT","EARMR_NonResGFA","EARMR_ResSQFT","EUARMR_OffSQFT","EUARMR_RetSQFT","EUARMR_HotelSQFT","EUARMR_InstSQFT","EUARMR_IndusSQFT","EUARMR_NonResGFA","EUARMR_ResSQFT"]]
-    
-    ##office_selection_existing = csvdata[["EX_OffSQFT","EX_RetSQFT","EX_HotSQFT","EX_InstSQFT","EX_IndusSQFT","EX_NonResGFA"]]
-    ##residential_selection  = csvdata[["EX_ResSQFT","MR_ResGFA","EARMR_ResSQFT","EUARMR_ResSQFT"]]
-    ##header = filtered_selection["EX_ResSQRT",]    
-
-
-    html_format = all_selection.to_html()
-    return jsonify(html_format)
-    
-
+    filtered_selection = pd.read_csv("static/resources/data/TableExample.csv")
+ 
+    return jsonify(filtered_selection.to_html())
 
 if __name__ == "__main__":
     app.run(debug=True)
