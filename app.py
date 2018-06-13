@@ -199,9 +199,9 @@ def areaSelection(selectionString):
 
     summaryTableDF.to_csv("static/resources/data/selection.csv")
     
-    #summaryTableDict = summaryTableDF.to_dict('records')
-    return jsonify(summaryTableDF.to_html())
-    #return jsonify(summaryTableDict)
+    summaryTableDict = summaryTableDF.to_dict('records')
+    #return jsonify(summaryTableDF.to_html())
+    return jsonify(summaryTableDict)
 
 
 @app.route("/table/<uniqueid_selection>")
@@ -251,7 +251,7 @@ def table(uniqueid_selection):
                             newtable_df['Institutions']+
                             newtable_df['Retail']+
                             newtable_df['Industry'])
-    newtable_df['Percent Residential'] = 100*(newtable_df['Residential']/newtable_df['Total'])
+    newtable_df['Percent Residential'] = round(100*(newtable_df['Residential']/newtable_df['Total']))
     filtered_selection = newtable_df.set_index('label')
 
     filtered_selection.to_csv("static/resources/data/selection.csv")
