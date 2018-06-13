@@ -74,15 +74,16 @@
               </span></a>
 
               <a href='#'><span>
-              <select id="dropdownlist4">
-                <option value='Development Plan' selected="selected">Development Plan</option>
+              <select id="dropdownlist4"  onchange="optionChanged(this.value)">
+                <option value='Unique Plan' selected="selected">Development Plan</option>
+                <!--
                 <option>Niyati</option>
                 <option>Guirlyn</option>
-                <option>Indrani</option>
+                <option>Indrani</option>  -->
               </select>
               </span></a>
               
-              <button type="button" class="btn btn-primary" id="submitbt">Submit</button>
+              <button type="button" class="btn btn-primary" id="submitbt" onclick="optionChanged(this.value)">Submit</button>
 
             </div>
             <div id='container'>
