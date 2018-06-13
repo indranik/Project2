@@ -29,8 +29,8 @@ def get_select_list():
     data_selectlist.reset_index(inplace=True, drop=True)
     
     initial_val = "Herndon TSA"
-    district_list = []
-    landuse_list = []
+    district_list = ["Select"]
+    landuse_list = ["Select"]
     final_list = {}
     final_list['district'] = []
     final_list['landuse'] = []
@@ -46,8 +46,8 @@ def get_select_list():
             final_list['district'].append(district_list)
             final_list['landuse'].append(landuse_list)        
             initial_val = data_selectlist.TSA[row1]
-            district_list = []
-            landuse_list = []
+            district_list = ["Select"]
+            landuse_list = ["Select"]
     final_list['district'].append(district_list) 
     final_list['landuse'].append(landuse_list)
 
