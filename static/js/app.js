@@ -58,8 +58,7 @@ function configureDropDownLists(ddl1,ddl2,ddl3,ddl4) {
   var distList0 = response[Object.keys(response)[0]].district;
   var distList1 = response[Object.keys(response)[1]].district;
   var distList2 = response[Object.keys(response)[2]].district;
-  
-  
+
   var landuseList0 = response[Object.keys(response)[0]].landuse;
   var landuseList1 = response[Object.keys(response)[1]].landuse;
   var landuseList2 = response[Object.keys(response)[2]].landuse;
