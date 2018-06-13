@@ -23,6 +23,14 @@
   integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
   crossorigin="anonymous">
 
+  <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+  <script src="https://www.amcharts.com/lib/3/gauge.js"></script>
+  <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+  <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+  <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+  
+  
+  <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
 </head>
 
 <body>
@@ -74,9 +82,7 @@
               </select>
               </span></a>
               
-
               <button type="button" class="btn btn-primary" id="submitbt">Submit</button>
-
 
             </div>
             <div id='container'>
@@ -93,7 +99,45 @@
   </div>
 
 
-  <div id="table"></div>
+
+  <div class="row">
+      <div class="container">
+        <div class="col-md-12">
+          <div id="table"></div>
+        </div>
+      </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3">
+      <div id="gaugeExistingResidential"></div>
+    </div>
+    <div class="col-md-3">
+      <div id="gaugePlanResidential"></div>
+    </div>
+    <div class="col-md-3">  
+      <div id="gaugeApprovedResidential"></div>
+    </div>
+    <div class="col-md-3">    
+      <div id="gaugeReviewResidential"></div>
+    </div>  
+  </div>
+
+
+  <div class="row">
+      <div class="col-md-3">
+        <div id="gaugeExistingNonResidential"></div>
+      </div>
+      <div class="col-md-3">
+        <div id="gaugePlanNonResidential"></div>
+      </div>
+      <div class="col-md-3">  
+        <div id="gaugeApprovedNonResidential"></div>
+      </div>
+      <div class="col-md-3">    
+        <div id="gaugeReviewNonResidential"></div>
+      </div>  
+  </div>
 
 
   <div class="container-fluid">
@@ -114,8 +158,10 @@
       </div>
     </div>
   </div>
-  
+
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>  
 <script type="text/javascript" src="../static/js/app.js"></script>
+
  
 </body>
 
