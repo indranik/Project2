@@ -37,7 +37,11 @@
 
 
 
-/** common method to call back the table with the selection of the user */
+/** Draw Table
+ * method to collect the selected date made by the user 
+ * in the dropdown menus and calculate and draw the table 
+ * using POST method to pass the information to the flask app
+ */
 function drawTable(ddl1, ddl2, ddl3){
 
     console.log("on selection TSA")
@@ -204,12 +208,12 @@ d3.json('/selectlist', (error, response) => {
 //***********END SELECT LIST*************/
 //***************************************/
 
-/*
 
-Gauge
 
-*/
 
+/** gauge
+ * draw a gauge 1-100% for a given scenario and mark the residential value %
+ */
 function gauge(scenario, residential_value){
   var value = residential_value?residential_value:1
   
@@ -266,32 +270,12 @@ function gauge(scenario, residential_value){
               showgrid: false, range: [-1, 1]}
   };
 
-  Plotly.newPlot('gauge'+scenario, data, layout);
+  Plotly.newPlot('gauge'+scenario, data, layout, {displayModeBar: false});
 }
 
-function optionChanged(route) {
-   console.log("Option changed called with  "+ route);
-   table(route);
-  
-} 
-
-
-d3.json("/unique", (error, response) => {
-  if (error) return console.warn(error);
-  //console.log("unique", response);
-
-  var ddl = document.querySelector("#dropdownlist4");
-  for (i = 0; i < response.length; i++) 
-  {
-    var opt = document.createElement('option');
-    opt.value = response[i];
-    opt.text = response[i];
-    ddl.options.add(opt);
-  }
-
-
-});
-
+/**
+ * Creates and draws a gauge for each scenario 
+ */
 function gauges(){
   d3.json("/gauges", (error, response) => {
     if (error) return console.warn(error);
@@ -311,6 +295,58 @@ function gauges(){
   });
 }
 
+/** areaSelection:
+ * draw the table with no selections made (uses default GET method) 
+ */
+function areaSelection(){
+  d3.json('/areaSelection', (error, response)=> {
+    if (error) return console.warn(error);
+   
+    var table = document.querySelector("#table");
+    table.innerHTML = response;
+  });
+}
+
+/** Update table from user selected options called at each dropdown selection  */
+function updateTable(){
+  var ddl1 = document.querySelector("#dropdownlist1");
+  var ddl2 = document.querySelector("#dropdownlist2");
+  var ddl3 = document.querySelector("#dropdownlist3");
+  drawTable(ddl1, ddl2, ddl3);
+  gauges();
+}
+
+
+/** Test mode only:
+ *  pass the selected Unique plan to draw the table
+ */
+function optionChanged(route) {
+  console.log("Option changed called with  "+ route);
+  table(route);
+ 
+} 
+
+/** Test mode only: 
+ *  populates the unique plans in the Unique dropdown
+ */
+d3.json("/unique", (error, response) => {
+  if (error) return console.warn(error);
+  //console.log("unique", response);
+
+  var ddl = document.querySelector("#dropdownlist4");
+  for (i = 0; i < response.length; i++) 
+  {
+    var opt = document.createElement('option');
+    opt.value = response[i];
+    opt.text = response[i];
+    ddl.options.add(opt);
+  }
+});
+
+/** Test mode only: 
+ * draws the table for Unique areas (not composed values)
+ * depends on the dropdown for unique plans
+ */
 function table(uniqueid_selection){
   d3.json(`/table/${uniqueid_selection}`, (error, response) => {
     if (error) return console.warn(error);
@@ -324,44 +360,5 @@ function table(uniqueid_selection){
 }
 
 
-function areaSelection(){
-  // Solution wit DB needs to resolve spaces in column names
-
-  
-  d3.json('/areaSelection', (error, response)=> {
-    if (error) return console.warn(error);
-   
-    var table = document.querySelector("#table");
-    table.innerHTML = response;
-  });
-}
-
-function optionChanged(value){
-  console.log("on selection TSA")
-  var dd2 = document.querySelector("#dropdownlist2");
-  var dd3 = document.querySelector("#dropdownlist3");
-
-  var district = (dd2.value == "Select")?"":dd2.value;
-  var category = (dd3.value == "Select")?"":dd3.value;
-  var selection = { 'TSA': value,
-                    'DistSubDist': district,
-                    'LUCategory': category}
-
-  console.log(selection)
-
-}
-
-/** Update table from user selected options called at each dropdown selection  */
-
-function updateTable(){
-  var ddl1 = document.querySelector("#dropdownlist1");
-  var ddl2 = document.querySelector("#dropdownlist2");
-  var ddl3 = document.querySelector("#dropdownlist3");
-  drawTable(ddl1, ddl2, ddl3);
-  gauges();
-}
-
-
- //Testing only  table('HerndonTSAWoodlandParkMixedUse')
  areaSelection();
  gauges();
