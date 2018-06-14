@@ -35,6 +35,38 @@
 //***********END TEST BLOCK**************/
 //***************************************/
 
+
+
+/** common method to call back the table with the selection of the user */
+function drawTable(ddl1, ddl2, ddl3){
+
+    console.log("on selection TSA")
+    var tsa = (ddl1.value == "TSA (Area Selection)")?"":ddl1.value;
+    var district = (ddl2.value == "Select")?"":ddl2.value;
+    var category = (ddl3.value == "Select")?"":ddl3.value;
+
+    var selection = { TSA: ddl1.value,
+                      DistSubDist: district,
+                      LUCategory: category}
+
+    console.log(selection)  
+
+    fetch('/areaSelection', {
+      body: JSON.stringify(selection), // must match 'Content-Type' header
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'POST', 
+    }).then((response) => { 
+      return response.text();
+    }).then(text => {
+      var table = document.querySelector("#table");
+      table.innerHTML = text;
+    });
+
+  }
+
+
 //***************************************/
 //*********CREATE SELECT LIST************/
 //***************************************/
@@ -118,7 +150,11 @@ function configureDropDownLists(ddl1,ddl2,ddl3,ddl4) {
           ddl4.options.length = 0;
       break;
     }
-  });
+  
+    // A selection has been made by the user, update the table with the values derived from the selection
+    updateTable();
+  
+  });  
 }
 
 function createOption(ddl, text, value) {
@@ -234,15 +270,15 @@ function gauge(scenario, residential_value){
 }
 
 function optionChanged(route) {
-  console.log("Option changed called with  "+ route);
-  table(route);
+   console.log("Option changed called with  "+ route);
+   table(route);
   
 } 
 
 
 d3.json("/unique", (error, response) => {
   if (error) return console.warn(error);
-  console.log("unique", response);
+  //console.log("unique", response);
 
   var ddl = document.querySelector("#dropdownlist4");
   for (i = 0; i < response.length; i++) 
@@ -288,9 +324,11 @@ function table(uniqueid_selection){
 }
 
 
-function areaSelection(selectionString){
+function areaSelection(){
   // Solution wit DB needs to resolve spaces in column names
-  d3.json(`/areaSelection/${selectionString}`, (error, response)=> {
+
+  
+  d3.json('/areaSelection', (error, response)=> {
     if (error) return console.warn(error);
    
     var table = document.querySelector("#table");
@@ -298,33 +336,32 @@ function areaSelection(selectionString){
   });
 }
 
-//On click of the Submit button
-function drawSelection(){
-
-  // grab selection from html dom elements
-  var dd1 = document.querySelector("#dropdownlist1");
+function optionChanged(value){
+  console.log("on selection TSA")
   var dd2 = document.querySelector("#dropdownlist2");
   var dd3 = document.querySelector("#dropdownlist3");
-  console.log(dd1.value);
-  console.log(dd2.value);
-  console.log(dd3.value);
 
-  // fabricate the string to select the the row from the data
-  var sbt = document.querySelector("#submitbt");
-  
-  //remove spaces, ":", and "-"
-  var clean1 = dd1.value.replace(/\s|-|:/g,'')
-  var clean2 = dd2.value.replace(/\s|-|:/g,'')
-  var clean3 = dd2.value.replace(/\s|-|:/g,'')
-  var selection = clean1 + "_" + clean2  + "_" +clean3
-  sbt.value = selection
+  var district = (dd2.value == "Select")?"":dd2.value;
+  var category = (dd3.value == "Select")?"":dd3.value;
+  var selection = { 'TSA': value,
+                    'DistSubDist': district,
+                    'LUCategory': category}
 
-  // set the latest selection as value to the submit button
-  console.log("Submit?",sbt.value)
-  
-  //table(selection)
-  areaSelection(selection);
+  console.log(selection)
 
 }
 
- //table('HerndonTSAWoodlandParkMixedUse')
+/** Update table from user selected options called at each dropdown selection  */
+
+function updateTable(){
+  var ddl1 = document.querySelector("#dropdownlist1");
+  var ddl2 = document.querySelector("#dropdownlist2");
+  var ddl3 = document.querySelector("#dropdownlist3");
+  drawTable(ddl1, ddl2, ddl3);
+  gauges();
+}
+
+
+ //Testing only  table('HerndonTSAWoodlandParkMixedUse')
+ areaSelection();
+ gauges();
