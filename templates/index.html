@@ -11,8 +11,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  
   <link rel="stylesheet" type="text/css" href="../static/styles/style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+ 
   <link rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
   integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
@@ -48,7 +48,7 @@
               <!-- <select id="dropdownlist1" onchange="optionChanged(this.value)"> -->
               <a href='#'><span>
               <select id="dropdownlist1" onchange="configureDropDownLists(this,document.getElementById('dropdownlist2'),document.getElementById('dropdownlist3'),document.getElementById('dropdownlist4'))">                
-              <option value='TSA (Area Selection)' selected="selected">TSA (Area Selection)</option>
+              <option value='TSA (Area Selection)' selected="selected" >TSA (Area Selection)</option>
               <!-- <option>Niyati</option>
               <option>Guirlyn</option>
               <option>Indrani</option> -->
@@ -56,8 +56,8 @@
               </span></a>
 
               <a href='#'><span>
-              <select id="dropdownlist2">
-                <option value='District/Sub-District' selected="selected">District/Sub-District</option>
+              <select id="dropdownlist2" onchange="updateTable()">
+                <option value='Select' selected="selected">District/Sub-District</option>
                 <!-- <option>Niyati</option>
                 <option>Guirlyn</option>
                 <option>Indrani</option> -->
@@ -65,8 +65,8 @@
               </span></a>
 
               <a href='#'><span>
-              <select id="dropdownlist3">
-                <option value='Land Use Category' selected="selected">Land Use Category</option>
+              <select id="dropdownlist3" onchange="updateTable()">
+                <option value='Select' selected="selected">Land Use Category</option>
                 <!-- <option>Niyati</option>
                 <option>Guirlyn</option>
                 <option>Indrani</option> -->
@@ -74,17 +74,14 @@
               </span></a>
 
               <a href='#'><span>
-              <select id="dropdownlist4"  onchange="optionChanged(this.value)">
-                <option value='Unique Plan' selected="selected">Development Plan</option>
+              <select id="dropdownlist4"  onchange="optionChanged(this.value)" style="color:red">
+                <option value='Unique Plan' selected="selected">Unique Plan</option>
                 <!--
                 <option>Niyati</option>
                 <option>Guirlyn</option>
                 <option>Indrani</option>  -->
               </select>
               </span></a>
-              
-              <button type="button" class="btn btn-primary" id="submitbt" onclick="drawSelection()">Submit</button>
-
             </div>
             <div id='container'>
                 <div class='ribbon'>
@@ -139,7 +136,6 @@
 
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>  
 <script type="text/javascript" src="../static/js/app.js"></script>
-
  
 </body>
 

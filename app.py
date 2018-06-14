@@ -9,8 +9,8 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine,inspect, func
 
 import numpy as np
-
-from flask import Flask, render_template, jsonify
+import json
+from flask import Flask, render_template, jsonify, request
 
 #################################################
 # Flask Setup
@@ -98,18 +98,23 @@ def unique():
         unique_id.append(u)
     return (jsonify(unique_id))
 
-@app.route("/areaSelection/<selectionString>")
-def areaSelection(selectionString):
-    TSA = ""
-    DistSubDist = ""
-    LUCategory = ""
+@app.route("/areaSelection", methods=['GET','POST'])
+def areaSelection():
+    print("SELECTION ")
     
-    if (len(selectionString)>2):
-        userSelection = selectionString.split("_")  ### ',' character not allowed in filenames http protocol change to '_'
-        TSA = userSelection[0]
-        DistSubDist = userSelection[1]
-        LUCategory = userSelection[2]
-        
+    if request.json: ### == 'POST':
+        print("POSTED")
+        #selection = request.json
+        data = request.json
+        print(data)
+        TSA = data['TSA']
+        DistSubDist = data['DistSubDist']
+        LUCategory = data['LUCategory']
+    else:
+        TSA = ""
+        DistSubDist = ""
+        LUCategory = ""
+    
     # Filter strings   
     EX_FilterString = ""
     PlanMax_FilterString = ""
@@ -186,7 +191,7 @@ def areaSelection(selectionString):
                                 func.sum(ExURApp.Residential_GFA).label('Residential_GFA'),\
                                 func.sum(ExURApp.Residential_Units).label('Residential_Units')).filter(EXURApp_FilterString).\
                                 group_by(ExURApp.Scenario).all()
-                                                          
+                                                        
     ExistingDataDF = pd.DataFrame(ExistingData)
     PlanMaxDataDF = pd.DataFrame(PlanMaxData)
     ExAppDataDF = pd.DataFrame(ExAppData)
@@ -195,14 +200,15 @@ def areaSelection(selectionString):
     Testframes = [ExistingDataDF, PlanMaxDataDF, ExAppDataDF,ExURAppDataDF]
     
     summaryTableDF = pd.concat(Testframes)
-    #summaryTableDF['Percent Residential'] = 100*(summaryTableDF['Residential_GFA']/(summaryTableDF['Residential_GFA']+summaryTableDF['Nonresidential_GFA']))
+    summaryTableDF['Percent Residential'] = round(100*(summaryTableDF['Residential_GFA']/(summaryTableDF['Residential_GFA']+summaryTableDF['Nonresidential_GFA'])))
     #summaryTableDF = summaryTableDF.set_index('Scenario')
 
     summaryTableDF.to_csv("static/resources/data/selection.csv")
-    
+
     #summaryTableDict = summaryTableDF.to_dict('records')
     return jsonify(summaryTableDF.to_html())
     #return jsonify(summaryTableDict)
+
 
 
 @app.route("/table/<uniqueid_selection>")
