@@ -90,7 +90,7 @@ d3.csv('../static/resources/data/summaryData.csv', (error, response) => {
   } 
 });
 
-function configureDropDownLists(ddl1,ddl2,ddl3,ddl4) {
+function configureDropDownLists(ddl1,ddl2,ddl3) {
   d3.json('/selectlist', (error, response) => {
   if (error) return console.warn(error);
   
@@ -139,22 +139,22 @@ function configureDropDownLists(ddl1,ddl2,ddl3,ddl4) {
       case 'TSA (Area Selection)':
           ddl2.options.length = 0;
           ddl3.options.length = 0;
-          ddl4.options.length = 0;
+          // ddl4.options.length = 0;
           for (i = 0; i < 2; i++) {
             createOption(ddl2, ['District/Sub-District'], ['District/Sub-District']);
           }
           for (j = 0; j < 2; j++) {
             createOption(ddl3,['Land Use Category'], ['Land Use Category']);
           }
-          for (k = 0; k < 2; k++) {
-            createOption(ddl4,['Development Plan'], ['Development Plan']);
-          }
-          break;
+          // for (k = 0; k < 2; k++) {
+          //   createOption(ddl4,['Development Plan'], ['Development Plan']);
+          // }
+          // break;
 
       default:
           ddl2.options.length = 0;
           ddl3.options.length = 0;
-          ddl4.options.length = 0;
+          // ddl4.options.length = 0;
       break;
     }
   
@@ -332,19 +332,19 @@ function optionChanged(route) {
 /** Test mode only: 
  *  populates the unique plans in the Unique dropdown
  */
-d3.json("/unique", (error, response) => {
-  if (error) return console.warn(error);
-  //console.log("unique", response);
+// d3.json("/unique", (error, response) => {
+//   if (error) return console.warn(error);
+//   //console.log("unique", response);
 
-  var ddl = document.querySelector("#dropdownlist4");
-  for (i = 0; i < response.length; i++) 
-  {
-    var opt = document.createElement('option');
-    opt.value = response[i];
-    opt.text = response[i];
-    ddl.options.add(opt);
-  }
-});
+//   var ddl = document.querySelector("#dropdownlist4");
+//   for (i = 0; i < response.length; i++) 
+//   {
+//     var opt = document.createElement('option');
+//     opt.value = response[i];
+//     opt.text = response[i];
+//     ddl.options.add(opt);
+//   }
+// });
 
 /** Test mode only: 
  * draws the table for Unique areas (not composed values)
