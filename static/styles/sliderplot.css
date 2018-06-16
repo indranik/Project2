@@ -3,3 +3,19 @@ body {  width: 100%; height: 100%; }
 #select {
     padding-left: 50px;
 }
+
+/****** WEBPAGE ELEMENTS ******/
+.jumbotron {
+    padding-top: 1px;
+    /* background-color:rgb(247, 238, 223); */
+    padding-bottom: 1px;
+}
+
+#dashboard {
+    color: cadetblue;
+}
+
+#instruction {
+    font-size: 15px;
+    -webkit-animation-delay: 1s;
+}

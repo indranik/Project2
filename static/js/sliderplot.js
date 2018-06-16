@@ -1,8 +1,11 @@
+//##########################################################
+//Get the values for slider dropdown
+//##########################################################
 d3.json('/sliderdropdownlist', (error, response) => {
     if (error) return console.warn(error);
 
     var todoList = document.querySelector("#selectddl");
-    todoHTML = '';
+    todoHTML = "<option value='Development Plans' selected='selected'>Development Plans</option>";
     for (var i = 0; i < response.length; i++) {
         todoHTML += "<option>" + response[i] + "</option>";
     }
@@ -10,6 +13,54 @@ d3.json('/sliderdropdownlist', (error, response) => {
 });
 
 
+//##########################################################
+//Post and get the values for sliderplot to and from app.py
+//##########################################################
+/** Update table from user selected options called at each dropdown selection  */
+function updateSliderPlot_test(){
+    // change event
+    $('#selectddl').change(function(){
+        console.log($(this).find(':selected').text());
+        console.log($(this).find(':selected').val());
+    });
+  }
+
+
+
+
+function drawSliderPlot(ddl1){
+
+    console.log("on selection")
+    var development = (ddl1.value == "Development Plans")?"":ddl1.value;
+    console.log(ddl1.value)
+    var selection = { developmentPlan: ddl1.value}
+
+    console.log(selection)  
+
+    // fetch('/areaSelection', {
+    //   body: JSON.stringify(selection), // must match 'Content-Type' header
+    //   headers: {
+    //     'content-type': 'application/json'
+    //   },
+    //   method: 'POST', 
+    // }).then((response) => { 
+    //   return response.text();
+    // }).then(text => {
+    //   //  html  (bare table) --> flask app must return to_html()
+    //   var table = document.querySelector("#table");
+    //   textclean = text.replace(/"/g,' ');
+    //   textclean2 = textclean.replace(/\\n/g,'');
+    //   table.innerHTML = textclean2;
+    // });
+
+  }
+
+function updateSliderPlot(){
+    var ddl1 = document.querySelector("#selectddl");
+    drawSliderPlot(ddl1);
+}
+
+updateSliderPlot();
 
 
 
