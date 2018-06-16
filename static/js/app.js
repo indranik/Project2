@@ -171,6 +171,82 @@ function createOption(ddl, text, value) {
     ddl.options.add(opt);
 }
 
+
+function configureDropDownLists3(ddl1,ddl2,ddl3) {
+  d3.json('/selectlist3', (error, response) => {
+  if (error) return console.warn(error);
+  
+  var distList0 = response[Object.keys(response)[0]].district;
+  var distList1 = response[Object.keys(response)[1]].district;
+  var distList2 = response[Object.keys(response)[2]].district;
+
+  var landuseList0 = response[Object.keys(response)[0]].landuse;
+  var landuseList1 = response[Object.keys(response)[1]].landuse;
+  var landuseList2 = response[Object.keys(response)[2]].landuse;
+
+    switch (ddl1.value) {
+      case Object.keys(response)[0]:
+          ddl2.options.length = 0;
+          ddl3.options.length = 0;
+          for (i = 0; i < distList0.length; i++) {
+              createOption(ddl2, distList0[i], distList0[i]);
+          }
+          // break;
+          for (j = 0; j < landuseList0.length; j++) {
+            createOption(ddl3, landuseList0[j], landuseList0[j]);
+          }
+          break;
+      case Object.keys(response)[1]:
+          ddl2.options.length = 0; 
+          ddl3.options.length = 0;
+          for (i = 0; i < distList1.length; i++) {
+            createOption(ddl2, distList1[i], distList1[i]);
+          }
+        
+          for (j = 0; j < landuseList1.length; j++) {
+            createOption(ddl3, landuseList1[j], landuseList1[j]);
+          }
+          break;
+      case Object.keys(response)[2]:
+          ddl2.options.length = 0;
+          ddl3.options.length = 0;
+          for (i = 0; i < distList2.length; i++) {
+            createOption(ddl2, distList2[i], distList2[i]);
+          }
+        
+          for (j = 0; j < landuseList2.length; j++) {
+            createOption(ddl3, landuseList2[j], landuseList2[j]);
+          }
+          break;
+      case 'TSA (Area Selection)':
+          ddl2.options.length = 0;
+          ddl3.options.length = 0;
+          ddl4.options.length = 0;
+          for (i = 0; i < 2; i++) {
+            createOption(ddl2, ['District/Sub-District'], ['District/Sub-District']);
+          }
+          for (j = 0; j < 2; j++) {
+            createOption(ddl3,['Land Use Category'], ['Land Use Category']);
+          }
+          for (k = 0; k < 2; k++) {
+            createOption(ddl4,['Development Plan'], ['Development Plan']);
+          }
+          break;
+
+      default:
+          ddl2.options.length = 0;
+          ddl3.options.length = 0;
+          ddl4.options.length = 0;
+      break;
+    }
+  
+    // A selection has been made by the user, update the table with the values derived from the selection
+    updateTable();
+  
+  });  
+}
+
+
 // var temp = [{'Herndon TSA': {'district': ['Herndon Station', 'Great Oak', 'Woodland Park'], 
 //                              'landuse': ['Residential Mixed Use', 'Residential', 'Mixed Use', 'Transit Station Mixed Use']},
 //              'Reston Town Center TSA': 
@@ -211,6 +287,39 @@ function createOption(ddl, text, value) {
 //***********END SELECT LIST*************/
 //***************************************/
 
+
+function selectgauge(scenario_id){
+  //get the residential value for selected scnerario
+  d3.json("/redrawgauges", (error, response) => {
+    if (error) return console.warn(error);
+    console.log(response);
+    var scenarios= ["Existing","Plan","Approved","Review"];
+    gauge(scenarios[scenario_id],response[scenario_id]);
+  });
+  // d3.csv("static/resources/data/selection.csv",(error, response) => {
+  //     if (error) return console.warn(error);
+    
+  //     console.log(response)
+  //     var scenario = 0;
+  //     switch (scenario_id) {
+  //     case 0:
+  //       scenario = "Existing"
+  //       break;
+  //     case 1:
+  //       scenario = "Plan";
+  //       break;
+  //     case 2:
+  //       scenario = "Approved";
+  //       break;
+  //     default:
+  //       scenario = "Review"
+  //     }
+  //   //draw gauge
+  //     percent = response[scenario_id].percent_residential;
+  //     console.log(percent)
+  //     gauge(scenario,percent)
+  // });
+}
 
 
 
@@ -273,7 +382,7 @@ function gauge(scenario, residential_value){
               showgrid: false, range: [-1, 1]}
   };
 
-  Plotly.newPlot('gauge'+scenario, data, layout, {displayModeBar: false});
+  Plotly.newPlot('gauge', data, layout, {displayModeBar: false});
 }
 
 /**
@@ -316,7 +425,8 @@ function updateTable(){
   var ddl2 = document.querySelector("#dropdownlist2");
   var ddl3 = document.querySelector("#dropdownlist3");
   drawTable(ddl1, ddl2, ddl3);
-  gauges();
+  
+  selectgauge(0);
 }
 
 
@@ -364,4 +474,4 @@ function table(uniqueid_selection){
 
 
  areaSelection();
- gauges();
+ selectgauge(0)

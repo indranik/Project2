@@ -34,91 +34,95 @@
 </head>
 
 <body>
-  <!-- <div id="test"><h1>Lets start Project #2</h1></div> -->
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
         <div class="jumbotron text-center">
             <h2 class="animated bounceInLeft">RESTON TRANSIT STATION AREAS DEVELOPMENT</h2>
-            <h1 id="dashboard" class="animated bounceInRight">Dashboard</h1>
+            
             <p id="instruction" class="animated bounceInRight">Use the interactive chart below to track city's development</p>
             <br>
             <hr>
             <div id="dropdownlist" class="animated fadeIn ribbon">
-              <!-- <select id="dropdownlist1" onchange="optionChanged(this.value)"> -->
+              
               <a href='#'><span>
               <select id="dropdownlist1" onchange="configureDropDownLists(this,document.getElementById('dropdownlist2'),document.getElementById('dropdownlist3'),document.getElementById('dropdownlist4'))">                
               <option value='TSA (Area Selection)' selected="selected" >TSA (Area Selection)</option>
-              <!-- <option>Niyati</option>
-              <option>Guirlyn</option>
-              <option>Indrani</option> -->
+           
               </select>
               </span></a>
 
               <a href='#'><span>
               <select id="dropdownlist2" onchange="updateTable()">
                 <option value='Select' selected="selected">District/Sub-District</option>
-                <!-- <option>Niyati</option>
-                <option>Guirlyn</option>
-                <option>Indrani</option> -->
+              
               </select>
               </span></a>
 
               <a href='#'><span>
               <select id="dropdownlist3" onchange="updateTable()">
                 <option value='Select' selected="selected">Land Use Category</option>
-                <!-- <option>Niyati</option>
-                <option>Guirlyn</option>
-                <option>Indrani</option> -->
+               
               </select>
               </span></a>
 
               <a href='#'><span>
               <select id="dropdownlist4"  onchange="optionChanged(this.value)" style="color:red">
                 <option value='Unique Plan' selected="selected">Unique Plan</option>
-                <!--
-                <option>Niyati</option>
-                <option>Guirlyn</option>
-                <option>Indrani</option>  -->
+                
               </select>
               </span></a>
             </div>
-            <div id='container'>
-                <div class='ribbon'>
-                    <a href='#'><span>MediaSite</span></a>
-                    <a href='#'><span>Reviews</span></a>
-                    <a href='#'><span>Features</span></a>
-                    <a href='#'><span>Partners</span></a>
-                </div>
-            </div>
+            
         </div>
       </div>
     </div>
   </div>
 
+ <div class="row">
+
+ </div>
+
 
 
   <div class="row">
-      <div class="container">
-        <div class="col-md-12">
+      <div class="container-fluid">
+        <div class="col-md-6">
           <div id="table"></div>
         </div>
+      
+      <div class="col-md-6">
+        <div class="row">
+          <div class="container-fluid"> 
+              <div class="col-md-8">
+                <div id="gauge"></div>
+              </div>
+              <div class="col-md-4">
+                  <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="optradio" onclick="selectgauge(0)" checked> Existing
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="optradio" onclick="selectgauge(1)"> Plan
+                      </label>
+                    </div>
+                    <div class="form-check disabled">
+                      <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="optradio" onclick="selectgauge(2)"> Plan approved
+                      </label>
+                    </div>
+                    <div class="form-check disabled">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="optradio" onclick="selectgauge(3)"> Under review
+                        </label>
+                      </div>
+              </div>
+          </div>
+        </div>
       </div>
-  </div>
-  
-  <div class="row">
-    <div class="col-md-3">
-      <div id="gaugeExisting"></div>
-    </div>
-    <div class="col-md-3">
-      <div id="gaugePlan"></div>
-    </div>
-    <div class="col-md-3">  
-      <div id="gaugeApproved"></div>
-    </div>
-    <div class="col-md-3">    
-      <div id="gaugeReview"></div>
-    </div>  
+   </div>
   </div>
 
   <div class="container-fluid">
