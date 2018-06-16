@@ -66,9 +66,9 @@ function drawTable(ddl1, ddl2, ddl3){
     }).then(text => {
       //  html  (bare table) --> flask app must return to_html()
       var table = document.querySelector("#table");
-      textclean = text.replace(/\n/g,' ');
-      console.log(textclean)
-      table.innerHTML = textclean;
+      textclean = text.replace(/"/g,' ');
+      textclean2 = textclean.replace(/\\n/g,'');
+      table.innerHTML = textclean2;
     });
 
   }
