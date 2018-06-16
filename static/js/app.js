@@ -184,14 +184,14 @@ function createOption(ddl, text, value) {
 //                             {'district': ['Wiehle Station North', 'Sunset Hills', 'Reston East', 'Wiehle Station South'], 
 //                              'landuse': ['Residential Mixed Use', 'Transit Station Mixed Use', 'Mixed Use', 'Government / Institutional']}}];
 
-d3.json('/selectlist', (error, response) => {
-  if (error) return console.warn(error);
+// d3.json('/selectlist', (error, response) => {
+//   if (error) return console.warn(error);
 
-  var todoList = document.querySelector("#test");
-  var todoHTML='';
-  var sample = 'Herndon TSA'
-  todoHTML = "<p> AGE: " + response['Herndon TSA']['district'] + "</p>";
-  todoList.innerHTML = todoHTML;
+//   var todoList = document.querySelector("#test");
+//   var todoHTML='';
+//   var sample = 'Herndon TSA'
+//   todoHTML = "<p> AGE: " + response['Herndon TSA']['district'] + "</p>";
+//   todoList.innerHTML = todoHTML;
 
   // var j = 0;
 
@@ -204,7 +204,7 @@ d3.json('/selectlist', (error, response) => {
   //         todoList.innerHTML = todoHTML;
   //     }
   //     j++;
-  });
+  // });
 
 // })
 //***************************************/
