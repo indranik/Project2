@@ -48,6 +48,9 @@ def index():
     return render_template('index.html')
 
 csvdata = pd.read_csv("static/resources/data/summaryData.csv")
+slidercsvdata = pd.read_csv("static/resources/data/sliderdataclean.csv")
+cleaned_slider_data = slidercsvdata[['APPLICATION_NAME','APPLICATION','D_TOTALS','D_Office','D_Retail','D_Hotel',
+                     'D_Inst','D_Indus','D_NonResGFA']]
 
 ## Route to create dropdownlists
 @app.route("/selectlist")
@@ -286,6 +289,23 @@ def gauge():
     
     print(percentages)
     return jsonify(percentages)
+
+@app.route("/sliderdropdownlist")
+def sliderddl():
+    sliderDropdownList = []
+    for row in range(len(cleaned_slider_data.APPLICATION_NAME)):
+        sliderDropdownList.append(cleaned_slider_data.APPLICATION_NAME[row])
+    
+    return jsonify(sliderDropdownList)
+
+#@app.route("/sliderdata")
+#def sliderdata():
+#    sliderDropdownList = []
+#    for row in range(len(cleaned_slider_data.APPLICATION_NAME)):
+#        sliderDropdownList.append(cleaned_slider_data.APPLICATION_NAME[row])
+#    
+#    return jsonify(sliderDropdownList)
+    
 
 if __name__ == "__main__":
     app.run(debug=True)
