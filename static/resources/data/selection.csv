@@ -1,1 +1,5 @@
-""
+,Scenario,Office,Retail,Hotel,Institutional,Industrial,Nonresidential_GFA,Residential_GFA,Residential_Units,Percent Residential
+0,Existing Development,9296764,368986,0,9480,398056,10073286,922403,869,8.0
+0,Plan Buildout,12977843,393471,1325240,83635,0,14780189,15727000,15727,52.0
+0,Existing + Approved ,11092261,461483,579099,9480,398056,9504245,3684340,3325,28.0
+0,Existing + Approved + UnderReview,10748755,766343,672438,34480,318890,8270575,7797980,7176,49.0

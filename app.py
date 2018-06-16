@@ -205,12 +205,19 @@ def areaSelection():
     summaryTableDF = pd.concat(Testframes)
     summaryTableDF['Percent Residential'] = round(100*(summaryTableDF['Residential_GFA']/(summaryTableDF['Residential_GFA']+summaryTableDF['Nonresidential_GFA'])))
     #summaryTableDF = summaryTableDF.set_index('Scenario')
-
+    
+    # store information for gauges
     summaryTableDF.to_csv("static/resources/data/selection.csv")
 
     #summaryTableDict = summaryTableDF.to_dict('records')
+    ## Solution 1 bare html from flask return (has the extra /n characters)
     return jsonify(summaryTableDF.to_html())
-    #return jsonify(summaryTableDict)
+
+
+    ## Alternative solution return the dictionary and manipulate 
+    
+    #print(summaryTableDF)
+    #return jsonify(summaryTableDF)
 
 
 

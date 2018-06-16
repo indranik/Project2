@@ -64,8 +64,11 @@ function drawTable(ddl1, ddl2, ddl3){
     }).then((response) => { 
       return response.text();
     }).then(text => {
+      //  html  (bare table) --> flask app must return to_html()
       var table = document.querySelector("#table");
-      table.innerHTML = text;
+      textclean = text.replace(/\n/g,' ');
+      console.log(textclean)
+      table.innerHTML = textclean;
     });
 
   }
