@@ -2,22 +2,27 @@ var width = 300;
 var arcSize = (6 * width / 100);
 var innerRadius = arcSize * 3;            
 
-var data = [
-    {value: 0.2, label: "Institutions", color: '#0000ff'},
-    {value: 4.8, label: "Hotels", color: '#ffff00'},
-    {value: 5.4, label: "Retail", color: '#00ff00'},
-    {value: 89.4, label: "Office", color: '#ff0000'},
-    {value:100, label: "Non Residential", color: '#ff0000'}
-];
 
-function nonresidential_gauge() {
-    var svg = d3.select('#innergauge').append('svg').attr('width', width).attr('height', width);
+
+function allresidential_gauge(datapercent) {
+
+    var oldsvg = d3.selectAll('svg').remove();
+
+    var svg = d3.select('#result').append('svg').attr('width', width).attr('height', width);
+
+
+    var data = [
+        {value: datapercent[1], label: "Plan residential", color: '#ffff00'},
+        {value: datapercent[3], label: "+Review residential", color: '#ff0000'},
+        {value: datapercent[2], label: "+Approved residential", color: '#00ff00'},
+        {value: datapercent[0], label: "Existing residential", color: '#0000ff'}
+    ];
 
     var arcs = data.map(function (obj, i) {
-        return d3.svg.arc().innerRadius(i * arcSize + innerRadius).outerRadius((i + 1) * arcSize - (width / 100) + innerRadius);
+        return d3.arc().innerRadius(i * arcSize + innerRadius).outerRadius((i + 1) * arcSize - (width / 100) + innerRadius);
     });
     var arcsGrey = data.map(function (obj, i) {
-        return d3.svg.arc().innerRadius(i * arcSize + (innerRadius + ((arcSize / 2) - 2))).outerRadius((i + 1) * arcSize - ((arcSize / 2)) + (innerRadius));
+        return d3.arc().innerRadius(i * arcSize + (innerRadius + ((arcSize / 2) - 2))).outerRadius((i + 1) * arcSize - ((arcSize / 2)) + (innerRadius));
     });
 
     var pieData = data.map(function (obj, i) {
@@ -27,7 +32,7 @@ function nonresidential_gauge() {
             {value: 100 * 0.25, arc: arcs[i], object: obj}];
     });
 
-    var pie = d3.layout.pie().sort(null).value(function (d) {
+    var pie = d3.pie().sort(null).value(function (d) {
         return d.value;
     });
 
@@ -94,24 +99,26 @@ function nonresidential_gauge() {
 }
 
           
-function residential_gauge(){
-    var data = [27,52,32,43]
+function residential_gauge(data){
+    //var data = [27,52,32,43]
+
+    var oldsvg = d3.selectAll('svg').remove();
 
     var svg = d3.select('#result').append('svg').attr('width',500).attr('height',500)
 
     var arcs = data.map((v,i)=>{
-        return d3.svg.arc().innerRadius(i*20+60).outerRadius((i+1)*20-5+60)
+        return d3.arc().innerRadius(i*20+60).outerRadius((i+1)*20-5+60)
     });
 
     var pieData = data.map((v,i)=>{
     return [{value:v*0.75,arc:arcs[i]},{value:(100-v)*0.75,arc:arcs[i]},{value:100*0.25,arc:arcs[i]}]
     })
 
-    var pie = d3.layout.pie()
+    var pie = d3.pie()
         .sort(null)
         .value(d=>d.value)
 
-    var g = svg.selectAll('g').data(pieData).enter().append('g').attr('transform','translate(250,250) rotate(180)').attr('fill-opacity',(d,i)=>2/(i+1))
+    var g = svg.selectAll('g').data(pieData).enter().append('g').attr('transform','translate(250,250) rotate(270)').attr('fill-opacity',(d,i)=>2/(i+1))
 
     // progress
     g.selectAll('path').data(d=>{return pie(d)}).enter().append('path').attr('d',d=>{return d.data.arc(d)})
@@ -130,11 +137,3 @@ function residential_gauge(){
     })
  
 }
-
-//residential_gauge()
-
-
-
-//nonresidential_gauge()
-
-
