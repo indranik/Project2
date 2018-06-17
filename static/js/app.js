@@ -68,22 +68,24 @@ function configureDropDownLists(ddl1,ddl2,ddl3) {
             createOption(ddl3, landuseList2[j], landuseList2[j]);
           }
           break;
-      // case 'All TSA':
-      //     console.log("RIGHT CASE")
-      //     ddl2.options.length = 1
-      //     ddl3.options.length = 1;
+      case 'All TSA':
+          console.log("RIGHT CASE")
+          ddl2.options.length = 1
+          ddl3.options.length = 1;
 
-      //     ddl2.value = "Select";
-      //     ddl3.value = "Select";
-          // ddl2.options.length = 0;
-          // ddl3.options.length = 0;
+          ddl2.value = "Select";
+          ddl3.value = "Select";
+          ddl2.options.length = 0;
+          ddl3.options.length = 0;
           
-          // for (i = 0; i < 2; i++) {
-          //   createOption(ddl2, ['District/Sub-District'], ['District/Sub-District']);
-          // }
-          // for (j = 0; j < 2; j++) {
-          //   createOption(ddl3,['Land Use Category'], ['Land Use Category']);
-          // }
+          for (i = 0; i < 2; i++) {
+            createOption(ddl2, ['District/Sub-District'], ['District/Sub-District']);
+          }
+          for (j = 0; j < 2; j++) {
+            createOption(ddl3,['Land Use Category'], ['Land Use Category']);
+          }
+          break;
+
       default:
           ddl2.options.length = 0;
           ddl3.options.length = 0;
@@ -269,3 +271,9 @@ function table(uniqueid_selection){
 
  areaSelection();
  gauges();
+
+
+
+
+
+ 
