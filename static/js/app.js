@@ -1,41 +1,4 @@
 
-/** Draw Table
- * method to collect the selected date made by the user 
- * in the dropdown menus and calculate and draw the table 
- * using POST method to pass the information to the flask app
- */
-function drawTable(ddl1, ddl2, ddl3){
-
-    console.log("on selection TSA")
-    var tsa = (ddl1.value == "TSA (Area Selection)")?"":ddl1.value;
-    var district = (ddl2.value == "Select")?"":ddl2.value;
-    var category = (ddl3.value == "Select")?"":ddl3.value;
-
-    var selection = { TSA: ddl1.value,
-                      DistSubDist: district,
-                      LUCategory: category}
-
-    console.log(selection)  
-
-    fetch('/areaSelection', {
-      body: JSON.stringify(selection), // must match 'Content-Type' header
-      headers: {
-        'content-type': 'application/json'
-      },
-      method: 'POST', 
-    }).then((response) => { 
-      return response.text();
-    }).then(text => {
-      //  html  (bare table) --> flask app must return to_html()
-      var table = document.querySelector("#table");
-      textclean = text.replace(/"/g,' ');
-      textclean2 = textclean.replace(/\\n/g,'');
-      table.innerHTML = textclean2;
-    });
-
-  }
-
-
 //***************************************/
 //*********CREATE SELECT LIST************/
 //***************************************/
@@ -107,22 +70,16 @@ function configureDropDownLists(ddl1,ddl2,ddl3) {
       case 'TSA (Area Selection)':
           ddl2.options.length = 0;
           ddl3.options.length = 0;
-          // ddl4.options.length = 0;
+          
           for (i = 0; i < 2; i++) {
             createOption(ddl2, ['District/Sub-District'], ['District/Sub-District']);
           }
           for (j = 0; j < 2; j++) {
             createOption(ddl3,['Land Use Category'], ['Land Use Category']);
           }
-          // for (k = 0; k < 2; k++) {
-          //   createOption(ddl4,['Development Plan'], ['Development Plan']);
-          // }
-          // break;
-
       default:
           ddl2.options.length = 0;
           ddl3.options.length = 0;
-          // ddl4.options.length = 0;
       break;
     }
   
@@ -191,7 +148,7 @@ function configureDropDownLists3(ddl1,ddl2,ddl3) {
       case 'TSA (Area Selection)':
           ddl2.options.length = 0;
           ddl3.options.length = 0;
-          ddl4.options.length = 0;
+          
           for (i = 0; i < 2; i++) {
             createOption(ddl2, ['District/Sub-District'], ['District/Sub-District']);
           }
@@ -206,7 +163,7 @@ function configureDropDownLists3(ddl1,ddl2,ddl3) {
       default:
           ddl2.options.length = 0;
           ddl3.options.length = 0;
-          ddl4.options.length = 0;
+   
       break;
     }
   
@@ -220,80 +177,52 @@ function configureDropDownLists3(ddl1,ddl2,ddl3) {
 //***********END SELECT LIST*************/
 //***************************************/
 
+/** Draw Table
+ * method to collect the selected date made by the user 
+ * in the dropdown menus and calculate and draw the table 
+ * using POST method to pass the information to the flask app
+ */
+function drawTable(ddl1, ddl2, ddl3){
 
-function selectgauge(scenario_id){
-  //get the residential value for selected scnerario
-  d3.json("/gauges", (error, response) => {
-    if (error) return console.warn(error);
-    console.log(response);
-    var scenarios= ["Existing","Plan","Approved","Review"];
-    console.log(response[scenario_id]);
-    gauge(scenarios[scenario_id],response[scenario_id]); // redraw gauge for scenario_id
+  console.log("on selection TSA")
+  var tsa = (ddl1.value == "TSA (Area Selection)")?"":ddl1.value;
+  var district = (ddl2.value == "Select")?"":ddl2.value;
+  var category = (ddl3.value == "Select")?"":ddl3.value;
+
+  var selection = { TSA: ddl1.value,
+                    DistSubDist: district,
+                    LUCategory: category}
+
+  console.log(selection)  
+
+  fetch('/areaSelection', {
+    body: JSON.stringify(selection), // must match 'Content-Type' header
+    headers: {
+      'content-type': 'application/json'
+    },
+    method: 'POST', 
+  }).then((response) => { 
+    return response.text();
+  }).then(text => {
+    //  html  (bare table) --> flask app must return to_html()
+    var table = document.querySelector("#table");
+    textclean = text.replace(/"/g,' ');
+    textclean2 = textclean.replace(/\\n/g,'');
+    table.innerHTML = textclean2;
   });
+
 }
 
 
-/** gauge
- * draw a gauge taht goes from 1 to 100% for a given scenario 
- * mark the residential value %
+/** gauges
+ *  draw multi gauges to show residential percentages for all scenarios 
  */
-function gauge(scenario, residential_value){
-  var value = residential_value?residential_value:1
-  
-  // Trig to calc meter point
-  var degrees = 180 - (value*1.8);
-  var radius = .5;
-  var radians = degrees * Math.PI / 180;
-  var x = radius * Math.cos(radians);
-  var y = radius * Math.sin(radians);
-
-  // Path: may have to change to create a better triangle
-  var mainPath = 'M -.0 -0.025 L .0 0.025 L ',
-      pathX = String(x),
-      space = ' ',
-      pathY = String(y),
-      pathEnd = ' Z';
-  var path = mainPath.concat(pathX,space,pathY,pathEnd);
-
-  var data = [{ type: 'scatter',
-  x: [0], y:[0],
-      marker: {size: 28, color:'850000'},
-      showlegend: false,
-      name: 'value',
-      text: value,
-      hoverinfo: 'text'},
-  { values: [value/2, value/2, value],
-  rotation: 90,
-  text: ["","",''],
-  textinfo: 'text',
-  textposition:'inside',
-  marker: {colors:['rgba(14, 127, 0, .5)', 'rgba(14, 127, 0, .5)',
-  
-                          'rgba(255, 255, 255, 0)']},
-  labels: ['Non Residential', 'Residential', ''],
-  hoverinfo: 'labels+text',
-  hole: .5,
-  type: 'pie',
-  showlegend: false
-  }];
-
-  var layout = {
-  shapes:[{
-      type: 'path',
-      path: path,
-      fillcolor: '850000',
-      line: {
-          color: '850000'
-      }
-      }],
-  title: scenario,
-  xaxis: {zeroline:false, showticklabels:false, title: "Residential %",
-              showgrid: false, range: [-1, 1]}, 
-  yaxis: {zeroline:false, showticklabels:false,
-              showgrid: false, range: [-1, 1]}
-  };
-
-  Plotly.newPlot('gauge', data, layout, {displayModeBar: false});
+function gauges(){
+  d3.json("/gauges", (error, response) => {
+    if (error) return console.warn(error);
+    console.log(response);
+    allresidential_gauge(response)
+  });
 }
 
 /** areaSelection
@@ -318,12 +247,8 @@ function updateTable(){
   var ddl2 = document.querySelector("#dropdownlist2");
   var ddl3 = document.querySelector("#dropdownlist3");
   drawTable(ddl1, ddl2, ddl3);
-  selectgauge(0); // always redraw for Existing scenario
-  document.querySelector("#existing_scenario").checked = true;
-  document.querySelector("#plan_scenario").checked = false;
-  document.querySelector("#approved_scenario").checked = false;
-  document.querySelector("#review_scenario").checked = false;
- 
+  gauges();
+  
   // PLACEHOLDER FOR CALLING MAP JS with user selection <<<<INDU
   var TSA = document.querySelector("#dropdownlist1").value;
   var Distric_SubDistrict = document.querySelector("#dropdownlist2").value;
@@ -332,83 +257,5 @@ function updateTable(){
 }
 
 
-
-
-
-
-
-
-
-
-
-//***************************************/
-//********** TEST ONLY functions ********/
-//***************************************/
-
-/** Test mode only:
- * Creates and draws a gauge for each scenario 
- */
-function gauges(){
-  d3.json("/gauges", (error, response) => {
-    if (error) return console.warn(error);
-    console.log(response);
-  
-    //Only pass the Residential %, the non residential is 100- residential %
-    // Need to check value for proper rendering or use an alternative <<<<<<< assumes good values
-    var scenarios= ["Existing","Plan","Approved","Review"];
-    for (var i=0; i< scenarios.length; i++){
-      if (response[i] == 0){
-        console.log("draw something else");
-        gauge(scenarios[i], 0);
-      } else {
-        gauge(scenarios[i],response[i]);
-      }
-    }
-  });
-}
-
-/** Test mode only:
- *  pass the selected Unique plan to draw the table
- */
-function optionChanged(route) {
-  console.log("Option changed called with  "+ route);
-  table(route);
- 
-} 
-
-/** Test mode only: 
- *  populates the unique plans in the Unique dropdown
- */
-// d3.json("/unique", (error, response) => {
-//   if (error) return console.warn(error);
-//   //console.log("unique", response);
-
-//   var ddl = document.querySelector("#dropdownlist4");
-//   for (i = 0; i < response.length; i++) 
-//   {
-//     var opt = document.createElement('option');
-//     opt.value = response[i];
-//     opt.text = response[i];
-//     ddl.options.add(opt);
-//   }
-// });
-
-/** Test mode only: 
- * draws the table for Unique areas (not composed values)
- * depends on the dropdown for unique plans
- */
-function table(uniqueid_selection){
-  d3.json(`/table/${uniqueid_selection}`, (error, response) => {
-    if (error) return console.warn(error);
-    
-    // draw gauge based on example table loaded in response
-    var table = document.querySelector("#table");
-    table.innerHTML = response;
-    
-    gauges();
-  });
-}
-
-
  areaSelection();
- selectgauge(0)
+ gauges();
