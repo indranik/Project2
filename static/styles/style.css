@@ -1,7 +1,11 @@
+body{margin-left: 20px;}
+
 #test {
     color: blueviolet;
 }
+#SummaryPanel {margin-left: 20px;}
 
+#PanelRow{margin-left: 20px;}
 
 /********************/
 /** Summary Table **/

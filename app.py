@@ -45,6 +45,7 @@ session = Session(engine)
 #################################################
 @app.route("/")
 def index():
+
     return render_template('index.html')
 
 csvdata = pd.read_csv("static/resources/data/summaryData.csv")
@@ -254,6 +255,9 @@ def sliderddl():
         sliderDropdownList.append(cleaned_slider_data.APPLICATION_NAME[row])
     
     return jsonify(sliderDropdownList)
+@app.route('/get_map')
+def get_map():
+    return jsonify("../map.html")
 
 #@app.route("/sliderdata")
 #def sliderdata():
