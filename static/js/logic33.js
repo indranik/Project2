@@ -219,7 +219,7 @@ var lyrPreZoningCases = new L.Shapefile(ZoningCaselyr, {onEachFeature: function 
         }
           }});
 /* APPROVED BUILDINGS - BY TYPE */
-var lyrApprovedResidentialBuildings = new L.Shapefile("data/ZONINGCASESBLDGs.zip", {onEachFeature: function (feature, layer) {
+var lyrApprovedResidentialBuildings = new L.Shapefile(ZoningCaseBldslyr, {onEachFeature: function (feature, layer) {
         /* Add some colors based on shapefile features */
       
         layer.setOpacity(0);
