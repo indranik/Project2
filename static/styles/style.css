@@ -169,9 +169,10 @@ height:40vh;
 
 /****** WEBPAGE ELEMENTS ******/
 .jumbotron {
-    padding-top: 1px;
+    margin-top: 5px;
+    padding:0px;
     /* background-color:rgb(247, 238, 223); */
-    padding-bottom: 1px;
+    height: 20px;
 }
 
 #dashboard {
