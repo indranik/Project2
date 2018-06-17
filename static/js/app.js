@@ -404,7 +404,12 @@ function updateTable(){
   var ddl2 = document.querySelector("#dropdownlist2");
   var ddl3 = document.querySelector("#dropdownlist3");
   drawTable(ddl1, ddl2, ddl3);
-  selectgauge(0); // always redraw fpr Existing scenario
+  selectgauge(0); // always redraw for Existing scenario
+  document.querySelector("#existing_scenario").checked = true;
+  document.querySelector("#plan_scenario").checked = false;
+  document.querySelector("#approved_scenario").checked = false;
+  document.querySelector("#review_scenario").checked = false;
+  
 }
 
 
