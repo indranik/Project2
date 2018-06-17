@@ -17,6 +17,11 @@ from flask import Flask, render_template, jsonify, request
 #################################################
 app = Flask(__name__)
 
+
+csvdata = pd.read_csv("static/resources/data/summaryData.csv")
+slidercsvdata = pd.read_csv("static/resources/data/sliderdataclean.csv")
+cleaned_slider_data = slidercsvdata[['APPLICATION_NAME','APPLICATION','D_TOTALS','D_Office','D_Retail','D_Hotel',
+                     'D_Inst','D_Indus','D_NonResGFA','D_ResGFA']]
 #################################################
 # Database Queries Setup
 #################################################
@@ -48,10 +53,7 @@ def index():
 
     return render_template('index.html')
 
-csvdata = pd.read_csv("static/resources/data/summaryData.csv")
-slidercsvdata = pd.read_csv("static/resources/data/sliderdataclean.csv")
-cleaned_slider_data = slidercsvdata[['APPLICATION_NAME','APPLICATION','D_TOTALS','D_Office','D_Retail','D_Hotel',
-                     'D_Inst','D_Indus','D_NonResGFA']]
+
 
 ## Route to create dropdownlists
 @app.route("/selectlist")
@@ -231,13 +233,56 @@ def sliderddl():
 def get_map():
     return jsonify("../map.html")
 
-#@app.route("/sliderdata")
+#@app.route("/sliderdata1", methods=['GET','POST'])
 #def sliderdata():
-#    sliderDropdownList = []
-#    for row in range(len(cleaned_slider_data.APPLICATION_NAME)):
-#        sliderDropdownList.append(cleaned_slider_data.APPLICATION_NAME[row])
+#    if request.json: ### == 'POST':
+#        print("POSTED")
+#        #selection = request.json
+#        sliderdata_selected = request.json
+#        print(sliderdata_selected)
+#        
+#    else:
+#        sliderdata_selected = ""
+#        
+#    sliderdata_dict = {}
 #    
-#    return jsonify(sliderDropdownList)
+#    devplan_index = cleaned_slider_data.index[cleaned_slider_data['APPLICATION_NAME'] == sliderdata_selected]
+#    sliderdata_dict['applicationName'] = sliderdata_selected
+#    sliderdata_dict['office'] = cleaned_slider_data['D_Office'][devplan_index[0]]
+#    sliderdata_dict['retail'] = cleaned_slider_data['D_Retail'][devplan_index[0]]
+#    sliderdata_dict['hotel'] = cleaned_slider_data['D_Hotel'][devplan_index[0]]
+#    sliderdata_dict['institution'] = cleaned_slider_data['D_Inst'][devplan_index[0]]
+#    sliderdata_dict['industry'] = cleaned_slider_data['D_Indus'][devplan_index[0]]
+#    sliderdata_dict['nonresidential'] = cleaned_slider_data['D_NonResGFA'][devplan_index[0]]
+#    sliderdata_dict['residential'] = cleaned_slider_data['D_ResGFA'][devplan_index[0]]
+#    
+#    return jsonify(sliderdata_dict)
+    
+@app.route("/sliderdata1", methods=['GET','POST'])
+def sliderdata():
+    if request.json: ### == 'POST':
+        print("POSTED")
+        #selection = request.json
+        sliderdata_selected_json = request.json
+        sliderdata_selected = sliderdata_selected_json['developmentPlan']
+        print(sliderdata_selected)
+        
+    else:
+        sliderdata_selected = ""
+        
+    sliderdata_dict = {}
+    cleaned_slider_data1 = cleaned_slider_data.set_index(['APPLICATION_NAME'])
+
+    sliderdata_dict['applicationName'] = sliderdata_selected
+    sliderdata_dict['office'] = str(cleaned_slider_data1['D_Office'][sliderdata_selected])
+    sliderdata_dict['retail'] = str(cleaned_slider_data1['D_Retail'][sliderdata_selected])
+    sliderdata_dict['hotel'] = str(cleaned_slider_data1['D_Hotel'][sliderdata_selected])
+    sliderdata_dict['institution'] = str(cleaned_slider_data1['D_Inst'][sliderdata_selected])
+    sliderdata_dict['industry'] = str(cleaned_slider_data1['D_Indus'][sliderdata_selected])
+    sliderdata_dict['nonresidential'] = str(cleaned_slider_data1['D_NonResGFA'][sliderdata_selected])
+    sliderdata_dict['residential'] = str(cleaned_slider_data1['D_ResGFA'][sliderdata_selected])
+    
+    return jsonify(sliderdata_dict)
     
 
 if __name__ == "__main__":
