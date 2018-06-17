@@ -38,46 +38,57 @@
     <div class="row">
       <div class="col-md-12">
         <div class="jumbotron text-center">
-            <h2 class="animated bounceInLeft">RESTON TRANSIT STATION AREAS DEVELOPMENT</h2>
-            
+            <h4 class="animated bounceInLeft">RESTON TRANSIT STATION AREAS DEVELOPMENT</h4>
+            <!-- <h1 id="dashboard" class="animated bounceInRight">Dashboard</h1> -->
             <p id="instruction" class="animated bounceInRight">Use the interactive chart below to track city's development</p>
-            <br>
             <hr>
-            <div id="dropdownlist" class="animated fadeIn ribbon">
-              
-              <a href='#'><span>
-              <select id="dropdownlist1" onchange="configureDropDownLists(this,document.getElementById('dropdownlist2'),document.getElementById('dropdownlist3'),document.getElementById('dropdownlist4'))">                
-              <option value='TSA (Area Selection)' selected="selected" >TSA (Area Selection)</option>
-           
-              </select>
-              </span></a>
-
-              <a href='#'><span>
-              <select id="dropdownlist2" onchange="updateTable()">
-                <option value='Select' selected="selected">District/Sub-District</option>
-              
-              </select>
-              </span></a>
-
-              <a href='#'><span>
-              <select id="dropdownlist3" onchange="updateTable()">
-                <option value='Select' selected="selected">Land Use Category</option>
-               
-              </select>
-              </span></a>
-
-              <a href='#'><span>
-              <select id="dropdownlist4"  onchange="optionChanged(this.value)" style="color:red">
-                <option value='Unique Plan' selected="selected">Unique Plan</option>
-                
-              </select>
-              </span></a>
-            </div>
-            
+            <div class="row">
+                <div class="col-md-8">
+                    <!-- <br> -->
+                    <!-- <hr> -->
+                    <div id="dropdownlist" class="animated fadeIn ribbon">
+                      <!-- <select id="dropdownlist1" onchange="optionChanged(this.value)"> -->
+                      <a href='#'><span>
+                      <select id="dropdownlist1" onchange="configureDropDownLists(this,document.getElementById('dropdownlist2'),document.getElementById('dropdownlist3'))">                
+                      <option value='TSA (Area Selection)' selected="selected" >TSA (Area Selection)</option>
+                      </select>
+                      </span></a>
+        
+                      <a href='#'><span>
+                      <select id="dropdownlist2" onchange="updateTable()">
+                        <option value='Select' selected="selected">District/Sub-District</option>
+                      </select>
+                      </span></a>
+        
+                      <a href='#'><span>
+                      <select id="dropdownlist3" onchange="updateTable()">
+                        <option value='Select' selected="selected">Land Use Category</option>
+                      </select>
+                      </span></a>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div id="dropdownlist" class="animated fadeIn ribbon">
+                        <a href='../static/sliderplot.html'>Development Plans</a>
+                      </div>
+                  </div>
+                </div>
+              </div>
         </div>
       </div>
     </div>
-  </div>
+
+  <!-- <div class="container-fluid"> -->
+      
+            <!-- <div id='container'>
+                <div class='ribbon'>
+                    <a href='#'><span>MediaSite</span></a>
+                    <a href='#'><span>Reviews</span></a>
+                    <a href='#'><span>Features</span></a>
+                    <a href='#'><span>Partners</span></a>
+                </div>
+            </div> -->
+
 
  <div class="row">
 
@@ -123,14 +134,6 @@
         </div>
       </div>
    </div>
-  </div>
-
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <iframe src='../static/sliderplot.html' height="1500" width="500" scrolling='yes'></iframe>
-      </div>
-    </div>
   </div>
  
   <div class="with-container-fluid">

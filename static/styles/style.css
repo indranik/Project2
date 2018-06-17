@@ -160,8 +160,9 @@ height:40vh;
 
 /****** WEBPAGE ELEMENTS ******/
 .jumbotron {
-    background-color:rgb(247, 238, 223);
-    padding-bottom: 60px;
+    padding-top: 1px;
+    /* background-color:rgb(247, 238, 223); */
+    padding-bottom: 1px;
 }
 
 #dashboard {
@@ -173,17 +174,26 @@ height:40vh;
     -webkit-animation-delay: 1s;
 }
 
+
+#devplantext {
+    text-align: center;
+    -webkit-animation-delay: 2s;
+    color:black;
+    font-weight: bold;
+}
+
 #dropdownlist, #summarytable {
+    /* padding-top: 10px; */
     text-align: center;
     -webkit-animation-delay: 2s;
 }
 
-#dropdownlist1,#dropdownlist2,#dropdownlist3,#dropdownlist4 {
+#dropdownlist1,#dropdownlist2,#dropdownlist3,#dropdownlist4,#developmentbtn {
     width:180px;
     background-color: transparent;
     color:black;
     height: 30px;
-    font-size: 15px;
+    font-size: 12px;
     border:0px;
     outline:0px;
     font-weight: bold;
@@ -216,17 +226,17 @@ h2, h1 {
 
 /**** DROPDOWN EFFECT ****/
 #container{
-    position:fixed;
-    top:10px;
+    /* position:fixed; */
+    top:5px;
     left:50px;
 }
 
-.ribbon:after, .ribbon:before {
+/* .ribbon:after, .ribbon:before {
     margin-top:0.5em;
     content: "";
     float:left;
     border:1.5em solid #ccc8c8;
-}
+} */
 
 .ribbon:after {
     border-right-color:transparent;
