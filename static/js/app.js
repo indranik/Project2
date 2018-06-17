@@ -255,6 +255,61 @@ function updateTable(){
   var ddl3 = document.querySelector("#dropdownlist3");
   drawTable(ddl1, ddl2, ddl3);
   gauges();
+}
+
+
+function renderMap(){
+  d3.json('/get_map', (error, response)=> {
+    console.log("Here!")
+    if (error) return console.warn(error);
+    console.log(response)
+    document.getElementById('MapContianer').src= response;
+  });
+}
+renderMap();
+
+
+
+/** Test mode only:
+ *  pass the selected Unique plan to draw the table
+ */
+function optionChanged(route) {
+  console.log("Option changed called with  "+ route);
+  table(route);
+ 
+} 
+
+/** Test mode only: 
+ *  populates the unique plans in the Unique dropdown
+ */
+// d3.json("/unique", (error, response) => {
+//   if (error) return console.warn(error);
+//   //console.log("unique", response);
+
+//   var ddl = document.querySelector("#dropdownlist4");
+//   for (i = 0; i < response.length; i++) 
+//   {
+//     var opt = document.createElement('option');
+//     opt.value = response[i];
+//     opt.text = response[i];
+//     ddl.options.add(opt);
+//   }
+// });
+
+/** Test mode only: 
+ * draws the table for Unique areas (not composed values)
+ * depends on the dropdown for unique plans
+ */
+function table(uniqueid_selection){
+  d3.json(`/table/${uniqueid_selection}`, (error, response) => {
+    if (error) return console.warn(error);
+    
+    // draw gauge based on example table loaded in response
+    var table = document.querySelector("#table");
+    table.innerHTML = response;
+    
+    gauges();
+  });
   
   // PLACEHOLDER FOR CALLING MAP JS with user selection <<<<INDU
   var TSA = document.querySelector("#dropdownlist1").value;
