@@ -1,41 +1,3 @@
-//***************************************/
-//*************TEST BLOCK****************/
-//***************************************/
-
-//  Calling the renderHTMLtest function to test the sync amongst .py .html and .css
-// renderHTMLtest();
-
-// function renderHTMLtest() {
-//   // Getting a reference to the element on the page with an ID of app
-//   var app = document.querySelector("#test");
-
-//   // Storing a string into a variable
-//   var headingMessage = "Prelimnary TEST to check the sync between diff files";
-
-//   // Storing a string into the paragraphMessage variable.
-//   var paragraphMessage = "Looks like it works!!!! ";
-//   paragraphMessage += "AWESOME!!!! ";
-//   paragraphMessage += "Lets get started!!!.";
-
-
-//   // Create a heading element w/ document.createElement
-//   var heading = document.createElement("h1");
-//   var paragraph = document.createElement("p");
-
-//   // Update the innerHTML property of these elements
-//   heading.innerHTML = headingMessage;
-//   paragraph.innerHTML = paragraphMessage;
-
-//   // Use 'appendChild' to put the heading and paragraph into the `app` container
-//   app.appendChild(heading);
-//   app.appendChild(paragraph);
-// }
-
-//***************************************/
-//***********END TEST BLOCK**************/
-//***************************************/
-
-
 
 /** Draw Table
  * method to collect the selected date made by the user 
@@ -90,6 +52,12 @@ d3.csv('../static/resources/data/summaryData.csv', (error, response) => {
   } 
 });
 
+/** configureDropDownLists
+ * main function called at  dropdown 1 (TSA) re-selection
+ * will update the values for dropdown 2 and 3 options
+ * will call function to update and render the table
+ * will call function to draw the gauge 
+ */
 function configureDropDownLists(ddl1,ddl2,ddl3) {
   d3.json('/selectlist', (error, response) => {
   if (error) return console.warn(error);
@@ -248,43 +216,6 @@ function configureDropDownLists3(ddl1,ddl2,ddl3) {
   });  
 }
 
-
-// var temp = [{'Herndon TSA': {'district': ['Herndon Station', 'Great Oak', 'Woodland Park'], 
-//                              'landuse': ['Residential Mixed Use', 'Residential', 'Mixed Use', 'Transit Station Mixed Use']},
-//              'Reston Town Center TSA': 
-//                             {'district': ['Reston Town Center Station North', 'Town Center Urban Core', 
-//                                           'Central Sunrise Valley', 'West Fountain Drive', 'Town Center West', 
-//                                           'Reston Heights', 'Old Reston Avenue', 'East Fountain Drive', 
-//                                           'Reston Town Center Station South'], 
-//                              'landuse': ['Residential Mixed Use', 'Town Center Urban Core Mixed Use', 'Office', 'Mixed Use', 
-//                                          'Industrial', 'Transit Station Mixed Use', 'Town Center North Mixed Use']}, 
-//              'Wiehle-Reston East TSA': 
-//                             {'district': ['Wiehle Station North', 'Sunset Hills', 'Reston East', 'Wiehle Station South'], 
-//                              'landuse': ['Residential Mixed Use', 'Transit Station Mixed Use', 'Mixed Use', 'Government / Institutional']}}];
-
-// d3.json('/selectlist', (error, response) => {
-//   if (error) return console.warn(error);
-
-//   var todoList = document.querySelector("#test");
-//   var todoHTML='';
-//   var sample = 'Herndon TSA'
-//   todoHTML = "<p> AGE: " + response['Herndon TSA']['district'] + "</p>";
-//   todoList.innerHTML = todoHTML;
-
-  // var j = 0;
-
-  // for (i = 0; i < response.length; i++) {
-  //     var object = response[j];
-  //     // otu_ids_list = object[sample]['otu_ids'];
-  //     if (Object.keys(object) == sample) {
-  //         // todoHTML = '';
-  //         todoHTML += "<p> AGE: " + object['Herndon TSA']['district'][0] + "</p>";
-  //         todoList.innerHTML = todoHTML;
-  //     }
-  //     j++;
-  // });
-
-// })
 //***************************************/
 //***********END SELECT LIST*************/
 //***************************************/
@@ -303,7 +234,8 @@ function selectgauge(scenario_id){
 
 
 /** gauge
- * draw a gauge 1-100% for a given scenario and mark the residential value %
+ * draw a gauge taht goes from 1 to 100% for a given scenario 
+ * mark the residential value %
  */
 function gauge(scenario, residential_value){
   var value = residential_value?residential_value:1
@@ -364,7 +296,56 @@ function gauge(scenario, residential_value){
   Plotly.newPlot('gauge', data, layout, {displayModeBar: false});
 }
 
-/**
+/** areaSelection
+ * draw the table with no selections made (uses default GET method) 
+ * flask app does the database query and returns the final table
+ */
+function areaSelection(){
+  d3.json('/areaSelection', (error, response)=> {
+    if (error) return console.warn(error);
+   
+    var table = document.querySelector("#table");
+    table.innerHTML = response;
+  });
+}
+
+/** updateTable
+ * render table from user selected options called at each dropdown selection
+ * refresh gauge for residential percentage  
+ */
+function updateTable(){
+  var ddl1 = document.querySelector("#dropdownlist1");
+  var ddl2 = document.querySelector("#dropdownlist2");
+  var ddl3 = document.querySelector("#dropdownlist3");
+  drawTable(ddl1, ddl2, ddl3);
+  selectgauge(0); // always redraw for Existing scenario
+  document.querySelector("#existing_scenario").checked = true;
+  document.querySelector("#plan_scenario").checked = false;
+  document.querySelector("#approved_scenario").checked = false;
+  document.querySelector("#review_scenario").checked = false;
+ 
+  // PLACEHOLDER FOR CALLING MAP JS with user selection <<<<INDU
+  var TSA = document.querySelector("#dropdownlist1").value;
+  var Distric_SubDistrict = document.querySelector("#dropdownlist2").value;
+  var LandUseCategory = document.querySelector("#dropdownlist3").value;  
+  //updateMap(TSA,Distric_SubDistrict,LandUseCategory);
+}
+
+
+
+
+
+
+
+
+
+
+
+//***************************************/
+//********** TEST ONLY functions ********/
+//***************************************/
+
+/** Test mode only:
  * Creates and draws a gauge for each scenario 
  */
 function gauges(){
@@ -385,33 +366,6 @@ function gauges(){
     }
   });
 }
-
-/** areaSelection:
- * draw the table with no selections made (uses default GET method) 
- */
-function areaSelection(){
-  d3.json('/areaSelection', (error, response)=> {
-    if (error) return console.warn(error);
-   
-    var table = document.querySelector("#table");
-    table.innerHTML = response;
-  });
-}
-
-/** Update table from user selected options called at each dropdown selection  */
-function updateTable(){
-  var ddl1 = document.querySelector("#dropdownlist1");
-  var ddl2 = document.querySelector("#dropdownlist2");
-  var ddl3 = document.querySelector("#dropdownlist3");
-  drawTable(ddl1, ddl2, ddl3);
-  selectgauge(0); // always redraw for Existing scenario
-  document.querySelector("#existing_scenario").checked = true;
-  document.querySelector("#plan_scenario").checked = false;
-  document.querySelector("#approved_scenario").checked = false;
-  document.querySelector("#review_scenario").checked = false;
-  
-}
-
 
 /** Test mode only:
  *  pass the selected Unique plan to draw the table
