@@ -50,6 +50,7 @@ session = Session(engine)
 #################################################
 @app.route("/")
 def index():
+
     return render_template('index.html')
 
 
@@ -92,24 +93,10 @@ def get_select_list():
     return jsonify(select_dropdown_list)
 
 
-@app.route("/unique")
-def unique():
-    
-    unique_id=[]
-    for unique in csvdata["UniqueID"]:
-        u = unique.replace(" ", "")
-        u = u.replace(":","")
-        u = u.replace("-","")
-        unique_id.append(u)
-    return (jsonify(unique_id))
-
 @app.route("/areaSelection", methods=['GET','POST'])
 def areaSelection():
-    print("SELECTION ")
     
     if request.json: ### == 'POST':
-        print("POSTED")
-        #selection = request.json
         data = request.json
         print(data)
         TSA = data['TSA']
@@ -166,7 +153,7 @@ def areaSelection():
                                 func.sum(Existing.Residential_GFA).label('Residential_GFA'),\
                                 func.sum(Existing.Residential_Units).label('Residential_Units')).filter(EX_FilterString).\
                                 group_by(Existing.Scenario).all()
-                                
+                             
     PlanMaxData = session.query(PlanMax.Scenario,func.sum(PlanMax.Office).label('Office'),\
                                 func.sum(PlanMax.Retail).label('Retail'),\
                                 func.sum(PlanMax.Hotel).label('Hotel'),\
@@ -186,7 +173,7 @@ def areaSelection():
                                 func.sum(ExApp.Residential_GFA).label('Residential_GFA'),\
                                 func.sum(ExApp.Residential_Units).label('Residential_Units')).filter(EXApp_FilterString).\
                                 group_by(ExApp.Scenario).all()
-            
+          
     ExURAppData = session.query(ExURApp.Scenario,func.sum(ExURApp.Office).label('Office'),\
                                 func.sum(ExURApp.Retail).label('Retail'),\
                                 func.sum(ExURApp.Hotel).label('Hotel'),\
@@ -196,7 +183,7 @@ def areaSelection():
                                 func.sum(ExURApp.Residential_GFA).label('Residential_GFA'),\
                                 func.sum(ExURApp.Residential_Units).label('Residential_Units')).filter(EXURApp_FilterString).\
                                 group_by(ExURApp.Scenario).all()
-                                                        
+                                                      
     ExistingDataDF = pd.DataFrame(ExistingData)
     PlanMaxDataDF = pd.DataFrame(PlanMaxData)
     ExAppDataDF = pd.DataFrame(ExAppData)
@@ -205,82 +192,18 @@ def areaSelection():
     Testframes = [ExistingDataDF, PlanMaxDataDF, ExAppDataDF,ExURAppDataDF]
     
     summaryTableDF = pd.concat(Testframes)
-    summaryTableDF['Percent Residential'] = round(100*(summaryTableDF['Residential_GFA']/(summaryTableDF['Residential_GFA']+summaryTableDF['Nonresidential_GFA'])))
-    #summaryTableDF = summaryTableDF.set_index('Scenario')
     
-    # store information for gauges
-    summaryTableDF.to_csv("static/resources/data/selection.csv")
+    ## Prevent erro if selection has no data (data frame is empty)
+    if not summaryTableDF.empty:
+        summaryTableDF['percent_residential'] = round(100*(summaryTableDF['Residential_GFA']/(summaryTableDF['Residential_GFA']+summaryTableDF['Nonresidential_GFA'])))
+        # store information for gauges
+        summaryTableDF.to_csv("static/resources/data/selection.csv")   
+        nicetable = summaryTableDF[["Scenario", "Office", "Retail", "Hotel","Institutional", "Industrial","Residential_GFA"]]
+        nicetable = nicetable.set_index("Scenario")
+        return jsonify(nicetable.to_html())
+    else:
+        return jsonify("This selection has no data, please select a different option...... ")
 
-    #summaryTableDict = summaryTableDF.to_dict('records')
-    ## Solution 1 bare html from flask return (has the extra /n characters)
-    return jsonify(summaryTableDF.to_html())
-    #return jsonify("This is  a simple string") 
-
-    ## Alternative solution return the dictionary and manipulate 
-    
-    #print(summaryTableDF)
-    #return jsonify(summaryTableDF)
-
-
-
-@app.route("/table/<uniqueid_selection>")
-def table(uniqueid_selection):
-    data = csvdata
-    data['id'] = data['UniqueID'].str.replace(" ","")
-    data['id'] = data['id'].str.replace(":","")
-    data['UniqueID'] = data['id'].str.replace("-","")
-
-    row_selected = data.loc[data['UniqueID'] == uniqueid_selection]
-
-    off_col = ('EX_OffSQFT', 'MR_OFF_SQFT','EARMR_OffSQFT','EUARMR_OffSQFT')
-    ret_col = ('EX_RetSQFT', 'MR_RET_SQFT', 'EARMR_RetSQFT', 'EUARMR_RetSQFT')
-    hot_col = ('EX_HotSQFT', 'MR_HOT_SQFT', 'EARMR_HotSQFT', 'EUARMR_HotelSQFT')
-    ins_col = ('EX_InstSQFT', 'MR_INS_SQFT', 'EARMR_InstSQFT', 'EUARMR_InstSQFT')
-    ind_col = ('EX_IndusSQFT', 'MR_IND_SQFT', 'EARMR_IndusSQFT', 'EUARMR_IndusSQFT')
-    res_col = ('EX_ResSQFT', 'MR_ResGFA','EARMR_ResSQFT','EUARMR_ResSQFT')
-    office = []
-    for col in off_col:
-        office.append(row_selected[col].item())
-    retail = []
-    for col in ret_col:
-        retail.append(row_selected[col].item())
-    hotel = []
-    for col in hot_col:
-        hotel.append(row_selected[col].item())
-    institute = []
-    for col in ins_col:
-        institute.append(row_selected[col].item())
-    indust = []
-    for col in ind_col:
-        indust.append(row_selected[col].item())
-    residen = []
-    for col in res_col:
-        residen.append(row_selected[col].item())
-
-    label = ['Existing','Plan','Development','Review']
-    
-    newtable = {
-        'label' : label,
-        'Office': office,
-        'Retail':retail,
-        'Hotel':hotel,
-        'Industry':indust,
-        'Institutions': institute,
-        'Residential':residen}
-    newtable_df = pd.DataFrame(newtable)
-    newtable_df['Total'] = (newtable_df['Residential']+ newtable_df['Hotel']+ newtable_df['Office']+
-                            newtable_df['Institutions']+
-                            newtable_df['Retail']+
-                            newtable_df['Industry'])                            
-    newtable_df['Percent Residential'] = round(100*(newtable_df['Residential']/newtable_df['Total']))
-    newtable_df = newtable_df.fillna(0)
-    
-    filtered_selection = newtable_df.set_index('label')
-
-    filtered_selection.to_csv("static/resources/data/selection.csv")
-    
-
-    return jsonify(filtered_selection.to_html())
 
 @app.route("/gauges")
 def gauge():
@@ -293,7 +216,7 @@ def gauge():
     
     # get the percentages passed to JS
     percentages = []
-    for p in filtered_selection["Percent Residential"]:
+    for p in filtered_selection["percent_residential"]:
         percentages.append(p)
     
     print(percentages)
@@ -306,6 +229,9 @@ def sliderddl():
         sliderDropdownList.append(cleaned_slider_data.APPLICATION_NAME[row])
     
     return jsonify(sliderDropdownList)
+@app.route('/get_map')
+def get_map():
+    return jsonify("../map.html")
 
 #@app.route("/sliderdata1", methods=['GET','POST'])
 #def sliderdata():

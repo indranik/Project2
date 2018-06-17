@@ -6,11 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Project2 - Community Development</title>
-  
+  <link rel="stylesheet" type="text/css" href="../static/styles/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  
-  <link rel="stylesheet" type="text/css" href="../static/styles/style.css">
+  
   <script src="https://d3js.org/d3.v4.min.js"></script>
  
   <link rel="stylesheet"
@@ -31,10 +31,10 @@
   
   
   <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+  
 </head>
 
 <body>
-  <!-- <div id="test"><h1>Lets start Project #2</h1></div> -->
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
@@ -51,7 +51,7 @@
                       <!-- <select id="dropdownlist1" onchange="optionChanged(this.value)"> -->
                       <a href='#'><span>
                       <select id="dropdownlist1" onchange="configureDropDownLists(this,document.getElementById('dropdownlist2'),document.getElementById('dropdownlist3'))">                
-                      <option value='TSA (Area Selection)' selected="selected" >TSA (Area Selection)</option>
+                      <option value='All TSA' selected="selected" >TSA (Area Selection)</option>
                       </select>
                       </span></a>
         
@@ -90,32 +90,68 @@
                 </div>
             </div> -->
 
+            <div class="row" id ="PanelRow"> 
+                
+              <div class="col-md-4" id ="SummaryPanel">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">
+                         <strong><div class="panel-title">Reston</div></strong>
+                            
+                      </div>
 
+
+                      <div class="panel-body">
+                        
+                        <div class="row" id ="summaryRow">
+                            
+                            <div class="col-md-12">
+                                <div class="pull-left">
+                                    <p>Reston is a fast developing area within Fairfax County, VA. The impetus for the development in this area is the recent extension of Washington Metro.</p>
+                                    <p>A 2014 Planning Study replanned this area to transform this area to include a virbant mix of uses, with the majority of future development focussed near the station locations. The master Plan created three new Transit Station Areas (TSA). Each TSA is futher divided into Districts and Sub-Districts. The master Plan has guidence as to how specific areas within these TSA redevelop.</p>
+                                     <p>This tool will help the County staff and citizens to monitor the current and future development potential/activity for any given area in the TSAs and analyse if the Plan's longterm goals are met.In addition, this tool will let the users to engage in scenario building activity to understand the impacts of specific development plans.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                      </div>
+                      
+                    </div>
+                    </div>
+                    
+                    <div class="col-md-8">
+                      <div class="iframeContainer", id = "MapContianer">
+                        <!-- Students: Add a responsive iframe here that includes the d3.html file -->
+                        <iframe src="" frameborder="1"></iframe>
+                      </div>
+                    </div>    
+                    
+                </div>
+                
+ <div class="row">
+
+ </div>
 
 
   <div class="row">
-      <div class="container">
-        <div class="col-md-12">
+      <div class="container-fluid">
+        <div class="col-md-6">
           <div id="table"></div>
         </div>
+      
+      <div class="col-md-6">
+        <div class="row">
+          <div class="container-fluid"> 
+              <div class="col-md-12" >
+                <div id="result"></div>
+              </div>
+          </div>
+        </div>
       </div>
-  </div>
-  
-  <div class="row">
-    <div class="col-md-3">
-      <div id="gaugeExisting"></div>
-    </div>
-    <div class="col-md-3">
-      <div id="gaugePlan"></div>
-    </div>
-    <div class="col-md-3">  
-      <div id="gaugeApproved"></div>
-    </div>
-    <div class="col-md-3">    
-      <div id="gaugeReview"></div>
-    </div>  
+   </div>
   </div>
  
+
+
   <div class="with-container-fluid">
     <div class="row">
       <div class="col-md-12">
@@ -129,6 +165,7 @@
 
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>  
 <script type="text/javascript" src="../static/js/app.js"></script>
+<script type="text/javascript" src="../static/js/gauge.js"></script>
  
 </body>
 
