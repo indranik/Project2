@@ -3,15 +3,20 @@ body{margin-left: 20px;}
 #test {
     color: blueviolet;
 }
-#SummaryPanel {margin-left: 20px;}
+/*
+#SummaryPanel {margin: 20px;}
 
-#PanelRow{margin-left: 20px;}
-
+#PanelRow{margin: 20px;}
+*/
+#tablegauge{margin: 20px;}
 /********************/
 /** Summary Table **/
 
+#interactionbar{align: center;}
+
 table {
     border:0;
+    margin-left: 10px;
 }
 
 
