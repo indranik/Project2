@@ -35,6 +35,7 @@ function configureDropDownLists(ddl1,ddl2,ddl3) {
 
     switch (ddl1.value) {
       case Object.keys(response)[0]:
+      case 'All TSA':
           ddl2.options.length = 0;
           ddl3.options.length = 0;
           for (i = 0; i < distList0.length; i++) {
@@ -67,16 +68,22 @@ function configureDropDownLists(ddl1,ddl2,ddl3) {
             createOption(ddl3, landuseList2[j], landuseList2[j]);
           }
           break;
-      case 'TSA (Area Selection)':
-          ddl2.options.length = 0;
-          ddl3.options.length = 0;
+      // case 'All TSA':
+      //     console.log("RIGHT CASE")
+      //     ddl2.options.length = 1
+      //     ddl3.options.length = 1;
+
+      //     ddl2.value = "Select";
+      //     ddl3.value = "Select";
+          // ddl2.options.length = 0;
+          // ddl3.options.length = 0;
           
-          for (i = 0; i < 2; i++) {
-            createOption(ddl2, ['District/Sub-District'], ['District/Sub-District']);
-          }
-          for (j = 0; j < 2; j++) {
-            createOption(ddl3,['Land Use Category'], ['Land Use Category']);
-          }
+          // for (i = 0; i < 2; i++) {
+          //   createOption(ddl2, ['District/Sub-District'], ['District/Sub-District']);
+          // }
+          // for (j = 0; j < 2; j++) {
+          //   createOption(ddl3,['Land Use Category'], ['Land Use Category']);
+          // }
       default:
           ddl2.options.length = 0;
           ddl3.options.length = 0;
@@ -185,11 +192,11 @@ function configureDropDownLists3(ddl1,ddl2,ddl3) {
 function drawTable(ddl1, ddl2, ddl3){
 
   console.log("on selection TSA")
-  var tsa = (ddl1.value == "TSA (Area Selection)")?"":ddl1.value;
+  var tsa = (ddl1.value == "All TSA")?"":ddl1.value;
   var district = (ddl2.value == "Select")?"":ddl2.value;
   var category = (ddl3.value == "Select")?"":ddl3.value;
 
-  var selection = { TSA: ddl1.value,
+  var selection = { TSA: tsa,
                     DistSubDist: district,
                     LUCategory: category}
 
