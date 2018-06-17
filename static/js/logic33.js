@@ -112,7 +112,7 @@ var TSAlyr = "static/resources/data/TSA.zip"
 var Districtslyr = "static/resources/data/DISTRICTS.zip"
 var LUCatlyr = "static/resources/data/LUCATEGORIES.zip"
 var ZoningCaselyr = "static/resources/data/ZONINGCASES.zip"
-var ZoningCaseBldslyr = "static/resources/data/ZONINGCASESBLDGS.zip"
+var ZoningCaseBldslyr = "static/resources/data/ZONINGCASESBLGDS.zip"
 
 var arrTSACoordinates =[]
 var lyrTSABoundaries = new L.Shapefile(TSAlyr, {onEachFeature: function (feature, layer) {
