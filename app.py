@@ -92,6 +92,34 @@ def get_select_list():
         
     return jsonify(select_dropdown_list)
 
+@app.route("/selectlist3/<districtsub>")
+def get_select_list3(districtsub):
+    
+    data = csvdata.sort_values('Dis_SubDis')
+    data_selectlist = data[['Dis_SubDis', 'LUCategory']]
+    data_selectlist.reset_index(inplace=True, drop=True)
+    
+    landuse_list = ["Select"]
+
+    allDistSubDIst = data_selectlist['Dis_SubDis']
+    districts = allDistSubDIst.drop_duplicates()
+    
+    print("find a match for ", districtsub)
+    for row in districts.iteritems():
+        # textcompressed = row[1].replace(" ","")
+        # if textcompressed == districtsub:
+        if districtsub == row[1]:
+            print("match district")
+            validuse = data_selectlist.loc[data_selectlist['Dis_SubDis'] == row[1]]
+            print(validuse)
+            for x in validuse['LUCategory']:
+                landuse_list.append(x)
+
+    print("VALID Selection")
+    print(landuse_list)
+
+    return jsonify(landuse_list)
+
 
 @app.route("/areaSelection", methods=['GET','POST'])
 def areaSelection():
