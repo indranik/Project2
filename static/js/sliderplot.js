@@ -85,11 +85,11 @@ $(document).ready(function () {
 
     // prepare chart data
     var sampleData = [
-        { Category: 'Total Non-Residential(sq.ft)', MarketShare: 0 },
-        { Category: 'Total Residential(sq.ft)', MarketShare: 0 },
-        { Category: 'Total Jobs', MarketShare: 0 },
-        { Category: 'Total People', MarketShare: 0 },
-        { Category: 'Total Students', MarketShare: 0 }
+        { Category: 'Non-Residential(sq.ft)', MarketShare: 0 },
+        { Category: 'Residential(sq.ft)', MarketShare: 0 },
+        { Category: 'Jobs', MarketShare: 0 },
+        { Category: 'People', MarketShare: 0 },
+        { Category: 'Students', MarketShare: 0 }
     ]
 
     // prepare jqxChart settings
