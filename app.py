@@ -89,6 +89,42 @@ def get_select_list():
         
     return jsonify(select_dropdown_list)
 
+# ## Route to create dropdownlists
+# @app.route("/selectlist3/<district>")
+# def get_select_list3(district):
+    
+#     data = csvdata.sort_values('TSA')
+#     data_selectlist = data[['TSA','Dis_SubDis', 'LUCategory']]
+#     data_selectlist.reset_index(inplace=True, drop=True)
+
+#     data_selectlist[data_selectlist["Dis_SubDis"]=="Sunset Hills"]
+
+#     initial_val = "Herndon TSA"
+#     district_list = district
+#     landuse_list = ["Select"]
+#     final_list = {}
+#     final_list['landuse'] = []
+
+#     for row1 in range(len(data_selectlist.TSA)-1):
+#         if data_selectlist.TSA[row1] == initial_val:
+#             if data_selectlist.LUCategory[row1] not in landuse_list:
+#                 landuse_list.append(data_selectlist.LUCategory[row1])
+        
+#         else:
+#             final_list['district'].append(district_list)
+#             final_list['landuse'].append(landuse_list)        
+#             initial_val = data_selectlist.TSA[row1]
+#             district_list = ["Select"]
+#             landuse_list = ["Select"]
+#     final_list['district'].append(district_list) 
+#     final_list['landuse'].append(landuse_list)
+
+#     select_dropdown_list = {"Herndon TSA":{"district":final_list['district'][0],"landuse":final_list['landuse'][0]},
+#                 "Reston Town Center TSA":{"district":final_list['district'][1],"landuse":final_list['landuse'][1]},
+#                 "Wiehle-Reston East TSA":{"district":final_list['district'][2],"landuse":final_list['landuse'][2]}}
+        
+#     return jsonify(select_dropdown_list)
+
 
 @app.route("/unique")
 def unique():
@@ -103,11 +139,8 @@ def unique():
 
 @app.route("/areaSelection", methods=['GET','POST'])
 def areaSelection():
-    print("SELECTION ")
     
     if request.json: ### == 'POST':
-        print("POSTED")
-        #selection = request.json
         data = request.json
         print(data)
         TSA = data['TSA']
@@ -164,7 +197,7 @@ def areaSelection():
                                 func.sum(Existing.Residential_GFA).label('Residential_GFA'),\
                                 func.sum(Existing.Residential_Units).label('Residential_Units')).filter(EX_FilterString).\
                                 group_by(Existing.Scenario).all()
-                                
+                             
     PlanMaxData = session.query(PlanMax.Scenario,func.sum(PlanMax.Office).label('Office'),\
                                 func.sum(PlanMax.Retail).label('Retail'),\
                                 func.sum(PlanMax.Hotel).label('Hotel'),\
@@ -184,7 +217,7 @@ def areaSelection():
                                 func.sum(ExApp.Residential_GFA).label('Residential_GFA'),\
                                 func.sum(ExApp.Residential_Units).label('Residential_Units')).filter(EXApp_FilterString).\
                                 group_by(ExApp.Scenario).all()
-            
+          
     ExURAppData = session.query(ExURApp.Scenario,func.sum(ExURApp.Office).label('Office'),\
                                 func.sum(ExURApp.Retail).label('Retail'),\
                                 func.sum(ExURApp.Hotel).label('Hotel'),\
@@ -194,7 +227,7 @@ def areaSelection():
                                 func.sum(ExURApp.Residential_GFA).label('Residential_GFA'),\
                                 func.sum(ExURApp.Residential_Units).label('Residential_Units')).filter(EXURApp_FilterString).\
                                 group_by(ExURApp.Scenario).all()
-                                                        
+                                                      
     ExistingDataDF = pd.DataFrame(ExistingData)
     PlanMaxDataDF = pd.DataFrame(PlanMaxData)
     ExAppDataDF = pd.DataFrame(ExAppData)
@@ -203,22 +236,22 @@ def areaSelection():
     Testframes = [ExistingDataDF, PlanMaxDataDF, ExAppDataDF,ExURAppDataDF]
     
     summaryTableDF = pd.concat(Testframes)
-    summaryTableDF['Percent Residential'] = round(100*(summaryTableDF['Residential_GFA']/(summaryTableDF['Residential_GFA']+summaryTableDF['Nonresidential_GFA'])))
-    #summaryTableDF = summaryTableDF.set_index('Scenario')
     
-    # store information for gauges
-    summaryTableDF.to_csv("static/resources/data/selection.csv")
-
-    #summaryTableDict = summaryTableDF.to_dict('records')
-    ## Solution 1 bare html from flask return (has the extra /n characters)
-    return jsonify(summaryTableDF.to_html())
-    #return jsonify("This is  a simple string") 
-
-    ## Alternative solution return the dictionary and manipulate 
-    
-    #print(summaryTableDF)
-    #return jsonify(summaryTableDF)
-
+    ## Prevent erro if selection has no data (data frame is empty)
+    if not summaryTableDF.empty:
+        print("BEFORE")
+        print(summaryTableDF)
+        summaryTableDF['percent_residential'] = round(100*(summaryTableDF['Residential_GFA']/(summaryTableDF['Residential_GFA']+summaryTableDF['Nonresidential_GFA'])))
+        # store information for gauges
+        summaryTableDF.to_csv("static/resources/data/selection.csv")   
+        print("AFTER")
+        print(summaryTableDF)
+        nicetable = summaryTableDF[["Scenario", "Office", "Retail", "Hotel","Institutional", "Industrial","Residential_GFA"]]
+        nicetable = nicetable.set_index("Scenario")
+        #summaryTableDict = summaryTableDF.to_dict('records')
+        return jsonify(nicetable.to_html())
+    else:
+        return jsonify("This selection has no data, please select a different option...... ")
 
 
 @app.route("/table/<uniqueid_selection>")
@@ -270,7 +303,7 @@ def table(uniqueid_selection):
                             newtable_df['Institutions']+
                             newtable_df['Retail']+
                             newtable_df['Industry'])                            
-    newtable_df['Percent Residential'] = round(100*(newtable_df['Residential']/newtable_df['Total']))
+    newtable_df['percent_residential'] = round(100*(newtable_df['Residential']/newtable_df['Total']))
     newtable_df = newtable_df.fillna(0)
     
     filtered_selection = newtable_df.set_index('label')
@@ -279,6 +312,7 @@ def table(uniqueid_selection):
     
 
     return jsonify(filtered_selection.to_html())
+
 
 @app.route("/gauges")
 def gauge():
@@ -291,7 +325,7 @@ def gauge():
     
     # get the percentages passed to JS
     percentages = []
-    for p in filtered_selection["Percent Residential"]:
+    for p in filtered_selection["percent_residential"]:
         percentages.append(p)
     
     print(percentages)

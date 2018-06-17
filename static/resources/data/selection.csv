@@ -1,5 +1,5 @@
-,Scenario,Office,Retail,Hotel,Institutional,Industrial,Nonresidential_GFA,Residential_GFA,Residential_Units,Percent Residential
-0,Existing Development,21717143,1299993,936782,615485,1163779,25733182,9331653,7602,27.0
-0,Plan Buildout,32109612,1897359,4754791,2423515,462969,41648246,45222800,44697,52.0
-0,Existing + Approved ,24736163,1454865,1515881,623165,1163779,24908852,13831111,11311,36.0
-0,Existing + Approved + UnderReview,28843061,2564025,2243220,1105971,1731103,21254652,27610643,24870,57.0
+,Scenario,Office,Retail,Hotel,Institutional,Industrial,Nonresidential_GFA,Residential_GFA,Residential_Units,percent_residential
+0,Existing Development,477628,0,0,0,0,477628,922403,869,66.0
+0,Plan Buildout,1716125,42903,343225,42903,0,2145156,2145000,2145,50.0
+0,Existing + Approved ,1638981,65497,350599,0,0,477628,2292240,2127,83.0
+0,Existing + Approved + UnderReview,1576486,230167,350599,25000,0,155288,2508405,2379,94.0
