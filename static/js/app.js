@@ -149,7 +149,7 @@ function configureDropDownLists(ddl1,ddl2,ddl3) {
           // for (k = 0; k < 2; k++) {
           //   createOption(ddl4,['Development Plan'], ['Development Plan']);
           // }
-          // break;
+          break;
 
       default:
           ddl2.options.length = 0;
@@ -365,3 +365,9 @@ function table(uniqueid_selection){
 
  areaSelection();
  gauges();
+
+
+
+
+
+ 

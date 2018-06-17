@@ -17,33 +17,47 @@ d3.json('/sliderdropdownlist', (error, response) => {
 //Post and get the values for sliderplot to and from app.py
 //##########################################################
 /** Update table from user selected options called at each dropdown selection  */
-function updateSliderPlot_test(){
-    // change event
-    $('#selectddl').change(function(){
-        console.log($(this).find(':selected').text());
-        console.log($(this).find(':selected').val());
-    });
-  }
+// function updateSliderPlot_test(){
+//     // change event
+//     $('#selectddl').change(function(){
+//         console.log($(this).find(':selected').text());
+//         console.log($(this).find(':selected').val());
+//     });
+//   }
 
 
 
 
-function drawSliderPlot(ddl1){
+function optionChanged(ddl1) {
 
     console.log("on selection")
-    var development = (ddl1.value == "Development Plans")?"":ddl1.value;
-    console.log(ddl1.value)
-    var selection = { developmentPlan: ddl1.value}
+    console.log(ddl1)
+    var development = (ddl1 == "Development Plans")?"":ddl1;
+    console.log(development)
+    var selection = { developmentPlan: development}
+    console.log(selection) 
+    console.log( JSON.stringify(selection)) 
 
-    console.log(selection)  
-
-    // fetch('/areaSelection', {
-    //   body: JSON.stringify(selection), // must match 'Content-Type' header
-    //   headers: {
-    //     'content-type': 'application/json'
-    //   },
-    //   method: 'POST', 
+    fetch('/sliderdata1', {
+        body: JSON.stringify(selection), // must match 'Content-Type' header
+        headers: {
+          'content-type': 'application/json'
+        },
+        method: 'POST', 
+      }).then((response) => { 
+        console.log(response)})
+    //   }).then(text => {
+        //  html  (bare table) --> flask app must return to_html()
+    //     var table = document.querySelector("#table");
+    //     textclean = text.replace(/"/g,' ');
+    //     textclean2 = textclean.replace(/\\n/g,'');
+    //     table.innerHTML = textclean2;
+    //   });
+  
+    
     // }).then((response) => { 
+    //     return response
+    //     console.log(response)
     //   return response.text();
     // }).then(text => {
     //   //  html  (bare table) --> flask app must return to_html()
@@ -52,19 +66,18 @@ function drawSliderPlot(ddl1){
     //   textclean2 = textclean.replace(/\\n/g,'');
     //   table.innerHTML = textclean2;
     // });
-
-  }
-
-function updateSliderPlot(){
-    var ddl1 = document.querySelector("#selectddl");
-    drawSliderPlot(ddl1);
 }
 
-updateSliderPlot();
+// function updateSliderPlot(){
+//     var ddl1 = document.querySelector("#selectddl");
+//     drawSliderPlot(ddl1);
+// }
+
+// updateSliderPlot();
 
 
 
-
+// function configureDropDownLists() {
 $(document).ready(function () {
     function getExportServer() {
         return 'https://www.jqwidgets.com/export_server/export.php';
@@ -117,12 +130,12 @@ $(document).ready(function () {
     // setup the chart
     $('#chartContainer').jqxChart(settings);
 
-    $("#jqxslider1").jqxSlider({ width: 850, min: 0, max: 100, value: 50, step: 5 });
-    $("#jqxslider2").jqxSlider({ width: 850, min: 0, max: 100, value: 50, step: 5 });
-    $("#jqxslider3").jqxSlider({ width: 850, min: 0, max: 100, value: 50, step: 5 });
-    $("#jqxslider4").jqxSlider({ width: 850, min: 0, max: 100, value: 50, step: 5 });
-    $("#jqxslider5").jqxSlider({ width: 850, min: 0, max: 100, value: 50, step: 5 });
-    $("#jqxslider6").jqxSlider({ width: 850, min: 0, max: 100, value: 50, step: 5 });
+    $("#jqxslider1").jqxSlider({ width: 700, min: 0, max: 100, value: 0, step: 5 });
+    $("#jqxslider2").jqxSlider({ width: 700, min: 0, max: 100, value: 0, step: 5 });
+    $("#jqxslider3").jqxSlider({ width: 700, min: 0, max: 100, value: 0, step: 5 });
+    $("#jqxslider4").jqxSlider({ width: 700, min: 0, max: 100, value: 0, step: 5 });
+    $("#jqxslider5").jqxSlider({ width: 700, min: 0, max: 100, value: 0, step: 5 });
+    $("#jqxslider6").jqxSlider({ width: 700, min: 0, max: 100, value: 0, step: 5 });
 
     $('#jqxslider1').on('change', function (event) {
         var value = event.args.value;
@@ -177,3 +190,5 @@ $(document).ready(function () {
         $('#chartContainer').jqxChart('saveAsPDF', 'myChart.pdf', getExportServer());
     });
 });
+
+// }

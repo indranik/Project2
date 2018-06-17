@@ -13,6 +13,17 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
 
+
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
+    crossorigin="anonymous">
+    <!-- or -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+    integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
+    crossorigin="anonymous">
+
     <!-- <link src="resources/jqwidgets/images/icon-left.png" />
     <link src="resources/jqwidgets/images/icon-right.png" /> -->
     <!-- <script type="text/javascript" src="../../scripts/jquery-1.11.1.min.js"></script> -->
@@ -27,21 +38,23 @@
 </head>
 
 <BODY>
+    <div id="wholechart">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
             <div class="jumbotron text-center">
-                <h4 class="animated bounceInLeft">RESTON TRANSIT STATION AREAS DEVELOPMENT</h4>
+                <h3 class="animated bounceInLeft">RESTON TRANSIT STATION AREAS DEVELOPMENT</h3>
                 <!-- <h1 id="dashboard" class="animated bounceInRight">Dashboard</h1> -->
                 <p id="instruction" class="animated bounceInRight">Use the interactive chart below to track city's development</p>
                 <hr>
+                <a src="../templates/index.html" id="button" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Home Page</a>
             </div>
         </div>
     </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <div id='chartContainer' style="width: 850px; height: 300px;"></div>
+                <div id='chartContainer' style="width: 700px; height: 300px;"></div>
             </div>
         </div>
     </div>
@@ -52,7 +65,8 @@
                 <p><strong>Non-Residential</strong></p>
             </div>
             <div class="col-md-2">
-                <select id="selectddl">
+                <select id="selectddl" onchange="optionChanged(this.value)">
+                <!-- <select id="selectddl" onchange="configureDropDownLists(this,document.getElementById('dropdownlist2'),document.getElementById('dropdownlist3'))"> -->
                 </select>
             </div>    
         </div>
@@ -88,7 +102,9 @@
             </div>
         </div>
     </div>
+    </div>
 
     <script src="js/sliderplot.js" type="text/javascript"></script>
+    
 </BODY>
 </HTML>
