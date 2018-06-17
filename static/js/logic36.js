@@ -219,7 +219,7 @@ var lyrPreZoningCases = new L.Shapefile(ZoningCaselyr, {onEachFeature: function 
         }
           }});
 /* APPROVED BUILDINGS - BY TYPE */
-var lyrApprovedResidentialBuildings = new L.Shapefile("data/ZONINGCASESBLDGs.zip", {onEachFeature: function (feature, layer) {
+var lyrApprovedResidentialBuildings = new L.Shapefile(ZoningCaseBldslyr, {onEachFeature: function (feature, layer) {
         /* Add some colors based on shapefile features */
       
         layer.setOpacity(0);
@@ -475,6 +475,7 @@ var groupedOverlays = {
   
   // Create map object and set default layers
 var myMap = L.map('map-id', {
+
     center: [38.95, -77.38],
     zoom: 13,
     layers: [satiliteMap,lyrTSABoundaries]
@@ -483,6 +484,7 @@ var myMap = L.map('map-id', {
 // Add the layer control to the map
 
 L.control.groupedLayers(baseMaps, groupedOverlays,options).addTo(myMap);
+console.log("Done");
 
 // Create a legend to display information about our map
 var info = L.control({
