@@ -475,6 +475,7 @@ var groupedOverlays = {
   
   // Create map object and set default layers
 var myMap = L.map('map-id', {
+
     center: [38.95, -77.38],
     zoom: 13,
     layers: [satiliteMap,lyrTSABoundaries]
@@ -483,6 +484,7 @@ var myMap = L.map('map-id', {
 // Add the layer control to the map
 
 L.control.groupedLayers(baseMaps, groupedOverlays,options).addTo(myMap);
+console.log("Done");
 
 // Create a legend to display information about our map
 var info = L.control({
