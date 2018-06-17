@@ -171,7 +171,9 @@ function createOption(ddl, text, value) {
     ddl.options.add(opt);
 }
 
-
+/** TO DO
+ * Update drop down 3 for valid categories give district/subdistrict selection
+ */
 function configureDropDownLists3(ddl1,ddl2,ddl3) {
   d3.json('/selectlist3', (error, response) => {
   if (error) return console.warn(error);
@@ -290,37 +292,14 @@ function configureDropDownLists3(ddl1,ddl2,ddl3) {
 
 function selectgauge(scenario_id){
   //get the residential value for selected scnerario
-  d3.json("/redrawgauges", (error, response) => {
+  d3.json("/gauges", (error, response) => {
     if (error) return console.warn(error);
     console.log(response);
     var scenarios= ["Existing","Plan","Approved","Review"];
-    gauge(scenarios[scenario_id],response[scenario_id]);
+    console.log(response[scenario_id]);
+    gauge(scenarios[scenario_id],response[scenario_id]); // redraw gauge for scenario_id
   });
-  // d3.csv("static/resources/data/selection.csv",(error, response) => {
-  //     if (error) return console.warn(error);
-    
-  //     console.log(response)
-  //     var scenario = 0;
-  //     switch (scenario_id) {
-  //     case 0:
-  //       scenario = "Existing"
-  //       break;
-  //     case 1:
-  //       scenario = "Plan";
-  //       break;
-  //     case 2:
-  //       scenario = "Approved";
-  //       break;
-  //     default:
-  //       scenario = "Review"
-  //     }
-  //   //draw gauge
-  //     percent = response[scenario_id].percent_residential;
-  //     console.log(percent)
-  //     gauge(scenario,percent)
-  // });
 }
-
 
 
 /** gauge
@@ -425,8 +404,7 @@ function updateTable(){
   var ddl2 = document.querySelector("#dropdownlist2");
   var ddl3 = document.querySelector("#dropdownlist3");
   drawTable(ddl1, ddl2, ddl3);
-  
-  selectgauge(0);
+  selectgauge(0); // always redraw fpr Existing scenario
 }
 
 

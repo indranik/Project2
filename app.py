@@ -139,10 +139,8 @@ def unique():
 
 @app.route("/areaSelection", methods=['GET','POST'])
 def areaSelection():
-    print("SELECTION ")
     
     if request.json: ### == 'POST':
-        print("POSTED")
         data = request.json
         print(data)
         TSA = data['TSA']
@@ -199,8 +197,7 @@ def areaSelection():
                                 func.sum(Existing.Residential_GFA).label('Residential_GFA'),\
                                 func.sum(Existing.Residential_Units).label('Residential_Units')).filter(EX_FilterString).\
                                 group_by(Existing.Scenario).all()
-    print("Existing DATA")
-    print(ExistingData)                            
+                             
     PlanMaxData = session.query(PlanMax.Scenario,func.sum(PlanMax.Office).label('Office'),\
                                 func.sum(PlanMax.Retail).label('Retail'),\
                                 func.sum(PlanMax.Hotel).label('Hotel'),\
@@ -210,8 +207,7 @@ def areaSelection():
                                 func.sum(PlanMax.Residential_GFA).label('Residential_GFA'),\
                                 func.sum(PlanMax.Residential_Units).label('Residential_Units')).filter(PlanMax_FilterString).\
                                 group_by(PlanMax.Scenario).all()
-    print("Plan DATA")
-    print(PlanMaxData)
+    
     ExAppData = session.query(ExApp.Scenario,func.sum(ExApp.Office).label('Office'),\
                                 func.sum(ExApp.Retail).label('Retail'),\
                                 func.sum(ExApp.Hotel).label('Hotel'),\
@@ -221,8 +217,7 @@ def areaSelection():
                                 func.sum(ExApp.Residential_GFA).label('Residential_GFA'),\
                                 func.sum(ExApp.Residential_Units).label('Residential_Units')).filter(EXApp_FilterString).\
                                 group_by(ExApp.Scenario).all()
-    print("EXAPP DATA")
-    print(ExAppData)        
+          
     ExURAppData = session.query(ExURApp.Scenario,func.sum(ExURApp.Office).label('Office'),\
                                 func.sum(ExURApp.Retail).label('Retail'),\
                                 func.sum(ExURApp.Hotel).label('Hotel'),\
@@ -232,8 +227,7 @@ def areaSelection():
                                 func.sum(ExURApp.Residential_GFA).label('Residential_GFA'),\
                                 func.sum(ExURApp.Residential_Units).label('Residential_Units')).filter(EXURApp_FilterString).\
                                 group_by(ExURApp.Scenario).all()
-    print("EXUAR DATA")
-    print(ExURAppData)                                                    
+                                                      
     ExistingDataDF = pd.DataFrame(ExistingData)
     PlanMaxDataDF = pd.DataFrame(PlanMaxData)
     ExAppDataDF = pd.DataFrame(ExAppData)
@@ -243,32 +237,21 @@ def areaSelection():
     
     summaryTableDF = pd.concat(Testframes)
     
-    print("BEFORE")
-    print(summaryTableDF)
-
-
-
-    if summaryTableDF['Residential_GFA'].nonzero():
+    ## Prevent erro if selection has no data (data frame is empty)
+    if not summaryTableDF.empty:
+        print("BEFORE")
+        print(summaryTableDF)
         summaryTableDF['percent_residential'] = round(100*(summaryTableDF['Residential_GFA']/(summaryTableDF['Residential_GFA']+summaryTableDF['Nonresidential_GFA'])))
+        # store information for gauges
+        summaryTableDF.to_csv("static/resources/data/selection.csv")   
+        print("AFTER")
+        print(summaryTableDF)
+        nicetable = summaryTableDF[["Scenario", "Office", "Retail", "Hotel","Institutional", "Industrial","Residential_GFA"]]
+        nicetable = nicetable.set_index("Scenario")
+        #summaryTableDict = summaryTableDF.to_dict('records')
+        return jsonify(nicetable.to_html())
     else:
-        summaryTableDF['percent_residential'] = summaryTableDF['Residential_GFA']
-
-    #summaryTableDF = summaryTableDF.set_index('Scenario')
-    
-    # store information for gauges
-
-
-    summaryTableDF.to_csv("static/resources/data/selection.csv")
-   
-   
-    print("AFTER")
-    print(summaryTableDF)
-
-    nicetable = summaryTableDF[["Scenario", "Office", "Retail", "Hotel","Institutional", "Industrial","Residential_GFA"]]
-    nicetable = nicetable.set_index("Scenario")
-    #summaryTableDict = summaryTableDF.to_dict('records')
-    return jsonify(nicetable.to_html())
-   
+        return jsonify("This selection has no data, please select a different option...... ")
 
 
 @app.route("/table/<uniqueid_selection>")
@@ -329,23 +312,6 @@ def table(uniqueid_selection):
     
 
     return jsonify(filtered_selection.to_html())
-
-@app.route("/redrawgauges")
-def redrawgauge():
-    filtered_selection = pd.read_csv("static/resources/data/selection.csv")
-    # check that selection has returned value
-    
-    if len(filtered_selection) == 0:
-        percentages = [0,0,0,0]
-        return jsonify(percentages)     
-    
-    # get the percentages passed to JS
-    percentages = []
-    for p in filtered_selection["percent_residential"]:
-        percentages.append(p)
-    
-    print(percentages)
-    return jsonify(percentages)
 
 
 @app.route("/gauges")
