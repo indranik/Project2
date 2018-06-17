@@ -37,12 +37,12 @@
 
       <!-- Leaflet CSS -->
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css">
-
+      
       <!-- Icons -->
       <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-      <link rel="stylesheet" href="static/styles/leaflet.extra-markers.min.css">
+      <link rel="stylesheet" href="../static/styles/leaflet.extra-markers.min.css">
       <!-- Grouped Layers-->
-      <link rel="stylesheet" href="static/styles/leaflet.groupedlayercontrol.min.css">
+      <link rel="stylesheet" href="../static/styles/leaflet.groupedlayercontrol.min.css">
   <!--Map styles-->
   
 </head>
@@ -170,7 +170,7 @@
       <div class="panel panel-default" style="border:1px">
         <div id="map-id"></div>
       </div>
-      <a id="MapContianer" href="static/map.html">MAPCOINTAINER</a>
+      
     </div>    
 </div>
 
@@ -197,11 +197,15 @@
 
         <!-- Icons -->
         <script src="../static/js/leaflet.extra-markers.min.js"></script>
+
         <!-- shapefiles -->
+        <script src="https://unpkg.com/shpjs@latest/dist/shp.js"></script>
+
         <script src="../static/js/leaflet.shpfile.js"></script>
-        <script src="../static/js/catiline.js"></script>
-        <script src="../static/js/shp.js"></script>
-        <script src="../static/js/shp.min.js"></script>
+        <!--<script src="../static/js/catiline.js"></script>-->
+        
+          <script src="../static/js/shp.min.js"></script> 
+
 
         <!-- Groupedlayers -->
         <script src="../static/js/leaflet.groupedlayercontrol.min.js"></script>

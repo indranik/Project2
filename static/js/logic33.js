@@ -109,6 +109,10 @@ function BuildingsPopup(feature){var popup =  "<strong>NAME: </strong>" + featur
 return popup}
 
 var TSAlyr = "static/resources/data/TSA.zip"
+var Districtslyr = "static/resources/data/DISTRICTS.zip"
+var LUCatlyr = "static/resources/data/LUCATEGORIES.zip"
+var ZoningCaselyr = "static/resources/data/ZONINGCASES.zip"
+var ZoningCaseBldslyr = "static/resources/data/ZONINGCASESBLDGS.zip"
 
 var arrTSACoordinates =[]
 var lyrTSABoundaries = new L.Shapefile(TSAlyr, {onEachFeature: function (feature, layer) {
@@ -127,7 +131,7 @@ var lyrTSABoundaries = new L.Shapefile(TSAlyr, {onEachFeature: function (feature
 
   console.log(arrTSACoordinates)
   var arrDistCoordinates =[]
-  var lyrDistSubDist = new L.Shapefile("data/DISTRICTS.zip", {onEachFeature: function (feature, layer) {
+  var lyrDistSubDist = new L.Shapefile(Districtslyr, {onEachFeature: function (feature, layer) {
     /* Add some colors based on shapefile features */
     layer.setStyle({
       color: 'orange',
@@ -139,7 +143,7 @@ var lyrTSABoundaries = new L.Shapefile(TSAlyr, {onEachFeature: function (feature
     
     }});
     console.log(arrDistCoordinates)  
-var RestonGeo = new L.Shapefile("data/Reston_TSA_Landuse_Category_GeoUnits.zip", {onEachFeature: function (feature, layer) {
+var RestonGeo = new L.Shapefile(LUCatlyr, {onEachFeature: function (feature, layer) {
     /* Add some colors based on shapefile features */
     layer.setStyle({
         color: 'blue',
@@ -150,7 +154,7 @@ var RestonGeo = new L.Shapefile("data/Reston_TSA_Landuse_Category_GeoUnits.zip",
 
 
 
-var lyrZoningApprovedCases = new L.Shapefile("data/ZONINGCASES.zip", {onEachFeature: function (feature, layer) {
+var lyrZoningApprovedCases = new L.Shapefile(ZoningCaselyr, {onEachFeature: function (feature, layer) {
       /* Add some colors based on shapefile features */
       //Set all the feature no show
       layer.setStyle({
@@ -174,7 +178,7 @@ var lyrZoningApprovedCases = new L.Shapefile("data/ZONINGCASES.zip", {onEachFeat
 
       }
       }});
-var lyrZoningUnderReviewCases = new L.Shapefile("data/ZONINGCASES.zip", {onEachFeature: function (feature, layer) {
+var lyrZoningUnderReviewCases = new L.Shapefile(ZoningCaselyr, {onEachFeature: function (feature, layer) {
         /* Add some colors based on shapefile features */
     
         layer.setStyle({
@@ -196,7 +200,7 @@ var lyrZoningUnderReviewCases = new L.Shapefile("data/ZONINGCASES.zip", {onEachF
             
         }
         }});
-var lyrPreZoningCases = new L.Shapefile("data/ZONINGCASES.zip", {onEachFeature: function (feature, layer) {
+var lyrPreZoningCases = new L.Shapefile(ZoningCaselyr, {onEachFeature: function (feature, layer) {
           /* Add some colors based on shapefile features */
           layer.setStyle({
             fillOpacity: 0,
@@ -232,7 +236,7 @@ var lyrApprovedResidentialBuildings = new L.Shapefile("data/ZONINGCASESBLDGs.zip
         } 
         }});
 
-var lyrApprovedOfficeBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip", {onEachFeature: function (feature, layer) {
+var lyrApprovedOfficeBuildings = new L.Shapefile(ZoningCaseBldslyr , {onEachFeature: function (feature, layer) {
             /* Add some colors based on shapefile features */
           
             layer.setOpacity(0);
@@ -247,7 +251,7 @@ var lyrApprovedOfficeBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip", {
             layer.bindPopup(BuildingsPopup(feature));
             } 
 }});
-var lyrApprovedRetailBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip", {onEachFeature: function (feature, layer) {
+var lyrApprovedRetailBuildings = new L.Shapefile(ZoningCaseBldslyr , {onEachFeature: function (feature, layer) {
                 /* Add some colors based on shapefile features */
               
                 layer.setOpacity(0);
@@ -262,7 +266,7 @@ var lyrApprovedRetailBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip", {
                 layer.bindPopup(BuildingsPopup(feature));
                 } 
 }});
-var lyrApprovedHotelBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip", {onEachFeature: function (feature, layer) {
+var lyrApprovedHotelBuildings = new L.Shapefile(ZoningCaseBldslyr , {onEachFeature: function (feature, layer) {
                     /* Add some colors based on shapefile features */
                   
                     layer.setOpacity(0);
@@ -278,7 +282,7 @@ var lyrApprovedHotelBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip", {o
                         
                     } 
 }});
-var lyrApprovedInstitutionalBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip", {onEachFeature: function (feature, layer) {
+var lyrApprovedInstitutionalBuildings = new L.Shapefile(ZoningCaseBldslyr , {onEachFeature: function (feature, layer) {
                         /* Add some colors based on shapefile features */
                       
                         layer.setOpacity(0);
@@ -294,7 +298,7 @@ var lyrApprovedInstitutionalBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.
                             
                         } 
 }});
-var lyrApprovedIndustrialBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip", {onEachFeature: function (feature, layer) {
+var lyrApprovedIndustrialBuildings = new L.Shapefile(ZoningCaseBldslyr , {onEachFeature: function (feature, layer) {
                             /* Add some colors based on shapefile features */
                           
                             layer.setOpacity(0);
@@ -315,7 +319,7 @@ var lyrApprovedIndustrialBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip
 /* END APPROVED BUILDINGS - BY TYPE */
 
 /* INPROCESS BUILDINGS - BY TYPE */
-var lyrInprocessResidentialBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip", {onEachFeature: function (feature, layer) {
+var lyrInprocessResidentialBuildings = new L.Shapefile(ZoningCaseBldslyr , {onEachFeature: function (feature, layer) {
     /* Add some colors based on shapefile features */
   
     layer.setOpacity(0);
@@ -331,7 +335,7 @@ var lyrInprocessResidentialBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.z
     } 
     }});
 
-var lyrInprocessOfficeBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip", {onEachFeature: function (feature, layer) {
+var lyrInprocessOfficeBuildings = new L.Shapefile(ZoningCaseBldslyr , {onEachFeature: function (feature, layer) {
         /* Add some colors based on shapefile features */
       
         layer.setOpacity(0);
@@ -347,7 +351,7 @@ var lyrInprocessOfficeBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip", 
             
         } 
 }});
-var lyrInprocessRetailBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip", {onEachFeature: function (feature, layer) {
+var lyrInprocessRetailBuildings = new L.Shapefile(ZoningCaseBldslyr , {onEachFeature: function (feature, layer) {
             /* Add some colors based on shapefile features */
           
             layer.setOpacity(0);
@@ -363,7 +367,7 @@ var lyrInprocessRetailBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip", 
                 
             } 
 }});
-var lyrInprocessHotelBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip", {onEachFeature: function (feature, layer) {
+var lyrInprocessHotelBuildings = new L.Shapefile(ZoningCaseBldslyr , {onEachFeature: function (feature, layer) {
                 /* Add some colors based on shapefile features */
               
                 layer.setOpacity(0);
@@ -379,7 +383,7 @@ var lyrInprocessHotelBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip", {
                     
                 } 
 }});
-var lyrInprocessInstitutionalBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip", {onEachFeature: function (feature, layer) {
+var lyrInprocessInstitutionalBuildings = new L.Shapefile(ZoningCaseBldslyr , {onEachFeature: function (feature, layer) {
                     /* Add some colors based on shapefile features */
                   
                     layer.setOpacity(0);
@@ -395,7 +399,7 @@ var lyrInprocessInstitutionalBuildings = new L.Shapefile("data/ZONING_CASES_BLDG
                         
                     } 
 }});
-var lyrInprocessIndustrialBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip", {onEachFeature: function (feature, layer) {
+var lyrInprocessIndustrialBuildings = new L.Shapefile(ZoningCaseBldslyr , {onEachFeature: function (feature, layer) {
                         /* Add some colors based on shapefile features */
                       
                         layer.setOpacity(0);
@@ -411,7 +415,7 @@ var lyrInprocessIndustrialBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zi
                             
                         } 
                         }});
- var lyrInprocessMixedBuildings = new L.Shapefile("data/ZONING_CASES_BLDG.zip", {onEachFeature: function (feature, layer) {
+ var lyrInprocessMixedBuildings = new L.Shapefile(ZoningCaseBldslyr , {onEachFeature: function (feature, layer) {
                             /* Add some colors based on shapefile features */
                           
                             layer.setOpacity(0);
