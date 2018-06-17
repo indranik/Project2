@@ -239,16 +239,11 @@ def areaSelection():
     
     ## Prevent erro if selection has no data (data frame is empty)
     if not summaryTableDF.empty:
-        print("BEFORE")
-        print(summaryTableDF)
         summaryTableDF['percent_residential'] = round(100*(summaryTableDF['Residential_GFA']/(summaryTableDF['Residential_GFA']+summaryTableDF['Nonresidential_GFA'])))
         # store information for gauges
         summaryTableDF.to_csv("static/resources/data/selection.csv")   
-        print("AFTER")
-        print(summaryTableDF)
         nicetable = summaryTableDF[["Scenario", "Office", "Retail", "Hotel","Institutional", "Industrial","Residential_GFA"]]
         nicetable = nicetable.set_index("Scenario")
-        #summaryTableDict = summaryTableDF.to_dict('records')
         return jsonify(nicetable.to_html())
     else:
         return jsonify("This selection has no data, please select a different option...... ")
