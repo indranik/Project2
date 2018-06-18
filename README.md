@@ -32,15 +32,12 @@ Interactive web pages are a fun way to show cause and effect. We are looking at 
 - https://flowingdata.com/2016/08/09/household-types-then-and-now/
 
 
-Other visuals are <TO BE ADDED>
+
 
 ### Final sketch
 
-<TO BE ADDED>
 
-#### Potential draft 
-
-![Visual1](resources/draft_visual/Slide1.jpeg)
+Project description and final sketch described in Project2.pptx/pdf
 
 
 ### Project Contributors
