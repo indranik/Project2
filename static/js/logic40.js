@@ -112,7 +112,7 @@ var TSAlyr = "static/resources/data/TSA.zip"
 var Districtslyr = "static/resources/data/DISTRICTS.zip"
 var LUCatlyr = "static/resources/data/LUCATEGORIES.zip"
 var ZoningCaselyr = "static/resources/data/ZONINGCASES.zip"
-var ZoningCaseBldslyr = "static/resources/data/ZONINGCASESBLDGS.zip"
+var ZoningCaseBldslyr = "static/resources/data/ZONINGCASESBLGDS.zip"
 
 var arrTSACoordinates =[]
 var lyrTSABoundaries = new L.Shapefile(TSAlyr, {onEachFeature: function (feature, layer) {
@@ -487,15 +487,15 @@ console.log("Here!");
 L.control.groupedLayers(baseMaps, groupedOverlays,options).addTo(myMap);
 
 // Create a legend to display information about our map
-var info = L.control({
-    position: "bottomright"
-  });
+// var info = L.control({
+//     position: "bottomright"
+//   });
 
-// When the layer control is added, insert a div with the class of "legend"
-info.onAdd = function() {
-    var div = L.DomUtil.create("div", "legend");
-    return div;
-  };
+// // When the layer control is added, insert a div with the class of "legend"
+// info.onAdd = function() {
+//     var div = L.DomUtil.create("div", "legend");
+//     return div;
+//   };
 
 // Add the info legend to the map
 /* info.addTo(myMap);
