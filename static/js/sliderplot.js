@@ -175,12 +175,12 @@ function renderSliderPlot(sliderData) {
         $('#chartContainer').jqxChart(settings);
         // $('#chartContainer').jqxChart(settings2);
 
-        $("#jqxslider1").jqxSlider({ width: 750, min: 0, max: officeVal, value: 0 , step: 5 });
-        $("#jqxslider2").jqxSlider({ width: 750, min: 0, max: retailVal, value: 0, step: 5 });
-        $("#jqxslider3").jqxSlider({ width: 750, min: 0, max: hotelVal, value: 0, step: 5 });
-        $("#jqxslider4").jqxSlider({ width: 750, min: 0, max: institutionalVal, value: 0, step: 5 });
-        $("#jqxslider5").jqxSlider({ width: 750, min: 0, max: industrialVal, value: 0, step: 5 });
-        $("#jqxslider6").jqxSlider({ width: 750, min: 0, max: residentialVal, value: 0, step: 5 });
+        $("#jqxslider1").jqxSlider({  min: 0, max: officeVal, value: 0 , step: 5 });
+        $("#jqxslider2").jqxSlider({  min: 0, max: retailVal, value: 0, step: 5 });
+        $("#jqxslider3").jqxSlider({  min: 0, max: hotelVal, value: 0, step: 5 });
+        $("#jqxslider4").jqxSlider({  min: 0, max: institutionalVal, value: 0, step: 5 });
+        $("#jqxslider5").jqxSlider({  min: 0, max: industrialVal, value: 0, step: 5 });
+        $("#jqxslider6").jqxSlider({  min: 0, max: residentialVal, value: 0, step: 5 });
 
         // setup the slider
         $('#jqxslider1').on('change', function (event) {
