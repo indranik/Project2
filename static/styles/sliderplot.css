@@ -1,7 +1,10 @@
 body {  width: 100%; height: 100%; }
 
-#select {
+#selectddl {
     padding-left: 50px;
+    background-color: hsl(14, 78%, 95%);
+    color: black;
+    font-weight: bold;
 }
 
 /****** WEBPAGE ELEMENTS ******/
@@ -35,4 +38,8 @@ hr { background-color:rgb(182, 159, 30);
 
 /* #button{
     padding-bottom: 20px;
+} */
+
+/* #saveas {
+    padding-top: 10px;
 } */
