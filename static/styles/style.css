@@ -185,3 +185,4 @@ h2, h1 {
     height: 500px;
     margin: auto;
   }
+.leaflet-control-layer-list{text-align:left;}

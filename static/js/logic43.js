@@ -1,14 +1,14 @@
-var mapboxToken = "pk.eyJ1IjoiaW5kcmFuaWsiLCJhIjoiY2pod202dXZ3MDJpNDNxbnRpdnF0Y3hwMiJ9.G-Msbu1I25lI-ZKiIcEIhA";
+//var mapboxToken = "pk.eyJ1IjoiaW5kcmFuaWsiLCJhIjoiY2pod202dXZ3MDJpNDNxbnRpdnF0Y3hwMiJ9.G-Msbu1I25lI-ZKiIcEIhA";
 
 // Create the tile layer that will be the background of our map
-var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=" + mapboxToken, {
+var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=" + "pk.eyJ1IjoiaW5kcmFuaWsiLCJhIjoiY2pod202dXZ3MDJpNDNxbnRpdnF0Y3hwMiJ9.G-Msbu1I25lI-ZKiIcEIhA", {
   attribution: "Map data &copy; <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"http://mapbox.com\">Mapbox</a>",
   maxZoom: 18
 });
 
 // Define variables for our tile layers
 var satiliteMap = L.tileLayer(
-  'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v10/tiles/256/{z}/{x}/{y}?access_token=' + mapboxToken,{
+  'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v10/tiles/256/{z}/{x}/{y}?access_token=' + "pk.eyJ1IjoiaW5kcmFuaWsiLCJhIjoiY2pod202dXZ3MDJpNDNxbnRpdnF0Y3hwMiJ9.G-Msbu1I25lI-ZKiIcEIhA",{
     attribution: "Map data &copy; <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"http://mapbox.com\">Mapbox</a>",
     maxZoom: 18
   }
@@ -475,8 +475,8 @@ var groupedOverlays = {
   
   // Create map object and set default layers
 var myMap = L.map('map-id', {
-    center: [38.95, -77.38],
-    zoom: 13,
+    center: [38.949343, -77.337901],
+    zoom: 14,
     layers: [satiliteMap,lyrTSABoundaries]
 
   });
