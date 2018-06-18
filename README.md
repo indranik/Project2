@@ -37,7 +37,7 @@ Interactive web pages are a fun way to show cause and effect. We are looking at 
 ### Final sketch
 
 
-Project description and final sketch described in Project2.pptx/pdf
+Project description and final sketch described in [Project2.pdf](https://github.com/indranik/Project2/blob/master/Project2.pdf)
 
 
 ### Project Contributors
