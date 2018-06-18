@@ -254,6 +254,7 @@ function table(uniqueid_selection){
   var Distric_SubDistrict = document.querySelector("#dropdownlist2").value;
   var LandUseCategory = document.querySelector("#dropdownlist3").value;  
   //updateMap(TSA,Distric_SubDistrict,LandUseCategory);
+  document.getElementById("UserSelection").text = TSA+":"+Distric_SubDistrict
 }
 
 
