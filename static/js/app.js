@@ -151,6 +151,7 @@ function drawTable(ddl1, ddl2, ddl3){
                     LUCategory: category}
 
   console.log(selection)  
+  document.getElementById("UserSelection").innerHTML = tsa+":"+district
 
   fetch('/areaSelection', {
     body: JSON.stringify(selection), // must match 'Content-Type' header
@@ -254,7 +255,9 @@ function table(uniqueid_selection){
   var Distric_SubDistrict = document.querySelector("#dropdownlist2").value;
   var LandUseCategory = document.querySelector("#dropdownlist3").value;  
   //updateMap(TSA,Distric_SubDistrict,LandUseCategory);
-  document.getElementById("UserSelection").text = TSA+":"+Distric_SubDistrict
+  
+ 
+
 }
 
 
