@@ -481,7 +481,9 @@ var myMap = L.map('map-id', {
     center: [38.95, -77.38],
     zoom: 13,
     layers: [satiliteMap,lyrTSABoundaries]
-  }); 
+
+  });
+console.log("Here!");
 // Pass our map layers into our layer control
 // Add the layer control to the map
 
