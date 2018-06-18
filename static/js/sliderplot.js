@@ -25,10 +25,7 @@ d3.json('/sliderdropdownlist', (error, response) => {
 //     });
 //   }
 
-
-
-
-function optionChanged(ddl1) {
+function updateSliderPlot(ddl1) {
 
     console.log("on selection")
     console.log(ddl1)
@@ -53,167 +50,209 @@ function optionChanged(ddl1) {
         return data;
       })
       .then((data) => {
-          var officeVal = parseInt(data.residential);
-          var retailVal = parseInt(data.retail);
-          var hotelVal = parseInt(data.hotel);
-          var institutionalVal = parseInt(data.hotel);
-          var industrialVal = parseInt(data.hotel);
-          var nonresidentialVal = parseInt(data.hotel);
-          var residentialVal = parseInt(data.hotel);
-          console.log(officeVal,retailVal,hotelVal,institutionalVal,industrialVal,nonresidentialVal,residentialVal);
+        var sliderData = {officeVal: parseInt(data.office),
+            retailVal: parseInt(data.retail),
+            hotelVal: parseInt(data.hotel),
+            institutionalVal: parseInt(data.institution),
+            industrialVal: parseInt(data.industry),
+            nonresidentialVal: parseInt(data.nonresidential),
+            residentialVal: parseInt(data.residential)
+            };
+        console.log(sliderData);
+        renderSliderPlot(sliderData)
       });
     }
 
-$(document).ready(function () {
-    function getExportServer() {
-        return 'https://www.jqwidgets.com/export_server/export.php';
-    }
+// TEST DATA FOR 
+// var sliderDatadefault = {officeVal: 259845,
+//                          retailVal: 183555,
+//                          hotelVal: 0,
+//                          institutionalVal: 0,
+//                          industrialVal: 0,
+//                          nonresidentialVal: 443400,
+//                          residentialVal: 1341401
+//                          };
 
-    // prepare chart data
-    var sampleData = [
-        { Category: 'Non-Residential(sq.ft)'},
-        { Category: 'Residential(sq.ft)'},
-        { Category: 'Jobs'},
-        { Category: 'People'},
-        { Category: 'Students'}
-    ]
+var sliderDatadefault = {officeVal: 259845,
+retailVal: 183555,
+hotelVal: 0,
+institutionalVal: 0,
+industrialVal: 0,
+nonresidentialVal: 443400,
+residentialVal: 1341401
+}
 
-    var sampleData1 = [
-        { Category: 'Non-Residential(sq.ft)', MarketShare: 50 },
-        { Category: 'Residential(sq.ft)', MarketShare: 50 },
-        { Category: 'Jobs', MarketShare: 0 },
-        { Category: 'People', MarketShare: 0 },
-        { Category: 'Students', MarketShare: 0 }
-    ]
+// Render Sliderplot
+function renderSliderPlot(sliderData) {
+    var officeVal = (sliderData.officeVal+1)/1000;
+    var retailVal = (sliderData.retailVal+1)/1000;
+    var hotelVal = (sliderData.hotelVal+1)/1000;
+    var institutionalVal = (sliderData.institutionalVal+1)/1000;
+    var industrialVal = (sliderData.industrialVal+1)/1000;
+    var nonresidentialVal = (sliderData.nonresidentialVal+1)/1000;
+    var residentialVal = (sliderData.residentialVal+1)/1000;
+    var jobs = ((officeVal/300)+(retailVal/400)+(hotelVal/1350)+(institutionalVal/450)+(industrialVal/500))*1000;
+    var people = residentialVal*2.2;
+    var students = residentialVal*0.85;
+    console.log(jobs,people,students)
 
-    var sampleData2 = [
-        { Category: 'Non-Residential(sq.ft)', MarketShare: 0 },
-        { Category: 'Residential(sq.ft)', MarketShare: 0 },
-        { Category: 'Jobs', MarketShare: 50 },
-        { Category: 'People', MarketShare: 50 },
-        { Category: 'Students', MarketShare: 50 }
-    ]
 
-    // prepare jqxChart settings
-    var settings = {
-        title: "Development Plan Overview",
-        description: "",
-        showLegend: false,
-        enableAnimations: true,
-        padding: { left: 20, top: 5, right: 20, bottom: 5 },
-        titlePadding: { left: 90, top: 0, right: 0, bottom: 10 },
-        source: sampleData,
-        xAxis:
-            {
-                dataField: 'Category',
-                showGridLines: true,
-                flip: false
-            },
-        
-        colorScheme: 'scheme03',
-        seriesGroups:
-            [
+
+    $(document).ready(function () {
+        function getExportServer() {
+            return 'https://www.jqwidgets.com/export_server/export.php';
+        }
+
+        // prepare chart data
+        var xaxisData = [
+            { Category: 'Non-Residential(sq.ft)'},
+            { Category: 'Residential(sq.ft)'},
+            { Category: 'Jobs'},
+            { Category: 'People'},
+            { Category: 'Students'}
+        ]
+
+        var areaData = [
+            { Category: 'Non-Residential(sq.ft)', Area: nonresidentialVal },
+            { Category: 'Residential(sq.ft)', Area: residentialVal },
+            { Category: 'Jobs', Area: 0 },
+            { Category: 'People', Area: 0 },
+            { Category: 'Students', Area: 0 }
+        ]
+
+        var countData = [
+            { Category: 'Non-Residential(sq.ft)', Count: 0 },
+            { Category: 'Residential(sq.ft)', Count: 0 },
+            { Category: 'Jobs', Count: jobs },
+            { Category: 'People', Count: people },
+            { Category: 'Students', Count: students }
+        ]
+
+        // prepare jqxChart settings
+        var settings = {
+            title: "Development Plan Overview",
+            description: "Use slider to project development progress based on selection",
+            showLegend: true,
+            enableAnimations: true,
+            padding: { left: 20, top: 5, right: 20, bottom: 5 },
+            titlePadding: { left: 90, top: 0, right: 0, bottom: 10 },
+            source: xaxisData,
+            xAxis:
                 {
-                    type: 'column',
-                    columnsGapPercent: 50,
-                    toolTipFormatSettings: { thousandsSeparator: ',' },
-                    valueAxis:
-                    {
-                        unitInterval: 10,
-                        maxValue: 100,
-                        minValue: 0,
-                        description: 'Area in SQ.FT.'
-                    },
-                    source: sampleData1,
-                    
-                    series: [
-                            { dataField: 'MarketShare', displayText: 'Market share', formatSettings: { prefix: "%"} }
-                        ]
+                    dataField: 'Category',
+                    showGridLines: true,
+                    flip: false
                 },
-                {
-                    type: 'column',
-                    columnsGapPercent: 50,
-                    toolTipFormatSettings: { thousandsSeparator: ',' },
-                    valueAxis:
+            
+            colorScheme: 'scheme07',
+            seriesGroups:
+                [
                     {
-                        unitInterval: 10,
-                        maxValue: 100,
-                        minValue: 0,
-                        description: 'Count',
-                        position: 'right'
+                        type: 'column',
+                        columnsGapPercent: 50,
+                        toolTipFormatSettings: { thousandsSeparator: ',' },
+                        valueAxis:
+                        {
+                            unitInterval: 150,
+                            maxValue: Math.max(nonresidentialVal,residentialVal)+50,
+                            minValue: 0,
+                            description: 'Area (thousand SQ.FT.)'
+                        },
+                        source: areaData,
+                        
+                        series: [
+                                { dataField: 'Area', displayText: 'Area'}
+                            ]
                     },
-                    source: sampleData2,
-                    
-                    series: [
-                            { dataField: 'MarketShare', displayText: 'Market share', formatSettings: { prefix: "%"} }
-                        ]
-                },
-            ],
+                    {
+                        type: 'column',
+                        columnsGapPercent: 50,
+                        toolTipFormatSettings: { thousandsSeparator: ',' },
+                        valueAxis:
+                        {
+                            unitInterval: 150,
+                            maxValue: Math.max(jobs,people,students)+50,
+                            minValue: 0,
+                            description: 'Count',
+                            position: 'right',
+                            showGridLines: false
+                        },
+                        source: countData,
+                        
+                        series: [
+                                { dataField: 'Count', displayText: 'Count'}
+                            ]
+                    },
+                ],
+            
+        };
+
+
+        // setup the chart
+        $('#chartContainer').jqxChart(settings);
+        // $('#chartContainer').jqxChart(settings2);
+
+        $("#jqxslider1").jqxSlider({ width: 750, min: 0, max: officeVal, value: 0 , step: 5 });
+        $("#jqxslider2").jqxSlider({ width: 750, min: 0, max: retailVal, value: 0, step: 5 });
+        $("#jqxslider3").jqxSlider({ width: 750, min: 0, max: hotelVal, value: 0, step: 5 });
+        $("#jqxslider4").jqxSlider({ width: 750, min: 0, max: institutionalVal, value: 0, step: 5 });
+        $("#jqxslider5").jqxSlider({ width: 750, min: 0, max: industrialVal, value: 0, step: 5 });
+        $("#jqxslider6").jqxSlider({ width: 750, min: 0, max: residentialVal, value: 0, step: 5 });
+
+        $('#jqxslider1').on('change', function (event) {
+            var value = event.args.value;
+            areaData[0].Area = areaData[0].Area + value;
+            countData[2].Count = countData[2].Count + value;
+            $('#chartContainer').jqxChart("update");
+        });
         
-    };
+        $('#jqxslider2').on('change', function (event) {
+            var value = event.args.value;
+            areaData[0].Area = value;
+            countData[2].Count = value;
+            $('#chartContainer').jqxChart("update");
+        });
+        
+        $('#jqxslider3').on('change', function (event) {
+            var value = event.args.value;
+            sampleData2[2].MarketShare =value;
+            $('#chartContainer').jqxChart("update");
+        });
+        
+        $('#jqxslider4').on('change', function (event) {
+            var value = event.args.value;
+            sampleData2[3].MarketShare =value;
+            $('#chartContainer').jqxChart("update");
+        });
+        
+        $('#jqxslider5').on('change', function (event) {
+            var value = event.args.value;
+            sampleData2[4].MarketShare =value;
+            $('#chartContainer').jqxChart("update");
+        });
 
+        $('#jqxslider6').on('change', function (event) {
+            var value = event.args.value;
+            sampleData2[4].MarketShare =value;
+            $('#chartContainer').jqxChart("update");
+        });
 
-    // setup the chart
-    $('#chartContainer').jqxChart(settings);
-    // $('#chartContainer').jqxChart(settings2);
+        $("#jpegButton").jqxButton({});
+        $("#pngButton").jqxButton({});
+        $("#pdfButton").jqxButton({});
+        $("#jpegButton").click(function () {
+            // call the export server to create a JPEG image
+            $('#chartContainer').jqxChart('saveAsJPEG', 'myChart.jpeg', getExportServer());
+        });
+        $("#pngButton").click(function () {
+            // call the export server to create a PNG image
+            $('#chartContainer').jqxChart('saveAsPNG', 'myChart.png', getExportServer());
+        });
+        $("#pdfButton").click(function () {
+            // call the export server to create a PNG image
+            $('#chartContainer').jqxChart('saveAsPDF', 'myChart.pdf', getExportServer());
+        });
+    });
+}
 
-    $("#jqxslider1").jqxSlider({ width: 700, min: 0, max: 100, value: 0, step: 5 });
-    $("#jqxslider2").jqxSlider({ width: 700, min: 0, max: 100, value: 0, step: 5 });
-    $("#jqxslider3").jqxSlider({ width: 700, min: 0, max: 100, value: 0, step: 5 });
-    $("#jqxslider4").jqxSlider({ width: 700, min: 0, max: 100, value: 0, step: 5 });
-    $("#jqxslider5").jqxSlider({ width: 700, min: 0, max: 100, value: 0, step: 5 });
-    $("#jqxslider6").jqxSlider({ width: 700, min: 0, max: 100, value: 0, step: 5 });
-
-    $('#jqxslider1').on('change', function (event) {
-        var value = event.args.value;
-        sampleData1[0].MarketShare = value;
-        sampleData2[2].MarketShare = value;
-        $('#chartContainer').jqxChart("update");
-    });
-    
-    $('#jqxslider2').on('change', function (event) {
-        var value = event.args.value;
-        sampleData1[1].MarketShare =value;
-        $('#chartContainer').jqxChart("update");
-    });
-    
-    $('#jqxslider3').on('change', function (event) {
-        var value = event.args.value;
-        sampleData2[2].MarketShare =value;
-        $('#chartContainer').jqxChart("update");
-    });
-    
-    $('#jqxslider4').on('change', function (event) {
-        var value = event.args.value;
-        sampleData2[3].MarketShare =value;
-        $('#chartContainer').jqxChart("update");
-    });
-    
-    $('#jqxslider5').on('change', function (event) {
-        var value = event.args.value;
-        sampleData2[4].MarketShare =value;
-        $('#chartContainer').jqxChart("update");
-    });
-
-    $('#jqxslider6').on('change', function (event) {
-        var value = event.args.value;
-        sampleData2[4].MarketShare =value;
-        $('#chartContainer').jqxChart("update");
-    });
-
-    $("#jpegButton").jqxButton({});
-    $("#pngButton").jqxButton({});
-    $("#pdfButton").jqxButton({});
-    $("#jpegButton").click(function () {
-        // call the export server to create a JPEG image
-        $('#chartContainer').jqxChart('saveAsJPEG', 'myChart.jpeg', getExportServer());
-    });
-    $("#pngButton").click(function () {
-        // call the export server to create a PNG image
-        $('#chartContainer').jqxChart('saveAsPNG', 'myChart.png', getExportServer());
-    });
-    $("#pdfButton").click(function () {
-        // call the export server to create a PNG image
-        $('#chartContainer').jqxChart('saveAsPDF', 'myChart.pdf', getExportServer());
-    });
-});
+renderSliderPlot(sliderDatadefault);

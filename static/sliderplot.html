@@ -53,8 +53,8 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6">
-                <div id='chartContainer' style="width: 800px; height: 300px;"></div>
+            <div class="col-md-8">
+                <div id='chartContainer' style="width: 750px; height: 400px;"></div>
             </div>
         </div>
     </div>
@@ -64,8 +64,8 @@
             <div class="col-md-4">
                 <p><strong>Non-Residential</strong></p>
             </div>
-            <div class="col-md-2">
-                <select id="selectddl" onchange="optionChanged(this.value)">
+            <div class="col-md-4">
+                <select id="selectddl" onchange="updateSliderPlot(this.value)">
                 <!-- <select id="selectddl" onchange="configureDropDownLists(this,document.getElementById('dropdownlist2'),document.getElementById('dropdownlist3'))"> -->
                 </select>
             </div>    
@@ -93,7 +93,7 @@
     <hr>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6" id="saveas">
                 <div style='margin-top: 10px;'>
                     <input style='float: left;' id="jpegButton" type="button" value="Save As JPEG" />
                     <input style='float: left; margin-left: 5px;' id="pngButton" type="button" value="Save As PNG" />
