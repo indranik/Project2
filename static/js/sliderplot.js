@@ -34,9 +34,9 @@ function optionChanged(ddl1) {
     console.log(ddl1)
     var development = (ddl1 == "Development Plans")?"":ddl1;
     console.log(development)
-    var selection = { developmentPlan: development}
+    var selection = {developmentPlan: development}
     console.log(selection) 
-    console.log( JSON.stringify(selection)) 
+    console.log(JSON.stringify(selection)) 
 
     fetch('/sliderdata1', {
         body: JSON.stringify(selection), // must match 'Content-Type' header
@@ -44,40 +44,26 @@ function optionChanged(ddl1) {
           'content-type': 'application/json'
         },
         method: 'POST', 
-      }).then((response) => { 
-        console.log(response)})
-    //   }).then(text => {
-        //  html  (bare table) --> flask app must return to_html()
-    //     var table = document.querySelector("#table");
-    //     textclean = text.replace(/"/g,' ');
-    //     textclean2 = textclean.replace(/\\n/g,'');
-    //     table.innerHTML = textclean2;
-    //   });
-  
-    
-    // }).then((response) => { 
-    //     return response
-    //     console.log(response)
-    //   return response.text();
-    // }).then(text => {
-    //   //  html  (bare table) --> flask app must return to_html()
-    //   var table = document.querySelector("#table");
-    //   textclean = text.replace(/"/g,' ');
-    //   textclean2 = textclean.replace(/\\n/g,'');
-    //   table.innerHTML = textclean2;
-    // });
-}
+      })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        return data;
+      })
+      .then((data) => {
+          var officeVal = parseInt(data.residential);
+          var retailVal = parseInt(data.retail);
+          var hotelVal = parseInt(data.hotel);
+          var institutionalVal = parseInt(data.hotel);
+          var industrialVal = parseInt(data.hotel);
+          var nonresidentialVal = parseInt(data.hotel);
+          var residentialVal = parseInt(data.hotel);
+          console.log(officeVal,retailVal,hotelVal,institutionalVal,industrialVal,nonresidentialVal,residentialVal);
+      });
+    }
 
-// function updateSliderPlot(){
-//     var ddl1 = document.querySelector("#selectddl");
-//     drawSliderPlot(ddl1);
-// }
-
-// updateSliderPlot();
-
-
-
-// function configureDropDownLists() {
 $(document).ready(function () {
     function getExportServer() {
         return 'https://www.jqwidgets.com/export_server/export.php';
@@ -85,11 +71,27 @@ $(document).ready(function () {
 
     // prepare chart data
     var sampleData = [
-        { Category: 'Non-Residential(sq.ft)', MarketShare: 0 },
-        { Category: 'Residential(sq.ft)', MarketShare: 0 },
+        { Category: 'Non-Residential(sq.ft)'},
+        { Category: 'Residential(sq.ft)'},
+        { Category: 'Jobs'},
+        { Category: 'People'},
+        { Category: 'Students'}
+    ]
+
+    var sampleData1 = [
+        { Category: 'Non-Residential(sq.ft)', MarketShare: 50 },
+        { Category: 'Residential(sq.ft)', MarketShare: 50 },
         { Category: 'Jobs', MarketShare: 0 },
         { Category: 'People', MarketShare: 0 },
         { Category: 'Students', MarketShare: 0 }
+    ]
+
+    var sampleData2 = [
+        { Category: 'Non-Residential(sq.ft)', MarketShare: 0 },
+        { Category: 'Residential(sq.ft)', MarketShare: 0 },
+        { Category: 'Jobs', MarketShare: 50 },
+        { Category: 'People', MarketShare: 50 },
+        { Category: 'Students', MarketShare: 50 }
     ]
 
     // prepare jqxChart settings
@@ -107,28 +109,53 @@ $(document).ready(function () {
                 showGridLines: true,
                 flip: false
             },
-        colorScheme: 'scheme01',
+        
+        colorScheme: 'scheme03',
         seriesGroups:
             [
                 {
                     type: 'column',
-                    columnsGapPercent: 100,
+                    columnsGapPercent: 50,
                     toolTipFormatSettings: { thousandsSeparator: ',' },
                     valueAxis:
                     {
                         unitInterval: 10,
                         maxValue: 100,
                         minValue: 0,
+                        description: 'Area in SQ.FT.'
                     },
+                    source: sampleData1,
+                    
                     series: [
                             { dataField: 'MarketShare', displayText: 'Market share', formatSettings: { prefix: "%"} }
                         ]
-                }
-            ]
+                },
+                {
+                    type: 'column',
+                    columnsGapPercent: 50,
+                    toolTipFormatSettings: { thousandsSeparator: ',' },
+                    valueAxis:
+                    {
+                        unitInterval: 10,
+                        maxValue: 100,
+                        minValue: 0,
+                        description: 'Count',
+                        position: 'right'
+                    },
+                    source: sampleData2,
+                    
+                    series: [
+                            { dataField: 'MarketShare', displayText: 'Market share', formatSettings: { prefix: "%"} }
+                        ]
+                },
+            ],
+        
     };
+
 
     // setup the chart
     $('#chartContainer').jqxChart(settings);
+    // $('#chartContainer').jqxChart(settings2);
 
     $("#jqxslider1").jqxSlider({ width: 700, min: 0, max: 100, value: 0, step: 5 });
     $("#jqxslider2").jqxSlider({ width: 700, min: 0, max: 100, value: 0, step: 5 });
@@ -139,38 +166,38 @@ $(document).ready(function () {
 
     $('#jqxslider1').on('change', function (event) {
         var value = event.args.value;
-        sampleData[0].MarketShare = value;
-        sampleData[2].MarketShare = value;
+        sampleData1[0].MarketShare = value;
+        sampleData2[2].MarketShare = value;
         $('#chartContainer').jqxChart("update");
     });
     
     $('#jqxslider2').on('change', function (event) {
         var value = event.args.value;
-        sampleData[1].MarketShare =value;
+        sampleData1[1].MarketShare =value;
         $('#chartContainer').jqxChart("update");
     });
     
     $('#jqxslider3').on('change', function (event) {
         var value = event.args.value;
-        sampleData[2].MarketShare =value;
+        sampleData2[2].MarketShare =value;
         $('#chartContainer').jqxChart("update");
     });
     
     $('#jqxslider4').on('change', function (event) {
         var value = event.args.value;
-        sampleData[3].MarketShare =value;
+        sampleData2[3].MarketShare =value;
         $('#chartContainer').jqxChart("update");
     });
     
     $('#jqxslider5').on('change', function (event) {
         var value = event.args.value;
-        sampleData[4].MarketShare =value;
+        sampleData2[4].MarketShare =value;
         $('#chartContainer').jqxChart("update");
     });
 
     $('#jqxslider6').on('change', function (event) {
         var value = event.args.value;
-        sampleData[4].MarketShare =value;
+        sampleData2[4].MarketShare =value;
         $('#chartContainer').jqxChart("update");
     });
 
@@ -190,5 +217,3 @@ $(document).ready(function () {
         $('#chartContainer').jqxChart('saveAsPDF', 'myChart.pdf', getExportServer());
     });
 });
-
-// }
