@@ -14,16 +14,8 @@ d3.json('/sliderdropdownlist', (error, response) => {
 
 
 //##########################################################
-//Post and get the values for sliderplot to and from app.py
+//Post, get values to and from app.py and render sliderplot 
 //##########################################################
-/** Update table from user selected options called at each dropdown selection  */
-// function updateSliderPlot_test(){
-//     // change event
-//     $('#selectddl').change(function(){
-//         console.log($(this).find(':selected').text());
-//         console.log($(this).find(':selected').val());
-//     });
-//   }
 
 function updateSliderPlot(ddl1) {
 
@@ -41,38 +33,29 @@ function updateSliderPlot(ddl1) {
           'content-type': 'application/json'
         },
         method: 'POST', 
-      })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        return data;
-      })
-      .then((data) => {
-        var sliderData = {officeVal: parseInt(data.office),
-            retailVal: parseInt(data.retail),
-            hotelVal: parseInt(data.hotel),
-            institutionalVal: parseInt(data.institution),
-            industrialVal: parseInt(data.industry),
-            nonresidentialVal: parseInt(data.nonresidential),
-            residentialVal: parseInt(data.residential)
-            };
-        console.log(sliderData);
-        renderSliderPlot(sliderData)
-      });
-    }
+    })
+    .then((response) => {
+    return response.json();
+    })
+    .then((data) => {
+    console.log(data);
+    return data;
+    })
+    .then((data) => {
+    var sliderData = {officeVal: parseInt(data.office),
+        retailVal: parseInt(data.retail),
+        hotelVal: parseInt(data.hotel),
+        institutionalVal: parseInt(data.institution),
+        industrialVal: parseInt(data.industry),
+        nonresidentialVal: parseInt(data.nonresidential),
+        residentialVal: parseInt(data.residential)
+        };
+    console.log(sliderData);
+    renderSliderPlot(sliderData);
+    });
+}
 
-// TEST DATA FOR 
-// var sliderDatadefault = {officeVal: 259845,
-//                          retailVal: 183555,
-//                          hotelVal: 0,
-//                          institutionalVal: 0,
-//                          industrialVal: 0,
-//                          nonresidentialVal: 443400,
-//                          residentialVal: 1341401
-//                          };
-
+// Default object values
 var sliderDatadefault = {officeVal: 259845,
 retailVal: 183555,
 hotelVal: 0,
@@ -154,7 +137,7 @@ function renderSliderPlot(sliderData) {
                         valueAxis:
                         {
                             unitInterval: 150,
-                            maxValue: Math.max(nonresidentialVal,residentialVal)+50,
+                            maxValue: Math.max(areaData[0].Area,areaData[1].Area)+50,
                             minValue: 0,
                             description: 'Area (thousand SQ.FT.)'
                         },
@@ -199,41 +182,73 @@ function renderSliderPlot(sliderData) {
         $("#jqxslider5").jqxSlider({ width: 750, min: 0, max: industrialVal, value: 0, step: 5 });
         $("#jqxslider6").jqxSlider({ width: 750, min: 0, max: residentialVal, value: 0, step: 5 });
 
+        // setup the slider
         $('#jqxslider1').on('change', function (event) {
             var value = event.args.value;
-            areaData[0].Area = areaData[0].Area + value;
-            countData[2].Count = countData[2].Count + value;
+            var sli2Val = $('#jqxslider2').jqxSlider('value');
+            var sli3Val = $('#jqxslider3').jqxSlider('value');
+            var sli4Val = $('#jqxslider4').jqxSlider('value');
+            var sli5Val = $('#jqxslider5').jqxSlider('value');
+            areaData[0].Area = value + sli2Val + sli3Val+ sli4Val+ sli5Val;
+            countData[2].Count = ((value/300)+(sli2Val/400)+(sli3Val/1350)+(sli4Val/450)+(sli5Val/500))*1000;
+            // countData[2].Count = value;
             $('#chartContainer').jqxChart("update");
         });
+    
         
         $('#jqxslider2').on('change', function (event) {
             var value = event.args.value;
-            areaData[0].Area = value;
-            countData[2].Count = value;
+            var sli1Val = $('#jqxslider1').jqxSlider('value');
+            var sli3Val = $('#jqxslider3').jqxSlider('value');
+            var sli4Val = $('#jqxslider4').jqxSlider('value');
+            var sli5Val = $('#jqxslider5').jqxSlider('value');
+            areaData[0].Area = value + sli1Val + sli3Val+ sli4Val+ sli5Val;
+            countData[2].Count = ((value/400)+(sli1Val/300)+(sli3Val/1350)+(sli4Val/450)+(sli5Val/500))*1000;
+            // countData[2].Count = value;
             $('#chartContainer').jqxChart("update");
         });
         
         $('#jqxslider3').on('change', function (event) {
             var value = event.args.value;
-            sampleData2[2].MarketShare =value;
+            var sli1Val = $('#jqxslider1').jqxSlider('value');
+            var sli2Val = $('#jqxslider2').jqxSlider('value');
+            var sli4Val = $('#jqxslider4').jqxSlider('value');
+            var sli5Val = $('#jqxslider5').jqxSlider('value');
+            areaData[0].Area = value + sli1Val + sli2Val+ sli4Val+ sli5Val;
+            countData[2].Count = ((value/1350)+(sli1Val/300)+(sli2Val/400)+(sli4Val/450)+(sli5Val/500))*1000;
+            // countData[2].Count = value;
             $('#chartContainer').jqxChart("update");
         });
         
         $('#jqxslider4').on('change', function (event) {
             var value = event.args.value;
-            sampleData2[3].MarketShare =value;
+            var sli1Val = $('#jqxslider1').jqxSlider('value');
+            var sli2Val = $('#jqxslider2').jqxSlider('value');
+            var sli3Val = $('#jqxslider3').jqxSlider('value');
+            var sli5Val = $('#jqxslider5').jqxSlider('value');
+            areaData[0].Area = value + sli1Val + sli2Val+ sli3Val+ sli5Val;
+            countData[2].Count = ((value/450)+(sli1Val/300)+(sli2Val/400)+(sli3Val/1350)+(sli5Val/500))*1000;
+            // countData[2].Count = value;
             $('#chartContainer').jqxChart("update");
         });
         
         $('#jqxslider5').on('change', function (event) {
             var value = event.args.value;
-            sampleData2[4].MarketShare =value;
+            var sli1Val = $('#jqxslider1').jqxSlider('value');
+            var sli2Val = $('#jqxslider2').jqxSlider('value');
+            var sli3Val = $('#jqxslider3').jqxSlider('value');
+            var sli4Val = $('#jqxslider4').jqxSlider('value');
+            areaData[0].Area = value + sli1Val + sli2Val+ sli3Val+ sli4Val;
+            countData[2].Count = ((value/500)+(sli1Val/300)+(sli2Val/400)+(sli3Val/1350)+(sli4Val/450))*1000;
+            // countData[2].Count = value;
             $('#chartContainer').jqxChart("update");
         });
 
         $('#jqxslider6').on('change', function (event) {
             var value = event.args.value;
-            sampleData2[4].MarketShare =value;
+            areaData[1].Area = value;
+            countData[3].Count = value * 2.2;
+            countData[4].Count = value * 0.85;
             $('#chartContainer').jqxChart("update");
         });
 

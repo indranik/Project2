@@ -6,8 +6,6 @@
     <link rel="stylesheet" href="resources/jqwidgets/styles/jqx.base.css" type="text/css" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1 minimum-scale=1" />	
-    <!-- <img src="resources/jqwidgets/images/icon-left.png"></img>
-    <img src="resources/jqwidgets/images/icon-right.png"></img> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
@@ -24,9 +22,6 @@
     integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
     crossorigin="anonymous">
 
-    <!-- <link src="resources/jqwidgets/images/icon-left.png" />
-    <link src="resources/jqwidgets/images/icon-right.png" /> -->
-    <!-- <script type="text/javascript" src="../../scripts/jquery-1.11.1.min.js"></script> -->
     <script type="text/javascript" src="resources/jqwidgets/jqxcore.js"></script>
     <script type="text/javascript" src="resources/jqwidgets/jqxchart.core.js"></script>
     <script type="text/javascript" src="resources/jqwidgets/jqxdraw.js"></script>
@@ -42,9 +37,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-            <div class="jumbotron text-center">
+            <div class="jumbotron text-center">      
+                <div id='container' class='ribbon'>
+                    <a href='../templates/index.html'><span>HOME PAGE</span></a>
+                </div>
                 <h3 class="animated bounceInLeft">RESTON TRANSIT STATION AREAS DEVELOPMENT</h3>
-                <!-- <h1 id="dashboard" class="animated bounceInRight">Dashboard</h1> -->
                 <p id="instruction" class="animated bounceInRight">Use the interactive chart below to track city's development</p>
                 <hr>
                 <!-- <a src="../templates/index.html" id="button" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Home Page</a> -->
@@ -53,55 +50,59 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8">
-                <div id='chartContainer' style="width: 750px; height: 400px;"></div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-4">
-                <p><strong>Non-Residential</strong></p>
-            </div>
-            <div class="col-md-4">
-                <select id="selectddl" onchange="updateSliderPlot(this.value)">
-                <!-- <select id="selectddl" onchange="configureDropDownLists(this,document.getElementById('dropdownlist2'),document.getElementById('dropdownlist3'))"> -->
-                </select>
-            </div>    
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-4">
-                <em>Category #1:</em> Office
-                <div id='jqxslider1'></div>
-                <em>Category #2:</em> Retail
-                <div id='jqxslider2'></div>
-                <em>Category #3:</em> Hotel
-                <div id='jqxslider3'></div>
-                <em>Category #4:</em> Institutional
-                <div id='jqxslider4'></div>
-                <em>Category #5:</em> Industrial
-                <div id='jqxslider5'></div>
-            <p><strong>Residential</strong></p>
-                <em>Category #1:</em> All Residential
-                <div id='jqxslider6'></div>
-            </div>
-        </div>
-    </div>
-    <hr>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6" id="saveas">
+            <div class="col-md-6">
+                <div id='chartContainer' class="animated bounceInUp" style="width: 750px; height: 640px;"></div>
+                <!-- <hr> -->
                 <div style='margin-top: 10px;'>
                     <input style='float: left;' id="jpegButton" type="button" value="Save As JPEG" />
                     <input style='float: left; margin-left: 5px;' id="pngButton" type="button" value="Save As PNG" />
                     <input style='float: left; margin-left: 5px;' id="pdfButton" type="button" value="Save As PDF" />
                 </div>
             </div>
+            <div class="col-md-4">
+                <p><strong>Non-Residential</strong></p>
+                <!-- <br> -->
+                <div class="col-md-6">
+                    <em>Category #1:</em> Office
+                    <div id='jqxslider1'></div>
+                    <em>Category #2:</em> Retail
+                    <div id='jqxslider2'></div>
+                    <em>Category #3:</em> Hotel
+                    <div id='jqxslider3'></div>
+                    <em>Category #4:</em> Institutional
+                    <div id='jqxslider4'></div>
+                    <em>Category #5:</em> Industrial
+                    <div id='jqxslider5'></div>
+                    <!-- <br> -->
+                <!-- <br> -->
+                <p><strong>Residential</strong></p>
+                <!-- <br> -->
+                    <em>Category #1:</em> All Residential
+                    <div id='jqxslider6'></div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <select id="selectddl" onchange="updateSliderPlot(this.value)"></select>
+            </div>
+            
+            <!-- <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6" id="saveas">
+                        <hr>
+                        <div style='margin-top: 10px;'>
+                            <input style='float: left;' id="jpegButton" type="button" value="Save As JPEG" />
+                            <input style='float: left; margin-left: 5px;' id="pngButton" type="button" value="Save As PNG" />
+                            <input style='float: left; margin-left: 5px;' id="pdfButton" type="button" value="Save As PDF" />
+                        </div>
+                    </div>
+                </div>
+            </div> -->
         </div>
     </div>
+    <br>
+    
+    </div>
+
     </div>
 
     <script src="js/sliderplot.js" type="text/javascript"></script>
