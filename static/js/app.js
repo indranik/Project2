@@ -208,18 +208,6 @@ function updateTable(){
 }
 
 
-function renderMap(){
-  d3.json('/get_map', (error, response)=> {
-    console.log("Here!")
-    if (error) return console.warn(error);
-    console.log(response)
-    document.getElementById('MapContianer').src= response;
-  });
-}
-renderMap();
-
-
-
 /** Test mode only:
  *  pass the selected Unique plan to draw the table
  */
@@ -271,9 +259,3 @@ function table(uniqueid_selection){
 
  areaSelection();
  gauges();
-
-
-
-
-
- 
