@@ -112,7 +112,9 @@ var TSAlyr = "static/resources/data/TSA.zip"
 var Districtslyr = "static/resources/data/DISTRICTS.zip"
 var LUCatlyr = "static/resources/data/LUCATEGORIES.zip"
 var ZoningCaselyr = "static/resources/data/ZONINGCASES.zip"
-var ZoningCaseBldslyr = "static/resources/data/ZONINGCASESBLDGS.zip"
+
+var ZoningCaseBldslyr = "static/resources/data/ZONINGCASESBLGDS.zip"
+
 
 var arrTSACoordinates =[]
 var lyrTSABoundaries = new L.Shapefile(TSAlyr, {onEachFeature: function (feature, layer) {
@@ -475,6 +477,7 @@ var groupedOverlays = {
   
   // Create map object and set default layers
 var myMap = L.map('map-id', {
+
     center: [38.95, -77.38],
     zoom: 13,
     layers: [satiliteMap,lyrTSABoundaries]
@@ -485,6 +488,9 @@ console.log("Here!");
 // Add the layer control to the map
 
 L.control.groupedLayers(baseMaps, groupedOverlays,options).addTo(myMap);
+
+console.log("Done");
+
 
 // Create a legend to display information about our map
 var info = L.control({
