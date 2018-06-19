@@ -491,3 +491,7 @@ function renderMap() {
     L.control.groupedLayers(baseMaps, groupedOverlays, options).addTo(myMap);
 }
 
+function userInputMapLogic(selectionStr){
+  console.log(selectionStr);
+}
+
