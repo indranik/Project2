@@ -50,39 +50,41 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6">
-                <div id='chartContainer' class="animated bounceInUp" style="width: 750px; height: 640px;"></div>
+            <div class="col-md-8">
+                <div class="row">
+                <div id='chartContainer' class="animated bounceInUp" style="width: 60vw; height: 60vh;"></div>
                 <!-- <hr> -->
                 <div style='margin-top: 10px;'>
                     <input style='float: left;' id="jpegButton" type="button" value="Save As JPEG" />
                     <input style='float: left; margin-left: 5px;' id="pngButton" type="button" value="Save As PNG" />
                     <input style='float: left; margin-left: 5px;' id="pdfButton" type="button" value="Save As PDF" />
                 </div>
-            </div>
-            <div class="col-md-4">
-                <p><strong>Non-Residential</strong></p>
-                <!-- <br> -->
-                <div class="col-md-6">
-                    <em>Category #1:</em> Office
-                    <div id='jqxslider1'></div>
-                    <em>Category #2:</em> Retail
-                    <div id='jqxslider2'></div>
-                    <em>Category #3:</em> Hotel
-                    <div id='jqxslider3'></div>
-                    <em>Category #4:</em> Institutional
-                    <div id='jqxslider4'></div>
-                    <em>Category #5:</em> Industrial
-                    <div id='jqxslider5'></div>
-                    <!-- <br> -->
-                <!-- <br> -->
-                <p><strong>Residential</strong></p>
-                <!-- <br> -->
-                    <em>Category #1:</em> All Residential
-                    <div id='jqxslider6'></div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <select id="selectddl" onchange="updateSliderPlot(this.value)"></select>
+               
+            <div class="col-md-4" >
+                <div class="row">
+                <select id="selectddl" style="margin-bottom:5%" onchange="updateSliderPlot(this.value)"></select>
+                
+                <!-- <br> -->
+                <div class="container-fluid">
+                <p><strong>Non-Residential</strong></p>
+                <em>Category #1:</em> Office
+                <div id='jqxslider1'></div>
+                <em>Category #2:</em> Retail
+                <div id='jqxslider2'></div>
+                <em>Category #3:</em> Hotel
+                <div id='jqxslider3'></div>
+                <em>Category #4:</em> Institutional
+                <div id='jqxslider4'></div>
+                <em>Category #5:</em> Industrial
+                <div id='jqxslider5'></div>
+                <p><strong>Residential</strong></p>
+                <!-- <br> -->
+                <em>Category #1:</em> All Residential
+                <div id='jqxslider6'></div>
+                </div>
+                </div>
             </div>
             
             <!-- <div class="container-fluid">
